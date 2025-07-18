@@ -362,8 +362,17 @@ namespace MoreLocales.Common
 
                 string title = info.buttonText.title.GetForCulture(ref culture, $"Cultures.{culture.Name}.Title").Value;
                 float xSizeTitle = font.MeasureString(title).X;
-                Vector2 drawTitlePos = (centerForTitles - new Vector2(xSizeTitle * 0.5f, sub ? 18f : 10f)).Floor();
-                ChatManager.DrawColorCodedStringWithShadow(sb, font, title, drawTitlePos, drawColor, 0f, Vector2.Zero, Vector2.One);
+
+                float xScale = 1f;
+                float availableSize = buttonWidth - flagOffset.X - info.flagWidthCache;
+                if (xSizeTitle > availableSize)
+                {
+                    xScale = (float)availableSize / xSizeTitle;
+                    xSizeTitle = availableSize;
+                }
+
+                Vector2 drawTitlePos = (centerForTitles - new Vector2(xSizeTitle * 0.5f, sub ? 20f : 10f)).Floor();
+                ChatManager.DrawColorCodedStringWithShadow(sb, font, title, drawTitlePos, drawColor, 0f, Vector2.Zero, new Vector2(xScale , 1f));
             }
 
             // we can reset the list when handling interactions
