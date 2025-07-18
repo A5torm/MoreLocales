@@ -1,1 +1,7 @@
-Localization+ is a mod that adds plenty of new localizable languages (Japanese, Korean, Traditional Chinese, Turkish, Indonesian, and many more), as well as a new, more sleek Language menu. In the future, a way to change languages from in-game (without needing to exit your current world) is also planned.
+Localization+ is a mod that adds:
+- 18 new localizable languages (Japanese, Korean, Traditional Chinese, Turkish, Indonesian, and many more)
+- A new, more sleek Language menu
+- Access to the language menu from in-game using a button added near the Settings button
+- The ability to use Hangul, Hiragana, Katakana, Vietnamese and Thai Script characters freely, without impacting other fonts
+- (For developers) The ability to make your own localizable cultures
+- For certain languages, special item prefix behavior.

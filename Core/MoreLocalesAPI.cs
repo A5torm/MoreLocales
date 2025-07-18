@@ -777,6 +777,8 @@ namespace MoreLocales.Core
                 byte version = reader.ReadByte();
 
                 string langCode = reader.ReadString();
+                byte accessibleCulture = reader.ReadByte();
+
                 for (int i = 1; i < extraCulturesV2.Length; i++)
                 {
                     GameCulture culture = extraCulturesV2[i].Culture;
@@ -786,6 +788,9 @@ namespace MoreLocales.Core
                         break;
                     }
                 }
+
+                if (loadedCulture == 9999)
+                    loadedCulture = accessibleCulture;
             }
 
             LanguageManager.Instance.SetLanguage(extraCulturesV2[loadedCulture].Culture);
@@ -806,6 +811,8 @@ namespace MoreLocales.Core
 
                 string langCode = LanguageManager.Instance.ActiveCulture.Name;
                 writer.Write(langCode);
+
+                writer.Write((byte)cachedVanillaCulture);
             }
 
             if (!File.Exists(pathToCustomCultureData))

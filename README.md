@@ -1,6 +1,6 @@
 # Localization Plus
 This mod (Localization Plus) is a mod all about adding extra localization features for players and modders alike.  
-Languages are now changeable without needing to exit your current world, via a small UI element near the Settings button. (This feature is currently not available in the mod)   
+Languages are now changeable without needing to exit your current world, via a small UI element near the Settings button.  
 Adds the following cultures to the game's language settings and allows for mods to add their own localizations in the same way as they would do with natively supported languages: 
 
 English - United Kingdom (en-GB) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/GB.svg" width="20">  
@@ -21,6 +21,8 @@ Vietnamese (vi-VN) <img src="https://catamphetamine.github.io/country-flag-icons
 Finnish (fi-FI) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/FI.svg" width="20">  
 Romanian (ro-RO) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/RO.svg" width="20">  
 Indonesian (id-ID) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/ID.svg" width="20">  
+
+Developers may also add their own languages to the menu through the API (read [the wiki page](https://github.com/queueAngel/MoreLocales/wiki/Registering-a-New-Culture) for more info)
  
 <small>Wish to add another language to this list? [Make an issue!](https://github.com/Angeltrisi/MoreLocales/issues)</small>  
 <small>Before doing so, note that due to the way the game renders fonts, we are limited to displaying text that is written from left to right.</small>  

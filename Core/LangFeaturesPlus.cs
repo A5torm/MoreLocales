@@ -211,13 +211,15 @@ namespace MoreLocales.Core
         {
             int prefix = context.prefix;
 
+            LocalizedText ogText = Lang.prefix[prefix];
+
             if (prefix == 0 || !ClientSideConfig.Instance.LocalizedPrefixGenderPluralization)
-                return Lang.prefix[prefix];
+                return ogText;
 
             MoreLocalesSets.CachedInflectionData[context.type].Deconstruct(out GrammaticalGender gender, out Pluralization pluralization);
 
             if (!LanguageManager.Instance.ActiveCulture.InflectionDataChangesAdjectiveForm(gender, pluralization))
-                return Lang.prefix[prefix]; // adjective form stays the same
+                return ogText; // adjective form stays the same
 
             bool vanilla = prefix < PrefixID.Count;
             ModPrefix modPrefix = null;
@@ -226,13 +228,20 @@ namespace MoreLocales.Core
                 modPrefix = PrefixLoader.GetPrefix(prefix);
 
             if (!(modPrefix?.Mod ?? MoreLocales.Instance).TryGetInflectionFileKey(out string inflectionFile))
-                return Lang.prefix[prefix];
+                return ogText;
 
             string prefixName = vanilla ? PrefixID.Search.GetName(prefix) : modPrefix.Name;
 
             string genderName = GenderNames[(byte)gender];
 
-            return Language.GetOrRegister($"{inflectionFile}.Prefixes.{prefixName}.{genderName}", () => Lang.prefix[prefix].Value).WithFormatArgs((byte)pluralization);
+            string englishName = vanilla ? LangUtils.GetVanillaLocalizationValues(ogText, GameCulture.DefaultCulture)[0] : string.Empty;
+            string defaultFunc() => (vanilla ? englishName : ogText.Value);
+
+            LocalizedText possiblyFinal = Language.GetOrRegister($"{inflectionFile}.Prefixes.{prefixName}.{genderName}", defaultFunc).WithFormatArgs((byte)pluralization);
+
+            if (possiblyFinal.Value == englishName)
+                return ogText;
+            return possiblyFinal;
         }
         internal static void EnsureKeysForPrefixExist(int prefix, bool addComments)
         {

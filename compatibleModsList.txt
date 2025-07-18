@@ -1,4 +1,4 @@
-﻿This is a list of mods that are known to be compatible with Localization Plus.
+﻿This is a (manually written) list of mods that are known to be compatible with Localization Plus.
 
 • Terramon Mod (adds ko-KR localization)
 • Spirit Mod Vietnamese (adds vi-VN localization) (only half-compatible; it doesn't use the mod's language system, but relies on the mod's fonts for proper display)

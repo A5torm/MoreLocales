@@ -1,7 +1,7 @@
 en-US, 1121/1121, 100%, missing 0
 de-DE, 50/1121, 4%, missing 1071
 fr-FR, 0/1121, 0%, missing 1121
-es-ES, 49/1121, 4%, missing 1072
+es-ES, 55/1121, 5%, missing 1066
 ru-RU, 50/1121, 4%, missing 1071
 zh-Hans, 64/1121, 6%, missing 1057
 en-GB, 287/1121, 26%, missing 834

@@ -55,17 +55,17 @@ InflectionData: {
 
 	Items: {
 		# DisplayName: Iron Pickaxe | Eisenspitzhacke | Piccone di ferro | Pioche en fer | Pico de hierro | Железная кирка | 铁镐 | Picareta de Ferro | Żelazny kilof
-		// IronPickaxe: /
+		IronPickaxe: M/S
 		# DisplayName: Iron Broadsword | Eisenbreitschwert | Spadone di ferro | Épée longue en fer | Espada larga de hierro | Железный меч | 铁阔剑 | Espada Larga de Ferro | Żelazny pałasz
-		// IronBroadsword: /
+		IronBroadsword: F/S
 		# DisplayName: Iron Shortsword | Eisenkurzschwert | Spada corta di ferro | Épée courte en fer | Espada corta de hierro | Железный короткий меч | 铁短剑 | Espada Curta de Ferro | Żelazny krótki miecz
-		// IronShortsword: /
+		IronShortsword: F/S
 		# DisplayName: Iron Hammer | Eisenhammer | Martello di ferro | Marteau en fer | Martillo de hierro | Железный молот | 铁锤 | Martelo de Ferro | Żelazny młot
-		// IronHammer: /
+		IronHammer: M/S
 		# DisplayName: Iron Axe | Eisenaxt | Ascia di ferro | Hache en fer | Hacha de hierro | Железный топор | 铁斧 | Machado de Ferro | Żelazna siekiera
-		// IronAxe: /
+		IronAxe: F/S
 		# DisplayName: Copper Watch | Kupferuhr | Orologio di rame | Montre en cuivre | Reloj de cobre | Медные часы | 铜表 | Relógio de Cobre | Miedziany zegarek
-		// CopperWatch: /
+		CopperWatch: M/S
 		# DisplayName: Silver Watch | Silberuhr | Orologio d'argento | Montre en argent | Reloj de plata | Серебряные часы | 银表 | Relógio de Prata | Srebrny zegarek
 		// SilverWatch: /
 		# DisplayName: Gold Watch | Golduhr | Orologio d'oro | Montre en or | Reloj de oro | Золотые часы | 金表 | Relógio de Ouro | Złoty zegarek
@@ -1689,86 +1689,86 @@ InflectionData: {
 	Prefixes: {
 		# Large | (Groß) | (Grande) | (Grand) | (Grande) | Большой | 大 | (Grande) | Duży
 		Large: {
-			// Masculine: Large
-			// Feminine: Large
-			// Neuter: Large
+			Masculine: {^0:(Grande);(Grandes)}
+			Feminine: {^0:(Grande);(Grandes)}
+			Neuter: {^0:(Grande;(Grandes)}
 		}
 
 		# Massive | (Riesig) | (Massiccio) | imposant(e) | (Enorme) | Массивный | 巨大 | (Enorme) | Solidny
 		Massive: {
-			// Masculine: Massive
-			// Feminine: Massive
-			// Neuter: Massive
+			Masculine: {^0:(Enorme);(Enormes)}
+			Feminine: {^0:(Enorme);(Enormes)}
+			Neuter: {^0:(Enorme);(Enormes)}
 		}
 
 		# Dangerous | (Gefährlich) | (Pericoloso) | (Dangereux) | (Peligroso) | Опасный | 危险 | (Perigoso) | Niebezpieczny
 		Dangerous: {
-			// Masculine: Dangerous
-			// Feminine: Dangerous
-			// Neuter: Dangerous
+			Masculine: {^0:Peligroso;Peligrosos}
+			Feminine: {^0:Peligrosa;Peligrosas}
+			Neuter: {^0:Peligroso;Peligrosos}
 		}
 
 		# Savage | (Barbarisch) | (Selvaggio) | (Sauvage) | (Salvaje) | Дикий | 凶残 | (Bárbaro) | Brutalny
 		Savage: {
-			// Masculine: Savage
-			// Feminine: Savage
-			// Neuter: Savage
+			Masculine: {^0:Enorme;Enormes}
+			Feminine: {^0:Enorme;Enormes}
+			Neuter: {^0:Enorme;Enormes}
 		}
 
 		# Sharp | (Scharf) | (Appuntito) | (Aiguisé) | (Afilado) | Острый | 锋利 | (Afiado) | Ostry
 		Sharp: {
-			// Masculine: Sharp
-			// Feminine: Sharp
-			// Neuter: Sharp
+			Masculine: {^0:Afilado;Afilados}
+			Feminine: {^0:Afilada;Afiladas}
+			Neuter: {^0:Afilado;Afilados}
 		}
 
 		# Pointy | (Spitz) | (Tagliente) | (Pointu) | (Puntiagudo) | Заостренный | 尖锐 | (Pontudo) | Szpiczasty
 		Pointy: {
-			// Masculine: Pointy
-			// Feminine: Pointy
-			// Neuter: Pointy
+			Masculine: {^0:Puntiagudo;Puntiagudos}
+			Feminine: {^0:Puntiaguda;Puntiagudas}
+			Neuter: {^0:Puntiagudo;Puntiagudos}
 		}
 
 		# Tiny | (Winzig) | (Minuto) | (Minuscule) | (Diminuto) | Маленький | 微小 | (Minúsculo) | Drobny
 		Tiny: {
-			// Masculine: Tiny
-			// Feminine: Tiny
-			// Neuter: Tiny
+			Masculine: {^0:Diminuto;Diminutos}
+			Feminine: {^0:Diminuta;Diminutas}
+			Neuter: {^0:Diminuto;Diminutos}
 		}
 
 		# Terrible | (Schrecklich) | (Terribile) | (Terrible) | (Malo) | Ужасный | 可怕 | (Terrível) | Straszliwy
 		Terrible: {
-			// Masculine: Terrible
-			// Feminine: Terrible
-			// Neuter: Terrible
+			Masculine: {^0:Terrible;Terribles}
+			Feminine: {^0:Terrible;Terribles}
+			Neuter: {^0:Terrible;Terribles}
 		}
 
 		# Small | (Klein) | (Piccolo) | (Petit) | (Pequeño) | Маленький | 小 | (Pequeno) | Mały
 		Small: {
-			// Masculine: Small
-			// Feminine: Small
-			// Neuter: Small
+			Masculine: {^0:Pequeño;Pequeños}
+			Feminine: {^0:Pequeña;Pequeñas}
+			Neuter: {^0:Pequeño;Pequeños}
 		}
 
 		# Dull | (Stumpf) | (Opaco) | (Terne) | (Romo) | Тупой | 钝 | (Fraco) | Tępy
 		Dull: {
-			// Masculine: Dull
-			// Feminine: Dull
-			// Neuter: Dull
+			Masculine: {^0:Romo;Romos}
+			Feminine: {^0:Roma;Romas}
+			Neuter: {^0:Romo;Romos}
 		}
 
 		# Unhappy | (Unglücklich) | (Infelice) | (Misérable) | (Infeliz) | Невезучий | 倒霉 | (Infeliz) | Nieszczęśliwy
 		Unhappy: {
-			// Masculine: Unhappy
-			// Feminine: Unhappy
-			// Neuter: Unhappy
+			Masculine: {^0:Infeliz;Infelices}
+			Feminine: {^0:Infeliz;Infelices}
+			Neuter: {^0:Infeliz;Infelices}
 		}
 
 		# Bulky | (Sperrig) | (Ingombrante) | (Mastoc) | (Voluminoso) | Массивный | 笨重 | (Volumoso) | Krzepki
 		Bulky: {
-			// Masculine: Bulky
-			// Feminine: Bulky
-			// Neuter: Bulky
+			Masculine: {^0:Voluminoso;Voluminosos}
+			Feminine:{^0:Voluminosa;Voluminosas}
+			Neuter: {^0:Voluminoso;Voluminosos}
 		}
 
 		# Shameful | (Beschämend) | (Vergognoso) | (Coupable) | (Deshonroso) | Позорный | 可耻 | (Vergonhoso) | Haniebny
