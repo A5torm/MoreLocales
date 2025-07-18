@@ -135,6 +135,9 @@ namespace MoreLocales.Common
             float yOffset = ((int)(((height - heightOfVisibleRows + buttonPaddingY) * 0.5f) * 0.5f) * 2); // (height - heightOfVisibleRows + buttonPaddingY) * 0.5f;
 
             int itemsPerPage = Math.Max(columns * rows, 1);
+            // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA I JUSYT REALIZED THIS WON'T WPORK WITH INACTIVE CULTURE. AANIOSDNIOANIOASNIONIOASDNDASNIOSDA
+            // do as patch fix if ppl complains
+            // note: maxpage is also the amount of pages there are total
             int maxPage = ((cultures.Length - 1) + itemsPerPage - 1) / itemsPerPage;
 
             if (PageChanged(out int direction))
@@ -162,6 +165,7 @@ namespace MoreLocales.Common
                 }
             }
 
+            // needed if user resizes the window
             if (currentPage >= maxPage)
                 currentPage = maxPage - 1;
 
@@ -184,10 +188,32 @@ namespace MoreLocales.Common
 
             var span = CollectionsMarshal.AsSpan(indices);
 
-            // passes start. we can use this pass to both set up the draw position cache, and to draw the panel
-            // this pass needs to be done with a for loop, as 'i' gives us the info we need to get the final position of the button
+            int itemsRemaining = (maxPage * itemsPerPage) - span.Length;
+
+            // passes start.
+
+            (int column, int row, Vector2 topLeftNoOffset, Vector2 topLeftDraw) GetPlacement(int i)
+            {
+                int c = i % (columns) + (i / itemsPerPage * columns); // the design is very human
+                int r = (i / columns) % rows;
+                Vector2 tlNOff = new((c * (buttonWidth + buttonPaddingX)), (r * (buttonHeight + buttonPaddingY)));
+                Vector2 tlDraw = new(tlNOff.X + xOffset, tlNOff.Y + yOffset);
+                return (c, r, tlNOff, tlDraw);
+            }
+
+            // pass 0.5: draw empty spots
 
             Rectangle frame = new(0, 0, buttonWidth, buttonHeight + 2);
+
+            for (int i = span.Length; i < span.Length + itemsRemaining; i++)
+            {
+                (_, _, _, Vector2 topLeftDraw) = GetPlacement(i);
+
+                sb.Draw(buttonDrawTex, topLeftDraw, frame, Color.Black with { A = 64 });
+            }
+
+            // we can use this pass to both set up the draw position cache, and to draw the panel
+            // this pass needs to be done with a for loop, as 'i' gives us the info we need to get the final position of the button
 
             for (int i = 0; i < span.Length; i++)
             {
@@ -199,13 +225,9 @@ namespace MoreLocales.Common
                 // seventh  eighth  seventeenth eighteenth
                 // ninth    tenth   nineteenth  twentieth
 
-                int column = i % (columns) + (i / itemsPerPage * columns); // the design is very human
-                int row = (i / columns) % rows;
+                (int column, int row, Vector2 topLeftNoOffset, Vector2 topLeftDraw) = GetPlacement(i);
 
                 int index = span[i]; // index of the morelocalesculture in morelocalesAPI.extraculturesv2
-
-                Vector2 topLeftNoOffset = new((column * (buttonWidth + buttonPaddingX)), (row * (buttonHeight + buttonPaddingY)));
-                Vector2 topLeftDraw = new(topLeftNoOffset.X + xOffset, topLeftNoOffset.Y + yOffset);
 
                 ref ButtonDrawInfo info = ref _drawInfoCache[index];
                 info.drawPositionCache = topLeftDraw;
@@ -461,9 +483,9 @@ namespace MoreLocales.Common
             }
             else
             {
-                if (JustPressed(Keys.E))
+                if (JustPressed(Keys.Right))
                     direction++;
-                if (JustPressed(Keys.Q))
+                if (JustPressed(Keys.Left))
                     direction--;
             }
 
