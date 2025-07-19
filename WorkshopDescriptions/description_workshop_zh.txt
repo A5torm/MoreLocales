@@ -1,0 +1,29 @@
+[DESCRIPTION OUTDATED]
+
+[url=https://discord.gg/4PDwPnz9Jm]Discord服务器[/url] | [url=https://github.com/Angeltrisi/MoreLocales]GitHub (源码)[/url]
+
+[h1]本地化+[/h1]
+
+你是否曾经因为Terraria默认提供的语言种类太少而感到失望？
+本地化+能满足你！
+
+[h2]功能[/h2]
+
+• 对18种新语言的支持(完整清单[url=https://github.com/Angeltrisi/MoreLocales/blob/master/README.md]请点击此处[/url])
+
+• 全新的语言选择菜单
+
+[i]如果你喜欢该Mod的话请！[/i]
+
+[img]https://i.imgur.com/ki1CPZe.gif[/img]
+
+[hr][/hr]
+[b]注意[/b]
+本Mod目前包括少量的英式英语、泰语和印尼语的内容. 
+如果你愿意加入并做一些贡献可以加入我们的Discord服务器或者通过GitHub直接进行贡献
+
+如果你只是在看到这个Mod发布后的一个用户，那么这个Mod只改变了你的语言选择界面，除非其它Mod有添加对应的新语言的本地化文件，否则不会改变任何东西
+我们正在将泰国本地化团队的文本添加进来，但是这需要一定时间
+
+[quote=tModLoader]
+开发者qAngel[/quote]

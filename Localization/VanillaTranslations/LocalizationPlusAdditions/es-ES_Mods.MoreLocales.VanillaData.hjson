@@ -67,311 +67,311 @@ InflectionData: {
 		# DisplayName: Copper Watch | Kupferuhr | Orologio di rame | Montre en cuivre | Reloj de cobre | Медные часы | 铜表 | Relógio de Cobre | Miedziany zegarek
 		CopperWatch: M/S
 		# DisplayName: Silver Watch | Silberuhr | Orologio d'argento | Montre en argent | Reloj de plata | Серебряные часы | 银表 | Relógio de Prata | Srebrny zegarek
-		// SilverWatch: /
+		SilverWatch: M/S
 		# DisplayName: Gold Watch | Golduhr | Orologio d'oro | Montre en or | Reloj de oro | Золотые часы | 金表 | Relógio de Ouro | Złoty zegarek
-		// GoldWatch: /
+		GoldWatch: M/S
 		# DisplayName: Depth Meter | Tiefenmesser | Misuratore di profondità | Altimètre | Medidor de profundidad | Глубиномер | 深度计 | Medidor de Profundidade | Głębinomierz
-		// DepthMeter: /
+		DepthMeter: M/S
 		# DisplayName: Wooden Sword | Holzschwert | Spada di legno | Épée en bois | Espada de madera | Деревянный меч | 木剑 | Espada de Madeira | Drewniany miecz
-		// WoodenSword: /
+		WoodenSword: F/S
 		# DisplayName: Wooden Bow | Holzbogen | Arco di legno | Arc en bois | Arco de madera | Деревянный лук | 木弓 | Arco de Madeira | Drewniany łuk
-		// WoodenBow: /
+		WoodenBow: M/S
 		# DisplayName: Demon Bow | Dämonenbogen | Arco demoniaco | Arc démoniaque | Arco demoníaco | Демонический лук | 恶魔弓 | Arco Demoníaco | Demoniczny łuk
-		// DemonBow: /
+		DemonBow: M/S
 		# DisplayName: War Axe of the Night | Kriegsaxt der Nacht | Ascia da guerra della notte | Hache de guerre de la nuit | Hacha de la noche | Топор ночи | 暗夜战斧 | Machado de Guerra da Noite | Topór wojenny nocy
-		// WarAxeoftheNight: /
+		WarAxeoftheNight: F/S
 		# DisplayName: Light's Bane | Schrecken des Tages | Flagello di luce | Fléau de la lumière | Azote de la luz | Бич света | 魔光剑 | Destruidor da Luz | Zguba światła
-		// LightsBane: /
+		LightsBane: M/S
 		# DisplayName: Band of Regeneration | Wiederherstellungsband | Benda di rigenerazione | Anneau de régénération | Banda de regeneración | Браслет регенерации | 再生手环 | Pulseira da Regeneração | Opaska regeneracji
-		// BandofRegeneration: /
+		BandofRegeneration: F/S
 		# DisplayName: Cloud in a Bottle | Wolke in einer Flasche | Nuvola in bottiglia | Nuage en bouteille | Nube embotellada | Облако в бутылке | 云朵瓶 | Nuvem na Garrafa | Chmura w butelce
-		// CloudinaBottle: /
+		CloudinaBottle: F/S
 		# DisplayName: Hermes Boots | Hermes-Stiefel | Stivali di Ermes | Bottes d'Hermès | Botas de Hermes | Сапоги Гермеса | 赫尔墨斯靴 | Botas de Hermes | Buty Hermesa
-		// HermesBoots: /
+		HermesBoots: F/P
 		# DisplayName: Enchanted Boomerang | Verzauberter Bumerang | Boomerang incantato | Boomerang envoûté | Bumerán encantado | Зачарованный бумеранг | 附魔回旋镖 | Bumerangue Encantado | Zaczarowany bumerang
-		// EnchantedBoomerang: /
+		EnchantedBoomerang: M/S
 		# DisplayName: Vilethorn | Ekeldorn | Spina vile | Vilépine | Espina vil | Злая колючка | 魔刺 | Espinho Infame | Plugawy cierń
-		// Vilethorn: /
+		Vilethorn: F/S
 		# DisplayName: Starfury | Sternenwut | Furia stellare | Furie étoilée | Furia de estrellas | Звездная ярость | 星怒 | Fúria das Estrelas | Gwiezdna furia
-		// Starfury: /
+		Starfury: F/S
 		# DisplayName: Flintlock Pistol | Steinschlosspistole | Pistola a pietra focaia | Pistolet à silex | Pistola de pedernal | Кремневый пистолет | 燧发枪 | Pistola Antiga | Pistolet skałkowy
-		// FlintlockPistol: /
+		FlintlockPistol: F/S
 		# DisplayName: Musket | Muskete | Moschetto | Mousquet | Mosquete | Мушкет | 火枪 | Mosquete | Muszkiet
-		// Musket: /
+		Musket: M/S
 		# DisplayName: Minishark | Minihai | Minishark | Minirequin | Minitiburón | Мини-акула | 迷你鲨 | Mini-tubarão | Minirekin
-		// Minishark: /
+		Minishark: M/S
 		# DisplayName: Iron Bow | Eisenbogen | Arco di ferro | Arc de fer | Arco de hierro | Железный лук | 铁弓 | Arco de Ferro | Żelazny łuk
-		// IronBow: /
+		IronBow: M/S
 		# DisplayName: Nightmare Pickaxe | Albtraum-Spitzhacke | Piccone dell'incubo | Pioche de cauchemar | Pico de pesadilla | Кошмарная кирка | 梦魇镐 | Picareta de Pesadelos | Koszmarny kilof
-		// NightmarePickaxe: /
+		NightmarePickaxe: M/S
 		# DisplayName: The Breaker | Zerschmetterer | Il Distruttore | Le Casseur | La Despedazadora | Разрушитель | 魔锤 | O Batedor | Kruszyciel
-		// TheBreaker: /
+		TheBreaker: F/S
 		# DisplayName: Band of Starpower | Sternenkraftband | Benda della forza stellare | Brassard de puissance étoilée | Banda de polvo de estrellas | Браслет звездной силы | 星力手环 | Pulseira do Poder das Estrelas | Opaska gwiezdnej mocy
-		// BandofStarpower: /
+		BandofStarpower: F/S
 		# DisplayName: Flower of Fire | Feuerblume | Fiore di fuoco | Fleur de feu | Flor de fuego | Огненный цветок | 火之花 | Flor de Fogo | Kwiat ognia
-		// FlowerofFire: /
+		FlowerofFire: F/S
 		# DisplayName: Magic Missile | Magische Rakete | Missile magico | Missile magique | Proyectil mágico | Волшебная ракета | 魔法导弹 | Míssil Mágico | Magiczny pocisk
-		// MagicMissile: /
+		MagicMissile: M/S
 		# DisplayName: Flamarang | Flammarang | Flamarang | Flammerang | Bumerán en llamas | Огнеранг | 烈焰回旋镖 | Bumerangue Flamejante | Ogniorang
-		// Flamarang: /
+		Flamarang: M/S
 		# DisplayName: Molten Fury | Geschmolzene Wut | Furia fusa | Furie en fusion | Furia fundida | Литая ярость | 熔火之怒 | Fúria Derretida | Roztopiona furia
-		// MoltenFury: /
+		MoltenFury: F/S
 		# DisplayName: Volcano | Vulkan | Vulcano | Volcan | Volcán | Вулкан | 火山 | Vulcão | Wulkan
-		// FieryGreatsword: /
+		FieryGreatsword: M/S
 		# DisplayName: Molten Pickaxe | Geschmolzene Spitzhacke | Piccone fuso | Pioche en fusion | Pico fundido | Литая кирка | 熔岩镐 | Picareta Derretida | Roztopiony kilof
-		// MoltenPickaxe: /
+		MoltenPickaxe: M/S
 		# DisplayName: Space Gun | Weltraumpistole | Pistola spaziale | Pistolet spatial | Pistola espacial | Космическая пушка | 太空枪 | Arma Espacial | Pistolet kosmiczny
-		// SpaceGun: /
+		SpaceGun: F/S
 		# DisplayName: Rocket Boots | Raketenstiefel | Stivali razzo | Bottes à fusée | Botas cohete | Реактивные сапоги | 火箭靴 | Botas Foguete | Buty rakietowe
-		// RocketBoots: /
+		RocketBoots: F/P
 		# DisplayName: Muramasa | Muramasa | Muramasa | Muramasa | Muramasa | Мурамаса | 村正大刀 | Muramasa | Muramasa
-		// Muramasa: /
+		Muramasa: F/S
 		# DisplayName: Cobalt Shield | Kobaltschild | Scudo di cobalto | Bouclier en cobalt | Escudo de cobalto | Кобальтовый щит | 钴护盾 | Escudo de Cobalto | Kobaltowa tarcza
-		// CobaltShield: /
+		CobaltShield: M/S
 		# DisplayName: Aqua Scepter | Aqua-Zepter | Scettro d'acqua | Sceptre aquatique | Cetro de agua | Водный скипетр | 海蓝权杖 | Cetro d'água | Wodne berło
-		// AquaScepter: /
+		AquaScepter: M/S
 		# DisplayName: Lucky Horseshoe | Glückshufeisen | Ferro di cavallo fortunato | Fer à cheval porte-bonheur | Herradura de la suerte | Счастливая подкова | 幸运马掌 | Ferradura da Sorte | Szczęśliwa podkowa
-		// LuckyHorseshoe: /
+		LuckyHorseshoe: F/S
 		# DisplayName: Shiny Red Balloon | Leuchtend roter Ballon | Palloncino rosso brillante | Ballon rouge brillant | Globo rojo brillante | Блестящий красный шарик | 闪亮红气球 | Balão Vermelho Brilhante | Błyszczący czerwony balon
-		// ShinyRedBalloon: /
+		ShinyRedBalloon: M/S
 		# DisplayName: Harpoon | Harpune | Arpione | Harpon | Arpón | Гарпун | 鱼叉枪 | Arpão | Harpun
-		// Harpoon: /
+		Harpoon: M/S
 		# DisplayName: Ball O' Hurt | Schmerzball | Palla del dolore | Boule de douleur | Flagelo con bola | Шар боли | 链球 | Bola de Dor | Kula bólu
-		// BallOHurt: /
+		BallOHurt: M/S
 		# DisplayName: Blue Moon | Blauer Mond | Luna blu | Lune bleue | Luna azul | Синяя луна | 蓝月 | Lua Azul | Niebieski księżyc
-		// BlueMoon: /
+		BlueMoon: F/S
 		# DisplayName: Handgun | Pistole | Pistola | Pistolet | Pistola | Пистолет | 手枪 | Arma | Pistolet jednoręczny
-		// Handgun: /
+		Handgun: F/S
 		# DisplayName: Water Bolt | Wasserbolzen | Dardo d'acqua | Sort de l'eau | Proyectil de agua | Водяной выстрел | 水矢 | Raio d'água | Pocisk wodny
-		// WaterBolt: /
+		WaterBolt: M/S
 		# DisplayName: Breathing Reed | Schilfrohr | Canna per la respirazione | Roseau de respiration | Caña para respirar | Дыхательная трубка | 芦苇呼吸管 | Snorkel de Junco | Trzcina do oddychania
-		// BreathingReed: /
+		BreathingReed: F/S
 		# DisplayName: Flipper | Flosse | Pinna | Palmes | Aletas | Ласты | 脚蹼 | Nadadeira | Płetwa
-		// Flipper: /
+		Flipper: F/P
 		# DisplayName: Blade of Grass | Grasklinge | Spada di erba | Lame d'herbe | Espada de hierba | Травяной клинок | 草剑 | Folha de Grama | Źdźbło trawy
-		// BladeofGrass: /
+		BladeofGrass: F/S
 		# DisplayName: Thorn Chakram | Dornen-Chakram | Artiglio di Chakram | Chakram épineux | Chakram de espinas | Колючий чакрам | 荆棘旋刃 | Chakram com Espinhos | Kolczy czakram
-		// ThornChakram: /
+		ThornChakram: M/S
 		# DisplayName: Obsidian Skull | Obsidianschädel | Teschio di ossidiana | Crâne en obsidienne | Calavera de obsidiana | Обсидиановый череп | 黑曜石骷髅头 | Caveira de Obsidiana | Obsydianowa czaszka
-		// ObsidianSkull: /
+		ObsidianSkull: F/S
 		# DisplayName: Wooden Hammer | Holzhammer | Martello di legno | Marteau en bois | Martillo de madera | Деревянный молот | 木锤 | Martelo de Madeira | Drewniany młotek
-		// WoodenHammer: /
+		WoodenHammer: M/S
 		# DisplayName: Star Cannon | Sternenkanone | Cannone stellare | Canon à étoiles | Cañón de estrellas | Звездная пушка | 星星炮 | Canhão de Estrelas | Gwiezdna armata
-		// StarCannon: /
+		StarCannon: M/S
 		# DisplayName: Blue Phaseblade | Blaue Laserklinge | Spada laser blu | Sabre laser bleu | Espada de luz azul | Синий лазерный меч | 蓝陨石光剑 | Espada de Luz Azul | Niebieski miecz świetny
-		// BluePhaseblade: /
+		BluePhaseblade: F/S
 		# DisplayName: Red Phaseblade | Rote Laserklinge | Spada laser rossa | Sabre laser rouge | Espada de luz roja | Красный лазерный меч | 红陨石光剑 | Espada de Luz Vermelha | Czerwony miecz świetny
-		// RedPhaseblade: /
+		RedPhaseblade: F/S
 		# DisplayName: Green Phaseblade | Grüne Laserklinge | Spada laser verde | Sabre laser vert | Espada de luz verde | Зеленый лазерный меч | 绿陨石光剑 | Espada de Luz Verde | Zielony miecz świetny
-		// GreenPhaseblade: /
+		GreenPhaseblade: F/S
 		# DisplayName: Purple Phaseblade | Lila Laserklinge | Spada laser viola | Sabre laser violet | Espada de luz morada | Фиолетовый лазерный меч | 紫陨石光剑 | Espada de Luz Roxa | Fioletowy miecz świetny
-		// PurplePhaseblade: /
+		PurplePhaseblade: F/S
 		# DisplayName: White Phaseblade | Weiße Laserklinge | Spada laser bianca | Sabre laser blanc | Espada de luz blanca | Белый лазерный меч | 白陨石光剑 | Espada de Luz Branca | Biały miecz świetny
-		// WhitePhaseblade: /
+		WhitePhaseblade: F/S
 		# DisplayName: Yellow Phaseblade | Gelbe Laserklinge | Spada laser gialla | Sabre laser jaune | Espada de luz amarilla | Желтый лазерный меч | 黄陨石光剑 | Espada de Luz Amarela | Żółty miecz świetny
-		// YellowPhaseblade: /
+		YellowPhaseblade: F/S
 		# DisplayName: Meteor Hamaxe | Meteor-Hamaxt | Maglio di meteorite | Martache de météore | Hacha-martillo de meteorito | Метеоритовый молотопор | 流星锤斧 | Martelo-machado de Meteoro | Młotopór z meteoru
-		// MeteorHamaxe: /
+		MeteorHamaxe: F/S
 		# DisplayName: Feral Claws | Wilde Klauen | Artigli bestiali | Griffes sauvages | Garras de bestia | Звериные когти | 猛爪手套 | Garras Ferozes | Dzikie szpony
-		// FeralClaws: /
+		FeralClaws: F/P
 		# DisplayName: Anklet of the Wind | Fusskette des Windes | Cavigliera del vento | Bracelet du vent | Tobillera de viento | Браслет ветра | 疾风脚镯 | Tornozeleira do Vento | Obrączka wiatru
-		// AnkletoftheWind: /
+		AnkletoftheWind: F/S
 		# DisplayName: Staff of Regrowth | Stab des Nachwachsens | Bastone della ricrescita | Sceptre de repousse | Báculo de regeneración | Посох выращивания | 再生法杖 | Cajado do Renascimento | Kostur porostu
-		// StaffofRegrowth: /
+		StaffofRegrowth: M/S
 		# DisplayName: Shackle | Fessel | Grillo | Menotte | Argolla | Кандалы | 脚镣 | Algema | Kajdany
-		// Shackle: /
+		Shackle: F/S
 		# DisplayName: Molten Hamaxe | Geschmolzene Hamaxt | Maglio fuso | Martache en fusion | Hacha-martillo fundida | Литой молотопор | 熔岩锤斧 | Martelo-machado Derretido | Roztopiony młotopór
-		// MoltenHamaxe: /
+		MoltenHamaxe: F/S
 		# DisplayName: Flamelash | Flammenpeitsche | Lanciatore di fiamma | Flammissile | Látigo de llamas | Огнеплеть | 烈焰火鞭 | Chicote Flamejante | Ognik
-		// Flamelash: /
+		Flamelash: M/S
 		# DisplayName: Phoenix Blaster | Phoenix-Blaster | Blaster della fenice | Pistolet Phénix | Desintegrador Fénix | Бластер феникса | 凤凰爆破枪 | Pistola da Fênix | Feniksowy blaster
-		// PhoenixBlaster: /
+		PhoenixBlaster: M/S
 		# DisplayName: Sunfury | Sonnenzorn | Furia del sole | Furie solaire | Furia solar | Солнечная ярость | 阳炎之怒 | Fúria do Sol | Słoneczna furia
-		// Sunfury: /
+		Sunfury: F/S
 		# DisplayName: Nature's Gift | Geschenk der Natur | Dono della natura | Don de la nature | Don de la naturaleza | Дар природы | 大自然的恩赐 | Presente da Natureza | Prezent natury
-		// NaturesGift: /
+		NaturesGift: M/S
 		# DisplayName: Sandgun | Sandgewehr | Pistola di sabbia | Sableuse | Pistola de arena | Песчаная пушка | 沙枪 | Arma de Areia | Piaskowy pistolet
-		// Sandgun: /
+		Sandgun: F/S
 		# DisplayName: Demon Scythe | Dämonensense | Falce demoniaca | Faux démoniaque | Guadaña demoníaca | Демоническая коса | 恶魔锄刀 | Gadanha Demoníaca | Demoniczna kosa
-		// DemonScythe: /
+		DemonScythe: F/S
 		# DisplayName: Night's Edge | Klinge der Nacht | Confine della notte | Épée des ténèbres | Filo de la noche | Грань ночи | 永夜刃 | Lâmina da Noite | Nocne ostrze
-		// NightsEdge: /
+		NightsEdge: M/S
 		# DisplayName: Dark Lance | Finstere Lanze | Lancia oscura | Lance du mal | Lanza de la oscuridad | Темное копье | 暗黑长戟 | Lança das Trevas | Mroczna lanca
-		// DarkLance: /
+		DarkLance: F/S
 		# DisplayName: Trident | Dreizack | Tridente | Trident | Tridente | Трезубец | 三叉戟 | Tridente | Trójząb
-		// Trident: /
+		Trident: M/S
 		# DisplayName: Spear | Speer | Lancia | Lance | Lanza | Копье | 长矛 | Lança | Włócznia
-		// Spear: /
+		Spear: F/S
 		# DisplayName: Blowpipe | Blasrohr | Cerbottana | Sarbacane | Cerbatana | Духовая трубка | 吹管 | Zarabatana | Dmuchawka
-		// Blowpipe: /
+		Blowpipe: F/S
 		# DisplayName: Wooden Boomerang | Holzbumerang | Boomerang di legno | Boomerang en bois | Bumerán de madera | Деревянный бумеранг | 木制回旋镖 | Bumerangue de Madeira | Drewniany bumerang
-		// WoodenBoomerang: /
+		WoodenBoomerang: M/S
 		# DisplayName: Aglet | Schnürsenkelkappe | Aghetto | Ferret | Herrete | Аксельбант | 金属带扣 | Aglet | Sznurówka
-		// Aglet: /
+		Aglet: M/S
 		# DisplayName: Pwnhammer | Pwnhammer | Martellone | Supermarteau | Gran martillo | Святой молот | 神锤 | Pwnhammer | Młot-demolka
-		// Pwnhammer: /
+		Pwnhammer: M/S
 		# DisplayName: Excalibur | Excalibur | Excalibur | Excalibur | Excalibur | Экскалибур | 断钢剑 | Excalibur | Excalibur
-		// Excalibur: /
+		Excalibur: F/S
 		# DisplayName: Cobalt Chainsaw | Kobaltkettensäge | Motosega di cobalto | Tronçonneuse en cobalt | Motosierra de cobalto | Кобальтовая бензопила | 钴链锯 | Serra-elétrica de Cobalto | Kobaltowa piła łańcuchowa
-		// CobaltChainsaw: /
+		CobaltChainsaw: F/S
 		# DisplayName: Mythril Chainsaw | Mithrilkettensäge | Motosega di mitrilio | Tronçonneuse en mithril | Motosierra de mithril | Мифриловая бензопила | 秘银链锯 | Serra-elétrica de Mithril | Mithrilowa piła łańcuchowa
-		// MythrilChainsaw: /
+		MythrilChainsaw: F/S
 		# DisplayName: Cobalt Drill | Kobaltbohrer | Perforatrice di cobalto | Foreuse en cobalt | Taladro de cobalto | Кобальтовый бур | 钴钻头 | Furadeira de Cobalto | Kobaltowy świder
-		// CobaltDrill: /
+		CobaltDrill: M/S
 		# DisplayName: Mythril Drill | Mithrilbohrer | Perforatrice di mitrilio | Foreuse en mithril | Taladro de mithril | Мифриловый бур | 秘银钻头 | Furadeira de Mithril | Mithrilowy świder
-		// MythrilDrill: /
+		MythrilDrill: M/S
 		# DisplayName: Adamantite Chainsaw | Adamantkettensäge | Motosega di adamantio | Tronçonneuse en adamantite | Motosierra de adamantita | Адамантитовая бензопила | 精金链锯 | Serra-elétrica de Adamantina | Adamantytowa piła łańcuchowa
-		// AdamantiteChainsaw: /
+		AdamantiteChainsaw: F/S
 		# DisplayName: Adamantite Drill | Adamantbohrer | Perforatrice di adamantio | Foreuse en adamantite | Taladro de adamantita | Адамантитовый бур | 精金钻头 | Furadeira de Adamantina | Adamantytowy świder
-		// AdamantiteDrill: /
+		AdamantiteDrill: M/S
 		# DisplayName: Dao of Pow | Dao von Pow | Frustona | Fouet taoïste | Flagelo Taoísta | Дао Пуха | 太极连枷 | Poder de Dao | Dao mocy
-		// DaoofPow: /
+		DaoofPow: M/S
 		# DisplayName: Mythril Halberd | Mithrilhellebarde | Alabarda di mitrilio | Hallebarde en mithril | Alabarda de mithril | Мифриловая алебарда | 秘银长戟 | Alabarda de Mithril | Mithrilowa halabarda
-		// MythrilHalberd: /
+		MythrilHalberd: F/S
 		# DisplayName: Compass | Kompass | Bussola | Boussole | Brújula | Компас | 罗盘 | Bússola | Kompas
-		// Compass: /
+		Compass: F/S
 		# DisplayName: Diving Gear | Tauchausrüstung | Muta da sub | Matériel de plongée | Equipo de buceo | Снаряжение для дайвинга | 潜水装备 | Equipamento de Mergulho | Sprzęt do nurkowania
-		// DivingGear: /
+		DivingGear: M/S
 		# DisplayName: GPS | GPS | GPS | GPS | GPS | GPS | 全球定位系统 | GPS | GPS
-		// GPS: /
+		GPS: M/S
 		# DisplayName: Obsidian Horseshoe | Obsidian-Hufeisen | Ferro di cavallo di ossidiana | Fer à cheval en obsidienne | Herradura de obsidiana | Обсидиановая подкова | 黑曜石马掌 | Ferradura de Obsidiana | Obsydianowa podkowa
-		// ObsidianHorseshoe: /
+		ObsidianHorseshoe: F/S
 		# DisplayName: Obsidian Shield | Obsidianschild | Scudo di ossidiana | Bouclier en obsidienne | Escudo de obsidiana | Обсидиановый щит | 黑曜石护盾 | Escudo de Obsidiana | Obsydianowa tarcza
-		// ObsidianShield: /
+		ObsidianShield: M/S
 		# DisplayName: Cloud in a Balloon | Wolke in einem Ballon | Nuvola in un palloncino | Nuage dans un ballon | Nube en globo | Облако в шарике | 云朵气球 | Nuvem no Balão | Chmura w balonie
-		// CloudinaBalloon: /
+		CloudinaBalloon: F/S
 		# DisplayName: Spectre Boots | Geisterstiefel | Stivali da fantasma | Bottes spectrales | Botas de espectro | Спектральные ботинки | 幽灵靴 | Botas Espectrais | Widmowe buty
-		// SpectreBoots: /
+		SpectreBoots: F/P
 		# DisplayName: Adamantite Glaive | Adamant-Glefe | Alabarda di adamantio | Glaive en adamantite | Guja de adamantita | Адамантитовая глефа | 精金关刀 | Gládio de Adamantina | Adamantytowa glewia
-		// AdamantiteGlaive: /
+		AdamantiteGlaive: F/S
 		# DisplayName: Toolbelt | Werkzeuggürtel | Cintura porta attrezzi | Ceinture à outils | Cinturón de herramientas | Пояс с инструментами | 工具腰带 | Cinto de Utilidades | Pasek na narzędzia
-		// Toolbelt: /
+		Toolbelt: M/S
 		# DisplayName: Breaker Blade | Schmetterklinge | Lama del distruttore | La Briseuse | Espada despedazadora | Дробильщик | 毁灭刃 | Lâmina do Batedor | Ostrze kruszące
-		// BreakerBlade: /
+		BreakerBlade: F/S
 		# DisplayName: Clockwork Assault Rifle | Automatiksturmwaffe | Fucile d'assalto automatico | Fusil d'assaut mécanique | Fusil de asalto de precisión | Заводная штурмовая винтовка | 发条式突击步枪 | Fuzil de Assalto Relógio | Mechaniczny karabin
-		// ClockworkAssaultRifle: /
+		ClockworkAssaultRifle: M/S
 		# DisplayName: Cobalt Repeater | Kobaltrepetierer | Balestra automatica di cobalto | Arbalète en cobalt | Repetidor de cobalto | Кобальтовый арбалет | 钴连弩 | Repetidora de Cobalto | Kusza powtarzalna z kobaltu
-		// CobaltRepeater: /
+		CobaltRepeater: M/S
 		# DisplayName: Mythril Repeater | Mithrilrepetierer | Balestra automatica di mitrilio | Arbalète en mithril | Repetidor de mithril | Мифриловый арбалет | 秘银连弩 | Repetidora de Mithril | Kusza powtarzalna z mithrilu
-		// MythrilRepeater: /
+		MythrilRepeater: M/S
 		# DisplayName: Adamantite Repeater | Adamantitrepetierer | Mietitore di adamantio | Arbalète en adamantite | Repetidor de adamantita | Адамантитовый арбалет | 精金连弩 | Repetidora de Adamantina | Kusza powtarzalna z adamantytu
-		// AdamantiteRepeater: /
+		AdamantiteRepeater: M/S
 		# DisplayName: Adamantite Sword | Adamantitschwert | Spada di adamantio | Épée en adamantite | Espada de adamantita | Адамантитовый меч | 精金剑 | Espada de Adamantina | Adamantytowy miecz
-		// AdamantiteSword: /
+		AdamantiteSword: F/S
 		# DisplayName: Cobalt Sword | Kobaltschwert | Spada di cobalto | Épée en cobalt | Espada de cobalto | Кобальтовый меч | 钴剑 | Espada de Cobalto | Kobaltowy miecz
-		// CobaltSword: /
+		CobaltSword: F/S
 		# DisplayName: Mythril Sword | Mithrilschwert | Spada di mitrilio | Épée en mithril | Espada de mithril | Мифриловый меч | 秘银剑 | Espada de Mithril | Mithrilowy miecz
-		// MythrilSword: /
+		MythrilSword: F/S
 		# DisplayName: Moon Charm | Mondzauber | Amuleto della luna | Amulette lunaire | Hechizo de luna | Зачарованная луна | 月光护身符 | Amuleto da Lua | Księżycowy wisior
-		// MoonCharm: /
+		MoonCharm: M/S
 		# DisplayName: Ruler | Lineal | Righello | Règle | Regla | Линейка | 标尺 | Régua | Linijka
-		// Ruler: /
+		Ruler: F/S
 		# DisplayName: Sorcerer Emblem | Siegel des Magiers | Emblema dell'incantatore | Emblème de mage | Emblema de hechicero | Эмблема мага | 巫士徽章 | Emblema do Feiticeiro | Symbol czarownika
-		// SorcererEmblem: /
+		SorcererEmblem: M/S
 		# DisplayName: Warrior Emblem | Siegel des Kriegers | Emblema del guerriero | Emblème de guerrier | Emblema de guerrero | Эмблема воина | 战士徽章 | Emblema do Guerreiro | Symbol wojownika
-		// WarriorEmblem: /
+		WarriorEmblem: M/S
 		# DisplayName: Ranger Emblem | Siegel des Schützen | Emblema del guardiaboschi | Emblème de ranger | Emblema de guardián | Эмблема лучника | 游侠徽章 | Emblema do Vigia | Symbol leśnika
-		// RangerEmblem: /
+		RangerEmblem: M/S
 		# DisplayName: Demon Wings | Dämonenflügel | Ali del demone | Ailes de démon | Alas demoníacas | Крылья демона | 恶魔之翼 | Asas Demoníacas | Demoniczne skrzydła
-		// DemonWings: /
+		DemonWings: F/P
 		# DisplayName: Angel Wings | Engelsflügel | Ali dell'angelo | Ailes d'ange | Alas de ángel | Крылья ангела | 天使之翼 | Asas Angelicais | Anielskie skrzydła
-		// AngelWings: /
+		AngelWings: F/P
 		# DisplayName: Magical Harp | Magische Harfe | Arpa magica | Harpe magique | Arpa mágica | Магическая арфа | 魔法竖琴 | Harpia Mágica | Magiczna harfa
-		// MagicalHarp: /
+		MagicalHarp: F/S
 		# DisplayName: Rainbow Rod | Regenbogenrute | Bastone dell'arcobaleno | Bâton arc-en-ciel | Varita multicolor | Радужный жезл | 彩虹魔杖 | Bastão de Arco-íris | Tęczowy kostur
-		// RainbowRod: /
+		RainbowRod: F/S
 		# DisplayName: Ice Rod | Eisrute | Bastone di ghiaccio | Bâton de glace | Varita helada | Ледяной жезл | 冰雪魔杖 | Bastão de Gelo | Lodowy kostur
-		// IceRod: /
+		IceRod: F/S
 		# DisplayName: Neptune's Shell | Neptuns Muschel | Conchiglia di Nettuno | Coquillage de Neptune | Concha de Neptuno | Ракушка Нептуна | 海神贝壳 | Concha de Netuno | Skorupa Neptuna
-		// NeptunesShell: /
+		NeptunesShell: F/S
 		# DisplayName: Flamethrower | Flammenwerfer | Lanciafiamme | Lance-flammes | Lanzallamas | Огнемет | 火焰喷射器 | Lança-Chamas | Miotacz płomieni
-		// Flamethrower: /
+		Flamethrower: M/S
 		# DisplayName: Laser Rifle | Lasergewehr | Fucile laser | Fusil à laser | Fusil láser | Лазерная винтовка | 激光步枪 | Fuzil de Laser | Karabin laserowy
-		// LaserRifle: /
+		LaserRifle: M/S
 		# DisplayName: Magic Dagger | Magischer Dolch | Pugnale magico | Dague magique | Daga mágica | Магический кинжал | 魔法飞刀 | Adaga Mágica | Magiczny sztylet
-		// MagicDagger: /
+		MagicDagger: F/S
 		# DisplayName: Crystal Storm | Kristallsturm | Tempesta di cristallo | Tempête de cristal | Tormenta de cristal | Кристальный шторм | 水晶风暴 | Tempestade de Cristal | Kryształowa burza
-		// CrystalStorm: /
+		CrystalStorm: F/S
 		# DisplayName: Cursed Flames | Verfluchte Flammen | Fiamme maledette | Flammes maudites | Llamas malditas | Проклятый огонь | 诅咒焰 | Chamas Amaldiçoadas | Przeklęte płomienie
-		// CursedFlames: /
+		CursedFlames: F/P
 		# DisplayName: Star Cloak | Sternenumhang | Mantello stellato | Cape étoilée | Manto de estrellas | Звездный плащ | 星星斗篷 | Manto das Estrelas | Gwiezdna peleryna
-		// StarCloak: /
+		StarCloak: M/S
 		# DisplayName: Megashark | Maxihai | Megashark | Mégarequin | Megatiburón | Мега-акула | 巨兽鲨 | Megatubarão | Megarekin
-		// Megashark: /
+		Megashark: M/S
 		# DisplayName: Shotgun | Schrotflinte | Fucile | Fusil à pompe | Escopeta | Дробовик | 霰弹枪 | Espingarda | Strzelba
-		// Shotgun: /
+		Shotgun: F/S
 		# DisplayName: Philosopher's Stone | Stein der Weisen | Pietra filosofale | Pierre philosophale | Piedra filosofal | Философский камень | 点金石 | Pedra Filosofal | Kamień filozoficzny
-		// PhilosophersStone: /
+		PhilosophersStone: F/S
 		# DisplayName: Titan Glove | Titanhandschuh | Guanto del Titano | Gant de titan | Guante de titán | Перчатка титана | 泰坦手套 | Luva de Titã | Tytanowa rękawica
-		// TitanGlove: /
+		TitanGlove: M/S
 		# DisplayName: Cobalt Naginata | Kobalt-Naginata | Naginata di cobalto | Naginata en cobalt | Naginata de cobalto | Кобальтовая нагината | 钴剃刀 | Naginata de Cobalto | Kobaltowa naginata
-		// CobaltNaginata: /
+		CobaltNaginata: F/S
 		# DisplayName: Gungnir | Gungnir | Gungnir | Gungnir | Gungnir | Гунгнир | 永恒之枪 | Gungnir | Gungnir
-		// Gungnir: /
+		Gungnir: F/S
 		# DisplayName: Cross Necklace | Kreuzhalskette | Collana con croce | Pendentif en croix | Collar con cruz | Золотой крестик | 十字项链 | Colar com Cruz | Łańcuszek z krzyżem
-		// CrossNecklace: /
+		CrossNecklace: M/S
 		# DisplayName: Mana Flower | Mana-Blume | Fiore di mana | Fleur de mana | Flor de maná | Цветок маны | 魔力花 | Flor de Mana | Kwiat many
-		// ManaFlower: /
+		ManaFlower: F/S
 		# DisplayName: Light Disc | Lichtscheibe | Disco di luce | Disque de lumière | Disco de luz | Диск света | 光辉飞盘 | Disco de Luz | Świetlisty dysk
-		// LightDisc: /
+		LightDisc: M/S
 		# DisplayName: Hallowed Repeater | Heiliger Repetierer | Balestra automatica consacrata | Arbalète sacré | Repetidor sagrado | Святой арбалет | 神圣连弩 | Repetidora Consagrada | Bajkowa kusza powtarzalna
-		// HallowedRepeater: /
+		HallowedRepeater: M/S
 		# DisplayName: Drax | Drax | Perforascia | Forche | Taladro hacha | Молотобур | 斧钻 | Drax | Świdrolof
-		// Drax: /
+		Drax: M/S
 		# DisplayName: Ebonwood Sword | Ebenholzschwert | Spada di ebano | Épée en ébène | Espada de madera de ébano | Меч из черной древесины | 乌木剑 | Espada de Madeira de Ébano | Miecz z drewna ebonowego
-		// EbonwoodSword: /
+		EbonwoodSword: F/S
 		# DisplayName: Ebonwood Hammer | Ebenholzhammer | Martello di ebano | Marteau en ébène | Martillo de madera de ébano | Молот из черной древесины | 乌木锤 | Martelo de Madeira de Ébano | Młot z drewna ebonowego
-		// EbonwoodHammer: /
+		EbonwoodHammer: M/S
 		# DisplayName: Ebonwood Bow | Ebenholzbogen | Arco di ebano | Arc en ébène | Arco de madera de ébano | Лук из черной древесины | 乌木弓 | Arco de Madeira de Ébano | Łuk z drewna ebonowego
-		// EbonwoodBow: /
+		EbonwoodBow: M/S
 		# DisplayName: Rich Mahogany Sword | Reiches Mahagonischwert | Spada di mogano scuro | Épée en acajou riche | Espada de madera de caoba rica | Меч из красной древесины | 红木剑 | Espada de Mogno | Miecz mahoniowy
-		// RichMahoganySword: /
+		RichMahoganySword: F/S
 		# DisplayName: Rich Mahogany Hammer | Reicher Mahagonihammer | Martello di mogano scuro | Marteau en acajou riche | Martillo de madera de caoba rica | Молот из красной древесины | 红木锤 | Martelo de Mogno | Młot mahoniowy
-		// RichMahoganyHammer: /
+		RichMahoganyHammer: M/S
 		# DisplayName: Rich Mahogany Bow | Reicher Mahagonibogen | Arco di mogano scuro | Arc en acajou riche | Arco de madera de caoba rica | Лук из красной древесины | 红木弓 | Arco de Mogno | Łuk mahoniowy
-		// RichMahoganyBow: /
+		RichMahoganyBow: M/S
 		# DisplayName: Pearlwood Sword | Perlholzschwert | Spada di legno perlato | Épée en bois perlé | Espada de madera perlada | Меч из жемчужной древесины | 珍珠木剑 | Espada de Madeira Pérola | Miecz z drewna perłowego
-		// PearlwoodSword: /
+		PearlwoodSword: F/S
 		# DisplayName: Pearlwood Hammer | Perlholzhammer | Martello di legno perlato | Marteau en bois perlé | Martillo de madera perlada | Молот из жемчужной древесины | 珍珠木锤 | Martelo de Madeira Pérola | Młot z drewna perłowego
-		// PearlwoodHammer: /
+		PearlwoodHammer: M/S
 		# DisplayName: Pearlwood Bow | Perlholzbogen | Arco di legno perlato | Arc en bois perlé | Arco de madera perlada | Лук из жемчужной древесины | 珍珠木弓 | Arco de Madeira Pérola | Łuk z drewna perłowego
-		// PearlwoodBow: /
+		PearlwoodBow: M/S
 		# DisplayName: Red's Wings | Reds Flügel | Ali di Redigit | Ailes de Red | Alas de Red | Крылья Red | Red的翅膀 | Asas de Redigit | Skrzydła Reda
-		// RedsWings: /
+		RedsWings: F/P
 		# DisplayName: Ice Boomerang | Eisbumerang | Boomerang di ghiaccio | Boomerang glacial | Bumerán de hielo | Ледяной бумеранг | 冰雪回旋镖 | Bumerangue de Gelo | Lodowy bumerang
-		// IceBoomerang: /
+		IceBoomerang: M/S
 		# DisplayName: Keybrand | Schlüsselbrand | Chiave marchiata | Keybrand | Llave-espada | Ключ-меч | 钥匙剑 | Keybrand | Kluczowe cięcie
-		// Keybrand: /
+		Keybrand: F/S
 		# DisplayName: Cutlass | Entermesser | Sciabola corta | Coutelas | Alfanje | Абордажная сабля | 短弯刀 | Cutlass | Kordelas
-		// Cutlass: /
+		Cutlass: M/S
 		# DisplayName: True Excalibur | Das wahre Excalibur | Vera Excalibur | Véritable Excalibur | Excalibur verdadera | Истинный экскалибур | 原版断钢剑 | Verdadeira Excalibur | Prawdziwy Excalibur
-		// TrueExcalibur: /
+		TrueExcalibur: F/S
 		# DisplayName: True Night's Edge | Die wahre Klinge der Nacht | Vero confine della notte | Vraie Épée des ténèbres | Espada de la noche verdadera | Истинная грань ночи | 原版永夜刃 | Verdadeira Lâmina da Noite | Prawdziwe nocne ostrze
-		// TrueNightsEdge: /
+		TrueNightsEdge: F/S
 		# DisplayName: Frostbrand | Gefrierbrand | Marchio del gelo | Lame de givre | Espada helada | Ледяная марка | 霜印剑 | Frostbrand | Mroźne cięcie
-		// Frostbrand: /
+		Frostbrand: F/S
 		# DisplayName: Tactical Shotgun | Taktische Schrotflinte | Fucile tattico | Fusil à pompe tactique | Escopeta táctica | Тактический дробовик | 战术霰弹枪 | Espingarda Tática | Strzelba taktyczna
-		// TacticalShotgun: /
+		TacticalShotgun: F/S
 		# DisplayName: Marrow | Knochenmark | Arco di midollo | Moelle | Médula | Сущность | 骸骨弓 | Tutano | Szpik kostny
-		// Marrow: /
+		Marrow: F/S
 		# DisplayName: Unholy Trident | Unheiliger Dreizack | Tridente profano | Trident profane | Tridente infame | Нечестивый трезубец | 邪恶三叉戟 | Tridente Profano | Nieświęty trójząb
-		// UnholyTrident: /
+		UnholyTrident: M/S
 		# DisplayName: Tin Watch | Zinnuhr | Orologio di latta | Montre en étain | Reloj de estaño | Оловянные часы | 锡表 | Relógio de Estanho | Cynowy zegarek
-		// TinWatch: /
+		TinWatch: M/S
 		# DisplayName: Tungsten Watch | Wolframuhr | Orologio di tungsteno | Montre en tungstène | Reloj de tungsteno | Вольфрамовые часы | 钨表 | Relógio de Tungstênio | Tungstenowy zegarek
-		// TungstenWatch: /
+		TungstenWatch: M/S
 		# DisplayName: Platinum Watch | Platinuhr | Orologio di platino | Montre en platine | Reloj de platino | Платиновые часы | 铂金表 | Relógio de Platina | Platynowy zegarek
-		// PlatinumWatch: /
+		PlatinumWatch: M/S
 		# DisplayName: Beam Sword | Strahlenschwert | Spada laser | Épée rayonnante | Espada lumínica | Лучевой меч | 光束剑 | Espada de Feixes | Miecz-promień
-		// BeamSword: /
+		BeamSword: F/S
 		# DisplayName: Ice Blade | Eisklinge | Lama di ghiaccio | Épée de glace | Espada de hielo | Ледяной клинок | 冰雪刃 | Lâmina de Gelo | Lodowe ostrze
-		// IceBlade: /
+		IceBlade: F/S
 		# DisplayName: Ice Bow | Eisbogen | Arco di ghiaccio | Arc de glace | Arco de hielo | Ледяной лук | 冰雪弓 | Arco de Gelo | Lodowy łuk
-		// IceBow: /
+		IceBow: M/S
 		# DisplayName: Frost Staff | Froststab | Bastone del gelo | Sceptre de givre | Báculo helado | Морозный посох | 寒霜法杖 | Cajado Congelado | Mroźny kostur
-		// FrostStaff: /
+		FrostStaff: M/S
 		# DisplayName: Amethyst Staff | Amethyststab | Bastone di ametista | Sceptre d'améthyste | Báculo de amatista | Аметистовый посох | 紫晶法杖 | Cajado de Ametista | Ametystowy kostur
-		// AmethystStaff: /
+		AmethystStaff: M/S
 		# DisplayName: Topaz Staff | Topasstab | Bastone di topazio | Sceptre de topaze | Báculo de topacio | Топазовый посох | 黄玉法杖 | Cajado de Topázio | Topazowy kostur
 		// TopazStaff: /
 		# DisplayName: Sapphire Staff | Saphirstab | Bastone di zaffiro | Sceptre de saphir | Báculo de zafiro | Сапфировый посох | 蓝玉法杖 | Cajado de Safira | Szafirowy kostur
@@ -1689,590 +1689,590 @@ InflectionData: {
 	Prefixes: {
 		# Large | (Groß) | (Grande) | (Grand) | (Grande) | Большой | 大 | (Grande) | Duży
 		Large: {
-			Masculine: {^0:(Grande);(Grandes)}
-			Feminine: {^0:(Grande);(Grandes)}
-			Neuter: {^0:(Grande;(Grandes)}
+			Masculine: "{^0:(Grande);(Grandes)}"
+			Feminine: "{^0:(Grande);(Grandes)}"
+			Neuter: "{^0:(Grande;(Grandes)}"
 		}
 
 		# Massive | (Riesig) | (Massiccio) | imposant(e) | (Enorme) | Массивный | 巨大 | (Enorme) | Solidny
 		Massive: {
-			Masculine: {^0:(Enorme);(Enormes)}
-			Feminine: {^0:(Enorme);(Enormes)}
-			Neuter: {^0:(Enorme);(Enormes)}
+			Masculine: "{^0:(Enorme);(Enormes)}"
+			Feminine: "{^0:(Enorme);(Enormes)}"
+			Neuter: "{^0:(Enorme);(Enormes)}"
 		}
 
 		# Dangerous | (Gefährlich) | (Pericoloso) | (Dangereux) | (Peligroso) | Опасный | 危险 | (Perigoso) | Niebezpieczny
 		Dangerous: {
-			Masculine: {^0:Peligroso;Peligrosos}
-			Feminine: {^0:Peligrosa;Peligrosas}
-			Neuter: {^0:Peligroso;Peligrosos}
+			Masculine: "{^0:(Peligroso);(Peligrosos)}"
+			Feminine: "{^0:(Peligrosa);(Peligrosas)}"
+			Neuter: "{^0:(Peligroso);(Peligrosos)}"
 		}
 
 		# Savage | (Barbarisch) | (Selvaggio) | (Sauvage) | (Salvaje) | Дикий | 凶残 | (Bárbaro) | Brutalny
 		Savage: {
-			Masculine: {^0:Enorme;Enormes}
-			Feminine: {^0:Enorme;Enormes}
-			Neuter: {^0:Enorme;Enormes}
+			Masculine: "{^0:(Salvaje);(Salvajes)}"
+			Feminine: "{^0:(Salvaje);(Salvajes)}"
+			Neuter: "{^0:(Salvaje);(Salvajes)}"
 		}
 
 		# Sharp | (Scharf) | (Appuntito) | (Aiguisé) | (Afilado) | Острый | 锋利 | (Afiado) | Ostry
 		Sharp: {
-			Masculine: {^0:Afilado;Afilados}
-			Feminine: {^0:Afilada;Afiladas}
-			Neuter: {^0:Afilado;Afilados}
+			Masculine: "{^0:(Afilado);(Afilados)}"
+			Feminine: "{^0:(Afilada);(Afiladas)}"
+			Neuter: "{^0:(Afilado);(Afilados)}"
 		}
 
 		# Pointy | (Spitz) | (Tagliente) | (Pointu) | (Puntiagudo) | Заостренный | 尖锐 | (Pontudo) | Szpiczasty
 		Pointy: {
-			Masculine: {^0:Puntiagudo;Puntiagudos}
-			Feminine: {^0:Puntiaguda;Puntiagudas}
-			Neuter: {^0:Puntiagudo;Puntiagudos}
+			Masculine: "{^0:(Puntiagudo);(Puntiagudos)}"
+			Feminine: "{^0:(Puntiaguda);(Puntiagudas)}"
+			Neuter: "{^0:(Puntiagudo);(Puntiagudos)}"
 		}
 
 		# Tiny | (Winzig) | (Minuto) | (Minuscule) | (Diminuto) | Маленький | 微小 | (Minúsculo) | Drobny
 		Tiny: {
-			Masculine: {^0:Diminuto;Diminutos}
-			Feminine: {^0:Diminuta;Diminutas}
-			Neuter: {^0:Diminuto;Diminutos}
+			Masculine: "{^0:(Diminuto);(Diminutos)}"
+			Feminine: "{^0:(Diminuta);(Diminutas)}"
+			Neuter: "{^0:(Diminuto);(Diminutos)}"
 		}
 
 		# Terrible | (Schrecklich) | (Terribile) | (Terrible) | (Malo) | Ужасный | 可怕 | (Terrível) | Straszliwy
 		Terrible: {
-			Masculine: {^0:Terrible;Terribles}
-			Feminine: {^0:Terrible;Terribles}
-			Neuter: {^0:Terrible;Terribles}
+			Masculine: "{^0:(Terrible);(Terribles)}"
+			Feminine: "{^0:(Terrible);(Terribles)}"
+			Neuter: "{^0:(Terrible);(Terribles)}"
 		}
 
 		# Small | (Klein) | (Piccolo) | (Petit) | (Pequeño) | Маленький | 小 | (Pequeno) | Mały
 		Small: {
-			Masculine: {^0:Pequeño;Pequeños}
-			Feminine: {^0:Pequeña;Pequeñas}
-			Neuter: {^0:Pequeño;Pequeños}
+			Masculine: "{^0:(Pequeño);(Pequeños)}"
+			Feminine: "{^0:(Pequeña);(Pequeñas)}"
+			Neuter: "{^0:(Pequeño);(Pequeños)}"
 		}
 
 		# Dull | (Stumpf) | (Opaco) | (Terne) | (Romo) | Тупой | 钝 | (Fraco) | Tępy
 		Dull: {
-			Masculine: {^0:Romo;Romos}
-			Feminine: {^0:Roma;Romas}
-			Neuter: {^0:Romo;Romos}
+			Masculine: "{^0:(Romo);(Romos)}"
+			Feminine: "{^0:(Roma);(Romas)}"
+			Neuter: "{^0:(Romo);(Romos)}"
 		}
 
 		# Unhappy | (Unglücklich) | (Infelice) | (Misérable) | (Infeliz) | Невезучий | 倒霉 | (Infeliz) | Nieszczęśliwy
 		Unhappy: {
-			Masculine: {^0:Infeliz;Infelices}
-			Feminine: {^0:Infeliz;Infelices}
-			Neuter: {^0:Infeliz;Infelices}
+			Masculine: "{^0:(Infeliz);(Infelices)}"
+			Feminine: "{^0:(Infeliz);(Infelices)}"
+			Neuter: "{^0:(Infeliz);(Infelices)}"
 		}
 
 		# Bulky | (Sperrig) | (Ingombrante) | (Mastoc) | (Voluminoso) | Массивный | 笨重 | (Volumoso) | Krzepki
 		Bulky: {
-			Masculine: {^0:Voluminoso;Voluminosos}
-			Feminine:{^0:Voluminosa;Voluminosas}
-			Neuter: {^0:Voluminoso;Voluminosos}
+			Masculine: "{^0:(Voluminoso);(Voluminosos)}"
+			Feminine: "{^0:(Voluminosa);(Voluminosas)}"
+			Neuter: "{^0:(Voluminoso);(Voluminosos)}"
 		}
 
 		# Shameful | (Beschämend) | (Vergognoso) | (Coupable) | (Deshonroso) | Позорный | 可耻 | (Vergonhoso) | Haniebny
 		Shameful: {
-			// Masculine: Shameful
-			// Feminine: Shameful
-			// Neuter: Shameful
+			Masculine: "{^0:(Deshonroso);(Deshonrosos)}"
+			Feminine: "{^0:(Deshonrosa);(Deshonrosas)}"
+			Neuter: "{^0:(Deshonroso);(Deshonrosos)}"
 		}
 
 		# Heavy | (Schwer) | (Pesante) | (Lourd) | (Pesado) | Тяжелый | 重 | (Pesado) | Ciężki
 		Heavy: {
-			// Masculine: Heavy
-			// Feminine: Heavy
-			// Neuter: Heavy
+			Masculine: "{^0:(Pesado);(Pesados)}"
+			Feminine: "{^0:(Pesada);(Pesadas)}"
+			Neuter: "{^0:(Pesado);(Pesados)}"
 		}
 
 		# Light | (Licht) | (Luce) | (Light) | (Luz) | Свет | 莱特 | (Luz) | Light
 		Light: {
-			// Masculine: Light
-			// Feminine: Light
-			// Neuter: Light
+			Masculine: "{^0:(Ligero);(Ligeros)}"
+			Feminine: "{^0:(Ligera);(Ligeras)}"
+			Neuter: "{^0:(Ligero);(Ligeros)}"
 		}
 
 		# Sighted | (Gesichtet) | (Mirino) | (Voyant) | (Perspicaz) | Пристрелянный | 精准 | (Visto) | Celny
 		Sighted: {
-			// Masculine: Sighted
-			// Feminine: Sighted
-			// Neuter: Sighted
+			Masculine: "{^0:(Perspicaz);(Perspicaces)}"
+			Feminine: "{^0:(Perspicaz);(Perspicaces)}"
+			Neuter: "{^0:(Perspicaz);(Perspicaces)}"
 		}
 
 		# Rapid | (Schnell) | (Rapido) | (Rapide) | (Rápido) | Скорый | 迅速 | (Acelerado) | Błyskawiczny
 		Rapid: {
-			// Masculine: Rapid
-			// Feminine: Rapid
-			// Neuter: Rapid
+			Masculine: "{^0:(Rápido);(Rápidos)}"
+			Feminine: "{^0:(Rápida);(Rápidas)}"
+			Neuter: "{^0:(Rápido);(Rápidos)}"
 		}
 
 		# Hasty | (Hastig) | (Frettoloso) | (Précipité) | (Precipitado) | Стремительный | 急速 | (Rápido) | Szybki
 		Hasty: {
-			// Masculine: Hasty
-			// Feminine: Hasty
-			// Neuter: Hasty
+			Masculine: "{^0:(Precipitado);(Precipitados)}"
+			Feminine: "{^0:(Precipitada);(Precipitadas)}"
+			Neuter: "{^0:(Precipitado);(Precipitados)}"
 		}
 
 		# Intimidating | (Einschüchternd) | (Intimidatorio) | (Intimidant) | (Intimidante) | Пугающий | 恐怖 | (Intimidador) | Zastraszający
 		Intimidating: {
-			// Masculine: Intimidating
-			// Feminine: Intimidating
-			// Neuter: Intimidating
+			Masculine: "{^0:(Intimidante);(Intimidantes)}"
+			Feminine: "{^0:(Intimidante);(Intimidantes)}"
+			Neuter: "{^0:(Intimidante);(Intimidantes)}"
 		}
 
 		# Deadly | (Tödlich) | (Mortale) | (Fatal) | (Letal) | Смертельный | 致命 | (Mortal) | Śmiercionośny
 		Deadly: {
-			// Masculine: Deadly
-			// Feminine: Deadly
-			// Neuter: Deadly
+			Masculine: "{^0:(Letal);(Letales)}"
+			Feminine: "{^0:(Letal);(Letales)}"
+			Neuter: "{^0:(Letal);(Letales)}"
 		}
 
 		# Staunch | (Unerschütterlich) | (Convinto) | (Fervent) | (Firme) | Крепкий | 可靠 | (Convicto) | Wierny
 		Staunch: {
-			// Masculine: Staunch
-			// Feminine: Staunch
-			// Neuter: Staunch
+			Masculine: "{^0:(Firme);(Firmes)}"
+			Feminine: "{^0:(Firme);(Firmes)}"
+			Neuter: "{^0:(Firme);(Firmes)}"
 		}
 
 		# Awful | (Schrecklich) | (Mostruoso) | (Atroce) | (Atroz) | Отвратительный | 可畏 | (Terrível) | Okropny
 		Awful: {
-			// Masculine: Awful
-			// Feminine: Awful
-			// Neuter: Awful
+			Masculine: "{^0:(Atroz);(Atroces)}"
+			Feminine: "{^0:(Atroz);(Atroces)}"
+			Neuter: "{^0:(Atroz);(Atroces)}"
 		}
 
 		# Lethargic | (Lethargisch) | (Letargico) | (Léthargique) | (Letárgico) | Летаргический | 无力 | (Letárgico) | Ospały
 		Lethargic: {
-			// Masculine: Lethargic
-			// Feminine: Lethargic
-			// Neuter: Lethargic
+			Masculine: "{^0:(Letárgico);(Letárgicos)}"
+			Feminine: "{^0:(Letárgica);(Letárgicas)}"
+			Neuter: "{^0:(Letárgico);(Letárgicos)}"
 		}
 
 		# Awkward | (Unbeholfen) | (Scomodo) | (Gauche) | (Torpe) | Странный | 粗笨 | (Estranho) | Niewygodny
 		Awkward: {
-			// Masculine: Awkward
-			// Feminine: Awkward
-			// Neuter: Awkward
+			Masculine: "{^0:(Torpe);(Torpes)}"
+			Feminine: "{^0:(Torpe);(Torpes)}"
+			Neuter: "{^0:(Torpe);(Torpes)}"
 		}
 
 		# Powerful | (Mächtig) | (Potente) | (Puissant) | (Poderoso) | Мощный | 强大 | (Poderoso) | Potężny
 		Powerful: {
-			// Masculine: Powerful
-			// Feminine: Powerful
-			// Neuter: Powerful
+			Masculine: "{^0:(Poderoso);(Poderosos)}"
+			Feminine: "{^0:(Poderosa);(Poderosas)}"
+			Neuter: "{^0:(Poderoso);(Poderosos)}"
 		}
 
 		# Mystic | (Mystisch) | (Mistico) | (Mystique) | (Místico) | Загадочный | 神秘 | (Místico) | Mistyczny
 		Mystic: {
-			// Masculine: Mystic
-			// Feminine: Mystic
-			// Neuter: Mystic
+			Masculine: "{^0:(Místico);(Místicos)}"
+			Feminine: "{^0:(Mística);(Místicas)}"
+			Neuter: "{^0:(Místico);(Místicos)}"
 		}
 
 		# Adept | (Geschickt) | (Esperto) | (Adepte) | (Experto) | Экспертный | 精巧 | (Adepto) | Fachowy
 		Adept: {
-			// Masculine: Adept
-			// Feminine: Adept
-			// Neuter: Adept
+			Masculine: "{^0:(Experto);(Expertos)}"
+			Feminine: "{^0:(Experta);(Expertas)}"
+			Neuter: "{^0:(Experto);(Expertos)}"
 		}
 
 		# Masterful | (Meisterhaft) | (Magistrale) | (Autoritaire) | (Maestro) | Грозный | 精湛 | (Mestre) | Mistrzowski
 		Masterful: {
-			// Masculine: Masterful
-			// Feminine: Masterful
-			// Neuter: Masterful
+			Masculine: "{^0:(Maestro);(Maestros)}"
+			Feminine: "{^0:(Maestra);(Maestras)}"
+			Neuter: "{^0:(Maestro);(Maestros)}"
 		}
 
 		# Inept | (Ungeschickt) | (Inetto) | (Inepte) | (Inepto) | Неподходящий | 笨拙 | (Incapaz) | Nieudany
 		Inept: {
-			// Masculine: Inept
-			// Feminine: Inept
-			// Neuter: Inept
+			Masculine: "{^0:(Inepto);(Ineptos)}"
+			Feminine: "{^0:(Inepta);(Ineptas)}"
+			Neuter: "{^0:(Inepto);(Ineptos)}"
 		}
 
 		# Ignorant | (Unwissend) | (Ignorante) | (Ignorant) | (Ignorante) | Грубый | 无知 | (Ignorante) | Prostacki
 		Ignorant: {
-			// Masculine: Ignorant
-			// Feminine: Ignorant
-			// Neuter: Ignorant
+			Masculine: "{^0:(Ignorante);(Ignorantes)}"
+			Feminine: "{^0:(Ignorante);(Ignorantes)}"
+			Neuter: "{^0:(Ignorante);(Ignorantes)}"
 		}
 
 		# Deranged | (Gestört) | (Squilibrato) | (Dérangé) | (Trastornado) | Неуравновешенный | 错乱 | (Demente) | Obłąkany
 		Deranged: {
-			// Masculine: Deranged
-			// Feminine: Deranged
-			// Neuter: Deranged
+			Masculine: "{^0:(Trastornado);(Trastornados)}"
+			Feminine: "{^0:(Trastornada);(Trastornadas)}"
+			Neuter: "{^0:(Trastornado);(Trastornados)}"
 		}
 
 		# Intense | (Intensiv) | (Intenso) | (Intense) | (Intenso) | Значительный | 威猛 | (Intenso) | Intensywny
 		Intense: {
-			// Masculine: Intense
-			// Feminine: Intense
-			// Neuter: Intense
+			Masculine: "{^0:(Intenso);(Intensos)}"
+			Feminine: "{^0:(Intensa);(Intensas)}"
+			Neuter: "{^0:(Intenso);(Intensos)}"
 		}
 
 		# Taboo | (Tabu) | (Tabù) | (Tabou) | (Prohibido) | Запрещенный | 禁忌 | (Tabu) | Tabu
 		Taboo: {
-			// Masculine: Taboo
-			// Feminine: Taboo
-			// Neuter: Taboo
+			Masculine: "{^0:(Prohibido);(Prohibidos)}"
+			Feminine: "{^0:(Prohibida);(Prohibidas)}"
+			Neuter: "{^0:(Prohibido);(Prohibidos)}"
 		}
 
 		# Celestial | (Himmlisch) | (Celeste) | (Céleste) | (Celeste) | Небесный | 天界 | (Celestial) | Niebiański
 		Celestial: {
-			// Masculine: Celestial
-			// Feminine: Celestial
-			// Neuter: Celestial
+			Masculine: "{^0:(Celeste);(Celestes)}"
+			Feminine: "{^0:(Celeste);(Celestes)}"
+			Neuter: "{^0:(Celeste);(Celestes)}"
 		}
 
 		# Furious | (Wütend) | (Furioso) | (Furieux) | (Furioso) | Яростный | 狂怒 | (Furioso) | Wściekły
 		Furious: {
-			// Masculine: Furious
-			// Feminine: Furious
-			// Neuter: Furious
+			Masculine: "{^0:(Furioso);(Furiosos)}"
+			Feminine: "{^0:(Furiosa);(Furiosas)}"
+			Neuter: "{^0:(Furioso);(Furiosos)}"
 		}
 
 		# Keen | (Scharf) | (Appassionato) | (Appliqué) | (Incisivo) | Заточенный | 锐利 | (Disposto) | Ochoczy
 		Keen: {
-			// Masculine: Keen
-			// Feminine: Keen
-			// Neuter: Keen
+			Masculine: "{^0:(Incisivo);(Incisivos)}"
+			Feminine: "{^0:(Incisiva);(Incisivas)}"
+			Neuter: "{^0:(Incisivo);(Incisivos)}"
 		}
 
 		# Superior | (Überlegen) | (Superiore) | (Supérieur) | (Superior) | Превосходный | 高端 | (Superior) | Ponadprzeciętny
 		Superior: {
-			// Masculine: Superior
-			// Feminine: Superior
-			// Neuter: Superior
+			Masculine: "{^0:(Superior);(Superiores)}"
+			Feminine: "{^0:(Superior);(Superiores)}"
+			Neuter: "{^0:(Superior);(Superiores)}"
 		}
 
 		# Forceful | (Kraftvoll) | (Forte) | (Énergique) | (Fuerte) | Неистовый | 强力 | (Vigoroso) | Gwałtowny
 		Forceful: {
-			// Masculine: Forceful
-			// Feminine: Forceful
-			// Neuter: Forceful
+			Masculine: "{^0:(Fuerte);(Fuertes)}"
+			Feminine: "{^0:(Fuerte);(Fuertes)}"
+			Neuter: "{^0:(Fuerte);(Fuertes)}"
 		}
 
 		# Broken | (Gebrochen) | (Rotto) | (Cassé) | (Roto) | Сломаный | 碎裂 | (Quebrado) | Niesprawny
 		Broken: {
-			// Masculine: Broken
-			// Feminine: Broken
-			// Neuter: Broken
+			Masculine: "{^0:(Roto);(Rotos)}"
+			Feminine: "{^0:(Rota);(Rotas)}"
+			Neuter: "{^0:(Roto);(Rotos)}"
 		}
 
 		# Damaged | (Beschädigt) | (Danneggiato) | (Endommagé) | (Estropeado) | Поврежденный | 破损 | (Danificado) | Uszkodzony
 		Damaged: {
-			// Masculine: Damaged
-			// Feminine: Damaged
-			// Neuter: Damaged
+			Masculine: "{^0:(Estropeado);(Estropeados)}"
+			Feminine: "{^0:(Estropeada);(Estropeadas)}"
+			Neuter: "{^0:(Estropeado);(Estropeados)}"
 		}
 
 		# Shoddy | (Schäbig) | (Scadente) | (Exécrable) | (Chapucero) | Некачественный | 粗劣 | (Pobre) | Tandetny
 		Shoddy: {
-			// Masculine: Shoddy
-			// Feminine: Shoddy
-			// Neuter: Shoddy
+			Masculine: "{^0:(Chapucero);(Chapuceros)}"
+			Feminine: "{^0:(Chapucera);(Chapuceras)}"
+			Neuter: "{^0:(Chapucero);(Chapuceros)}"
 		}
 
 		# Quick | (Rasch) | (Veloce) | (Bref) | (Veloz) | Быстрый | 迅捷 | (Rápido) | Prędki
 		Quick: {
-			// Masculine: Quick
-			// Feminine: Quick
-			// Neuter: Quick
+			Masculine: "{^0:(Veloz);(Veloces)}"
+			Feminine: "{^0:(Veloz);(Veloces)}"
+			Neuter: "{^0:(Veloz);(Veloces)}"
 		}
 
 		# Deadly | (Tödlich) | (Mortale) | (Fatal) | (Letal) | Смертельный | 致命 | (Mortal) | Śmiercionośny
 		Deadly2: {
-			// Masculine: Deadly
-			// Feminine: Deadly
-			// Neuter: Deadly
+			Masculine: "{^0:(Letal);(Letales)}"
+			Feminine: "{^0:(Letal);(Letales)}"
+			Neuter: "{^0:(Letal);(Letales)}"
 		}
 
 		# Agile | (Agil) | (Agile) | (Agile) | (Ágil) | Подвижный | 灵活 | (Ágil) | Zwinny
 		Agile: {
-			// Masculine: Agile
-			// Feminine: Agile
-			// Neuter: Agile
+			Masculine: "{^0:(Ágil);(Ágiles)}"
+			Feminine: "{^0:(Ágil);(Ágiles)}"
+			Neuter: "{^0:(Ágil);(Ágiles)}"
 		}
 
 		# Nimble | (Wendig) | (Lesto) | (Leste) | (Listo) | Шустрый | 灵巧 | (Ligeiro) | Chyży
 		Nimble: {
-			// Masculine: Nimble
-			// Feminine: Nimble
-			// Neuter: Nimble
+			Masculine: "{^0:(Listo);(Listos)}"
+			Feminine: "{^0:(Lista);(Listas)}"
+			Neuter: "{^0:(Listo);(Listos)}"
 		}
 
 		# Murderous | (Mörderisch) | (Omicida) | (Meurtrier) | (Asesino) | Убийственный | 残暴 | (Assassino) | Morderczy
 		Murderous: {
-			// Masculine: Murderous
-			// Feminine: Murderous
-			// Neuter: Murderous
+			Masculine: "{^0:(Asesino);(Asesinos)}"
+			Feminine: "{^0:(Asesina);(Asesinas)}"
+			Neuter: "{^0:(Asesino);(Asesinos)}"
 		}
 
 		# Slow | (Langsam) | (Lento) | (Lenteur) | (Lento) | Замедление | 缓慢 | (Lento) | Spowolnienie
 		Slow: {
-			// Masculine: Slow
-			// Feminine: Slow
-			// Neuter: Slow
+			Masculine: "{^0:(Lento);(Lentos)}"
+			Feminine: "{^0:(Lenta);(Lentas)}"
+			Neuter: "{^0:(Lento);(Lentos)}"
 		}
 
 		# Sluggish | (Träge) | (Indolente) | (Apathique) | (Perezoso) | Медлительный | 迟钝 | (Vagaroso) | Powolny
 		Sluggish: {
-			// Masculine: Sluggish
-			// Feminine: Sluggish
-			// Neuter: Sluggish
+			Masculine: "{^0:(Perezoso);(Perezosos)}"
+			Feminine: "{^0:(Perezosa);(Perezosas)}"
+			Neuter: "{^0:(Perezoso);(Perezosos)}"
 		}
 
 		# Lazy | (Faul) | (Pigro) | (Paresseux) | (Gandul) | Лентяйский | 呆滞 | (Preguiçoso) | Leniwy
 		Lazy: {
-			// Masculine: Lazy
-			// Feminine: Lazy
-			// Neuter: Lazy
+			Masculine: "{^0:(Gandul);(Gandules)}"
+			Feminine: "{^0:(Gandula);(Gandulas)}"
+			Neuter: "{^0:(Gandul);(Gandules)}"
 		}
 
 		# Annoying | (Lästig) | (Fastidioso) | (Ennuyeux) | (Molesto) | Раздражающий | 惹恼 | (Irritante) | Denerwujący
 		Annoying: {
-			// Masculine: Annoying
-			// Feminine: Annoying
-			// Neuter: Annoying
+			Masculine: "{^0:(Molesto);(Molestos)}"
+			Feminine: "{^0:(Molesta);(Molestas)}"
+			Neuter: "{^0:(Molesto);(Molestos)}"
 		}
 
 		# Nasty | (Böse) | (Cattivo) | (Méchant) | (Feo) | Мерзкий | 凶险 | (Nojento) | Paskudny
 		Nasty: {
-			// Masculine: Nasty
-			// Feminine: Nasty
-			// Neuter: Nasty
+			Masculine: "{^0:(Feo);(Feos)}"
+			Feminine: "{^0:(Fea);(Feas)}"
+			Neuter: "{^0:(Feo);(Feos)}"
 		}
 
 		# Manic | (Manisch) | (Maniaco) | (Frénétique) | (Maníaco) | Маниакальный | 狂躁 | (Maníaco) | Maniakalny
 		Manic: {
-			// Masculine: Manic
-			// Feminine: Manic
-			// Neuter: Manic
+			Masculine: "{^0:(Maníaco);(Maníacos)}"
+			Feminine: "{^0:(Maníaca);(Maníacas)}"
+			Neuter: "{^0:(Maníaco);(Maníacos)}"
 		}
 
 		# Hurtful | (Verletzend) | (Offensivo) | (Offensant) | (Hiriente) | Вредный | 致伤 | (Doloroso) | Bolesny
 		Hurtful: {
-			// Masculine: Hurtful
-			// Feminine: Hurtful
-			// Neuter: Hurtful
+			Masculine: "{^0:(Hiriente);(Hirientes)}"
+			Feminine: "{^0:(Hiriente);(Hirientes)}"
+			Neuter: "{^0:(Hiriente);(Hirientes)}"
 		}
 
 		# Strong | (Stark) | (Robusto) | (Fort) | (Vigoroso) | Прочный | 强劲 | (Forte) | Silny
 		Strong: {
-			// Masculine: Strong
-			// Feminine: Strong
-			// Neuter: Strong
+			Masculine: "{^0:(Vigoroso);(Vigorosos)}"
+			Feminine: "{^0:(Vigorosa);(Vigorosas)}"
+			Neuter: "{^0:(Vigoroso);(Vigorosos)}"
 		}
 
 		# Unpleasant | (Unangenehm) | (Sgradevole) | (Désagréable) | (Desagradable) | Неприятный | 粗鲁 | (Desagradável) | Nieprzyjemny
 		Unpleasant: {
-			// Masculine: Unpleasant
-			// Feminine: Unpleasant
-			// Neuter: Unpleasant
+			Masculine: "{^0:(Desagradable);(Desagradables)}"
+			Feminine: "{^0:(Desagradable);(Desagradables)}"
+			Neuter: "{^0:(Desagradable);(Desagradables)}"
 		}
 
 		# Weak | (Schwach) | (Debole) | (Faible) | (Débil) | Слабый | 软弱 | (Fraco) | Słabość
 		Weak: {
-			// Masculine: Weak
-			// Feminine: Weak
-			// Neuter: Weak
+			Masculine: "{^0:(Débil);(Débiles)}"
+			Feminine: "{^0:(Débil);(Débiles)}"
+			Neuter: "{^0:(Débil);(Débiles)}"
 		}
 
 		# Ruthless | (Rücksichtslos) | (Spietato) | (Impitoyable) | (Despiadado) | Безжалостный | 无情 | (Implacável) | Bezwzględny
 		Ruthless: {
-			// Masculine: Ruthless
-			// Feminine: Ruthless
-			// Neuter: Ruthless
+			Masculine: "{^0:(Despiadado);(Despiadados)}"
+			Feminine: "{^0:(Despiadada);(Despiadadas)}"
+			Neuter: "{^0:(Despiadado);(Despiadados)}"
 		}
 
 		# Frenzying | (Rasend) | (Frenetico) | (Déchaîné) | (Frenético) | Буйный | 暴怒 | (Enlouquecedor) | Furiacki
 		Frenzying: {
-			// Masculine: Frenzying
-			// Feminine: Frenzying
-			// Neuter: Frenzying
+			Masculine: "{^0:(Frenético);(Frenéticos)}"
+			Feminine: "{^0:(Frenética);(Frenéticas)}"
+			Neuter: "{^0:(Frenético);(Frenéticos)}"
 		}
 
 		# Godly | (Fromm) | (Devoto) | (Divin) | (Piadoso) | Праведный | 神级 | (Divino) | Boski
 		Godly: {
-			// Masculine: Godly
-			// Feminine: Godly
-			// Neuter: Godly
+			Masculine: "{^0:(Piadoso);(Piadosos)}"
+			Feminine: "{^0:(Piadosa);(Piadosas)}"
+			Neuter: "{^0:(Piadoso);(Piadosos)}"
 		}
 
 		# Demonic | (Dämonisch) | (Diabolico) | (Démoniaque) | (Demoníaco) | Демонический | 恶魔 | (Demoníaco) | Demoniczny
 		Demonic: {
-			// Masculine: Demonic
-			// Feminine: Demonic
-			// Neuter: Demonic
+			Masculine: "{^0:(Demoníaco);(Demoníacos)}"
+			Feminine: "{^0:(Demoníaca);(Demoníacas)}"
+			Neuter: "{^0:(Demoníaco);(Demoníacos)}"
 		}
 
 		# Zealous | (Eifrig) | (Zelante) | (Zélé) | (Fanático) | Пылкий | 狂热 | (Zeloso) | Zaprzysięgły
 		Zealous: {
-			// Masculine: Zealous
-			// Feminine: Zealous
-			// Neuter: Zealous
+			Masculine: "{^0:(Fanático);(Fanáticos)}"
+			Feminine: "{^0:(Fanática);(Fanáticas)}"
+			Neuter: Zealous
 		}
 
 		# Hard | (Schwer) | (Duro) | (Difficile) | (Duro) | Твердый | 坚硬 | (Difícil) | Twardy
 		Hard: {
-			// Masculine: Hard
-			// Feminine: Hard
-			// Neuter: Hard
+			Masculine: "{^0:(Duro);(Duros)}"
+			Feminine: "{^0:(Dura);(Duras)}"
+			Neuter: "{^0:(Duro);(Duros)}"
 		}
 
 		# Guarding | (Schützend) | (Protettivo) | (Protecteur) | (Protector) | Защитный | 守护 | (Protetor) | Strzegący
 		Guarding: {
-			// Masculine: Guarding
-			// Feminine: Guarding
-			// Neuter: Guarding
+			Masculine: "{^0:(Protector);(Protectores)}"
+			Feminine: "{^0:(Protectora);(Protectoras)}"
+			Neuter: "{^0:(Protector);(Protectores)}"
 		}
 
 		# Armored | (Gepanzert) | (Corazzato) | (Blindé) | (Blindado) | Укрепленный | 装甲 | (Blindado) | Opancerzony
 		Armored: {
-			// Masculine: Armored
-			// Feminine: Armored
-			// Neuter: Armored
+			Masculine: "{^0:(Blindado);(Blindados)}"
+			Feminine: "{^0:(Blindada);(Blindadas)}"
+			Neuter: "{^0:(Blindado);(Blindados)}"
 		}
 
 		# Warding | (Abwehrend) | (Difensivo) | (Défenseur) | (Defensivo) | Охранный | 护佑 | (Vigia) | Chroniący
 		Warding: {
-			// Masculine: Warding
-			// Feminine: Warding
-			// Neuter: Warding
+			Masculine: "{^0:(Defensivo);(Defensivos)}"
+			Feminine: "{^0:(Defensiva);(Defensivas)}"
+			Neuter: "{^0:(Defensivo);(Defensivos)}"
 		}
 
 		# Arcane | (Geheimnisvoll) | (Arcano) | (Obscur) | (Arcano) | Тайный | 奥秘 | (Arcano) | Tajemny
 		Arcane: {
-			// Masculine: Arcane
-			// Feminine: Arcane
-			// Neuter: Arcane
+			Masculine: "{^0:(Arcano);(Arcanos)}"
+			Feminine: "{^0:(Arcana);(Arcanas)}"
+			Neuter: "{^0:(Arcano);(Arcanos)}"
 		}
 
 		# Precise | (Präzise) | (Preciso) | (Précis) | (Preciso) | Точный | 精确 | (Preciso) | Precyzyjny
 		Precise: {
-			// Masculine: Precise
-			// Feminine: Precise
-			// Neuter: Precise
+			Masculine: "{^0:(Preciso);(Precisos)}"
+			Feminine: "{^0:(Precisa);(Precisas)}"
+			Neuter: "{^0:(Preciso);(Precisos)}"
 		}
 
 		# Lucky | (Glückspilz) | (Fortunato) | (Chance) | (Afortunado) | Счастливый | 幸运 | (Sortudo) | Fart
 		Lucky: {
-			// Masculine: Lucky
-			// Feminine: Lucky
-			// Neuter: Lucky
+			Masculine: "{^0:(Afortunado);(Afortunados)}"
+			Feminine: "{^0:(Afortunada);(Afortunadas)}"
+			Neuter: "{^0:(Afortunado);(Afortunados)}"
 		}
 
 		# Jagged | (Gezackt) | (Frastagliato) | (Denté) | (Dentado) | Зазубренный | 锯齿 | (Dentado) | Postrzępiony
 		Jagged: {
-			// Masculine: Jagged
-			// Feminine: Jagged
-			// Neuter: Jagged
+			Masculine: "{^0:(Dentado);(Dentados)}"
+			Feminine: "{^0:(Dentada);(Dentadas)}"
+			Neuter: "{^0:(Dentado);(Dentados)}"
 		}
 
 		# Spiked | (Stachelig) | (Chiodato) | (Perçant) | (Claveteado) | Шипастый | 尖刺 | (Perfurante) | Kolczasty
 		Spiked: {
-			// Masculine: Spiked
-			// Feminine: Spiked
-			// Neuter: Spiked
+			Masculine: "{^0:(Claveteado);(Claveteados)}"
+			Feminine: "{^0:(Claveteada);(Claveteadas)}"
+			Neuter: "{^0:(Claveteado);(Claveteados)}"
 		}
 
 		# Angry | (Wütend) | (Arrabbiato) | (Furieux) | (Enojado) | Сердящий | 愤怒 | (Raivoso) | Rozzłoszczony
 		Angry: {
-			// Masculine: Angry
-			// Feminine: Angry
-			// Neuter: Angry
+			Masculine: "{^0:(Enojado);(Enojados)}"
+			Feminine: "{^0:(Enojada);(Enojadas)}"
+			Neuter: "{^0:(Enojado);(Enojados)}"
 		}
 
 		# Menacing | (Bedrohlich) | (Minaccioso) | (Menaçant) | (Amenazante) | Грозный | 险恶 | (Ameaçador) | Groźny
 		Menacing: {
-			// Masculine: Menacing
-			// Feminine: Menacing
-			// Neuter: Menacing
+			Masculine: "{^0:(Amenazante);(Amenazantes)}"
+			Feminine: "{^0:(Amenazante);(Amenazantes)}"
+			Neuter: "{^0:(Amenazante);(Amenazantes)}"
 		}
 
 		# Brisk | (Rege) | (Vivace) | (Vif) | (Enérgico) | Бойкий | 轻快 | (Fugaz) | Energiczny
 		Brisk: {
-			// Masculine: Brisk
-			// Feminine: Brisk
-			// Neuter: Brisk
+			Masculine: "{^0:(Enérgico);(Enérgicos)}"
+			Feminine: "{^0:(Enérgica);(Enérgicas)}"
+			Neuter: "{^0:(Enérgico);(Enérgicos)}"
 		}
 
 		# Fleeting | (Flüchtig) | (Fugace) | (Fugace) | (Fugaz) | Молниеносный | 快速 | (Apressado) | Przelotny
 		Fleeting: {
-			// Masculine: Fleeting
-			// Feminine: Fleeting
-			// Neuter: Fleeting
+			Masculine: "{^0:(Fugaz);(Fugaces)}"
+			Feminine: "{^0:(Fugaz);(Fugaces)}"
+			Neuter: "{^0:(Fugaz);(Fugaces)}"
 		}
 
 		# Hasty | (Hastig) | (Frettoloso) | (Précipité) | (Precipitado) | Стремительный | 急速 | (Rápido) | Szybki
 		Hasty2: {
-			// Masculine: Hasty
-			// Feminine: Hasty
-			// Neuter: Hasty
+			Masculine: "{^0:(Precipitado);(Precipitados)}"
+			Feminine: "{^0:(Precipitada);(Precipitadas)}"
+			Neuter: "{^0:(Precipitado);(Precipitados)}"
 		}
 
 		# Quick | (Rasch) | (Veloce) | (Bref) | (Veloz) | Быстрый | 迅捷 | (Rápido) | Prędki
 		Quick2: {
-			// Masculine: Quick
-			// Feminine: Quick
-			// Neuter: Quick
+			Masculine: "{^0:(Veloz);(Veloces)}"
+			Feminine: "{^0:(Veloz);(Veloces)}"
+			Neuter: "{^0:(Veloz);(Veloces)}"
 		}
 
 		# Wild | (Wild) | (Selvaggio) | (Féroce) | (Salvaje) | Дикий | 狂野 | (Selvagem) | Dziki
 		Wild: {
-			// Masculine: Wild
-			// Feminine: Wild
-			// Neuter: Wild
+			Masculine: "{^0:(Salvaje);(Salvajes)}"
+			Feminine: "{^0:(Salvaje);(Salvajes)}"
+			Neuter: "{^0:(Salvaje);(Salvajes)}"
 		}
 
 		# Rash | (Rasch) | (Temerario) | (Imprudent) | (Temerario) | Безудержный | 鲁莽 | (Impetuoso) | Nierozważny
 		Rash: {
-			// Masculine: Rash
-			// Feminine: Rash
-			// Neuter: Rash
+			Masculine: "{^0:(Temerario);(Temerarios)}"
+			Feminine: "{^0:(Temeraria);(Temerarias)}"
+			Neuter: "{^0:(Temerario);(Temerarios)}"
 		}
 
 		# Intrepid | (Unerschrocken) | (Intrepido) | (Intrépide) | (Intrépido) | Отважный | 勇猛 | (Intrépido) | Nieustraszony
 		Intrepid: {
-			// Masculine: Intrepid
-			// Feminine: Intrepid
-			// Neuter: Intrepid
+			Masculine: "{^0:(Intrépido);(Intrépidos)}"
+			Feminine: "{^0:(Intrépida);(Intrépidas)}"
+			Neuter: "{^0:(Intrépido);(Intrépidos)}"
 		}
 
 		# Violent | (Gewalttätig) | (Violento) | (Violent) | (Violento) | Жестокий | 暴力 | (Violento) | Agresywny
 		Violent: {
-			// Masculine: Violent
-			// Feminine: Violent
-			// Neuter: Violent
+			Masculine: "{^0:(Violento);(Violentos)}"
+			Feminine: "{^0:(Violenta);(Violentas)}"
+			Neuter: "{^0:(Violento);(Violentos)}"
 		}
 
 		# Legendary | (Legendär) | (Leggendario) | (Légendaire) | (Legendario) | Легендарный | 传奇 | (Lendário) | Legendarny
 		Legendary: {
-			// Masculine: Legendary
-			// Feminine: Legendary
-			// Neuter: Legendary
+			Masculine: "{^0:(Legendario);(Legendarios)}"
+			Feminine: "{^0:(Legendaria);(Legendarias)}"
+			Neuter: "{^0:(Legendario);(Legendarios)}"
 		}
 
 		# Unreal | (Unwirklich) | (Irreale) | (Iréel) | (Irreal) | Нереальный | 虚幻 | (Surreal) | Nierealny
 		Unreal: {
-			// Masculine: Unreal
-			// Feminine: Unreal
-			// Neuter: Unreal
+			Masculine: "{^0:(Irreal);(Irreales)}"
+			Feminine: "{^0:(Irreal);(Irreales)}"
+			Neuter: "{^0:(Irreal);(Irreales)}"
 		}
 
 		# Mythical | (Mythisch) | (Mitico) | (Mythique) | (Mítico) | Загадочный | 神话 | (Mítico) | Mityczny
 		Mythical: {
-			// Masculine: Mythical
-			// Feminine: Mythical
-			// Neuter: Mythical
+			Masculine: "{^0:(Mítico);(Míticos)}"
+			Feminine: "{^0:(Mítica);(Míticas)}"
+			Neuter: "{^0:(Mítico);(Míticos)}"
 		}
 
 		# Legendary | (Legendär) | (Leggendario) | (Légendaire) | (Legendario) | Легендарный | 传奇 | (Lendário) | Legendarny
 		Legendary2: {
-			// Masculine: Legendary
-			// Feminine: Legendary
-			// Neuter: Legendary
+			Masculine: "{^0:(Legendario);(Legendarios)}"
+			Feminine: "{^0:(Legendaria);(Legendarias)}"
+			Neuter: "{^0:(Legendario);(Legendarios)}"
 		}
 	}
 }

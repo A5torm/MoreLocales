@@ -1,7 +1,7 @@
 Configs: {
 	Headers: {
 		Fonts: Configuración de fuentes
-		// Features: Other Features
+		Features: Otras características
 	}
 
 	ClientSideConfig: {
@@ -13,13 +13,13 @@ Configs: {
 		}
 
 		LocalizedPrefixPlacement: {
-			// Label: Smart Prefix Position
-			// Tooltip: Changes the position of an item's prefix in certain languages
+			Label: Posición inteligente de los modificadores
+			Tooltip: Cambia la posición del modificador de un objeto en ciertos idiomas (Incluyendo el Español)
 		}
 
 		LocalizedPrefixGenderPluralization: {
-			// Label: Smart Prefix Inflection
-			// Tooltip: Changes the inflection of an item's prefix depending on the item in certain languages
+			Label: Inflección inteligente de los modificadores
+			Tooltip: Cambia la inflección (forma) de los modificadores dependiendo del objeto en ciertos idiomas (Incluyendo el Español)
 		}
 	}
 
@@ -175,11 +175,11 @@ Cultures: {
 	}
 }
 
-/* Misc.Error.FontPatchingError:
+Misc.Error.FontPatchingError:
 	'''
-	There was an error during font patching.
-	Localized fonts will not show up correctly.
-	Please report this bug to the Localization Plus devs immediately.
-	In the meantime, you can try relaunching the game.
-	Click OK to continue anyway.
-	''' */
+	Hubo un error durante el proceso de patching para fuentes.
+	Fuentes localizadas no aparecerán correctamente.
+	Reporta este bug a los desarrolladores de Localization Plus inmediatamente.
+	Mientras tanto, puedes intentar relanzar el juego.
+	Clic a Continuar/OK para continuar aún así.
+	'''

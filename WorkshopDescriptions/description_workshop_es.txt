@@ -1,0 +1,33 @@
+[url=https://discord.gg/4PDwPnz9Jm]Servidor de Discord[/url] | [url=https://github.com/Angeltrisi/MoreLocales]GitHub (Código fuente)[/url]
+
+[h1]Localization+[/h1]
+
+Alguna vez te ha decepcionado que Terraria no tenga una gran variedad de idiomas disponibles por defecto? El propósito de Localization+ es darte de beber del agua de la fuente de la armonía y el entendimiento lingüistico... ¿qué decía? Ah, el mod.
+
+[h2]Características[/h2]
+
+• 18 nuevos idiomas traducibles (lista completa [url=https://github.com/Angeltrisi/MoreLocales/blob/master/README.md]aquí[/url])
+
+• Un nuevo menú de idiomas
+
+• Una manera de abrir y utilizar el menú de idiomas dentro del mundo del juego (Un botón cerca del botón de Configuración)
+
+• La posibilidad de usar carácteres del Hangul, Hiragana, Katakana, y de la escritura Vietnamita y Tailandés sin afectar las fuentes originales del juego
+
+• Formato especial para los modificadores de objetos en ciertos idiomas, incluyendo el Español (Configurable)
+
+• (Para desarrolladores) Bastantes funciones diferentes que te ayudan a hacer cosas con el sistema de localización del juego, incluyendo el añadir tus propias culturas/idiomas localizables al menú de idiomas (¡lee la wiki en nuestro repositorio en GitHub!)
+
+[i]¿Te gustó el mod? ¡Dale un Me gusta![/i]
+
+[img]https://i.imgur.com/ki1CPZe.gif[/img]
+
+[hr][/hr]
+[b]Nota[/b]
+Actualmente, el mod contiene escasas traducciones del contenido de vanilla en una pequeña cantidad de los nuevos idiomas, sin embargo, si quieres ayudar escribiendo algunas traducciones, puedes unirte al Discord o contribuir directamente a través de GitHub.
+
+¡POR FAVOR leer las Discusiones Fijadas en la pestaña de Discusiones de Steam antes de hacer preguntas!
+
+[spoiler]British English, 日本語 Japanese, 한국어 Korean, 中文 Traditional Chinese, Türkçe Turkish, ภาษาไทย Thai, Українська Ukrainian, Español Mexico México Mexicano Spanish, Čeština Czech, Magyar Hungarian, Português Portugal Portuguese, Svenska Swedish, Nederlands Dutch, Dansk Danish, Tiếng Việt Vietnamese, Suomi Finnish, Română Romanian, Bahasa Indonesia Indonesian[/spoiler]
+[quote=tModLoader MoreLocales]
+Desarrollado por qAngel[/quote]

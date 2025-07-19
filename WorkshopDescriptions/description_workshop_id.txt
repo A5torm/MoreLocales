@@ -1,0 +1,27 @@
+[DESCRIPTION OUTDATED]
+
+[url=https://discord.gg/4PDwPnz9Jm]Discord Server[/url] | [url=https://github.com/Angeltrisi/MoreLocales]GitHub (Source Code)[/url]
+
+[h1]Localization+[/h1]
+
+Pernahkah kamu kecewa dengan sedikitnya varian bahasa yang disediakan Terraria? Tujuan Localization+ adalah untuk memuaskan haus kalian untuk pemahaman linguistik!
+
+[h2]Fitur[/h2]
+
+• 18 lokalisasi bahasa baru (daftar lengkap [url=https://github.com/Angeltrisi/MoreLocales/blob/master/README.md]here[/url])
+
+• Menu bahasa baru
+
+• Sekarang kalian dapat dengan bebas menggunakan karakter Hangul, Hiragana, Katakana, Aksara Vietnam, dan Thailand tanpa mengorbankan font dasar Terraria
+
+[i]Suka mod nya? Like mod ini![/i]
+
+[img]https://i.imgur.com/ki1CPZe.gif[/img]
+
+[hr][/hr]
+[b]Catatan[/b]
+Saat ini modnya hanya mengandung sedikit lokalisasi untuk konten vanilla dalam sejumlah kecil bahasa baru, namun, jika kamu ingin membantu membuat translasi, kamu bisa bergabung di Discord atau memberikan kotribusi langsung dari GitHub.
+
+Jika kamu melihat mod ini setelah rilis dan kamu adalah pengguna, tolong perhatian mod ini tidak melakukan apapun selain memberikanmu menu bahasa cantik tunggu sampai modder lainnya menambahkan lokalisasi yang sesuai kedalam modnya, dan hingga orang-orang berkontribusi translasi untuk konten vanilla pada mod ini.
+
+[spoiler]British English, 日本語 Japanese, 한국어 Korean, 中文 Traditional Chinese, Türkçe Turkish, ภาษาไทย Thai, Українська Ukrainian, Español Latin America American Spanish, Čeština Czech, Magyar Hungarian, Português Portugal Portuguese, Svenska Swedish, Nederlands Dutch, Dansk Danish, Tiếng Việt Vietnamese, Suomi Finnish, Română Romanian, Bahasa Indonesia Indonesian[/spoiler]

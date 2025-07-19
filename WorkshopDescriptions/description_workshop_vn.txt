@@ -1,0 +1,29 @@
+[DESCRIPTION OUTDATED]
+
+[url=https://discord.gg/4PDwPnz9Jm]Server Discord[/url] | [url=https://github.com/Angeltrisi/MoreLocales]GitHub (Mã Nguồn)[/url]
+
+[h1]Thêm Bản Địa Hóa[/h1]
+
+Bạn đã bao giờ cảm thấy thất vọng vì sự thiếu đa dạng trong ngôn ngữ mặc định của Terraria chưa? Tác dụng của Thêm Bản Địa Hóa là dập tắt cơn khát thấu hiểu ngôn ngữ của bạn!
+
+[h2]Tính năng[/h2]
+
+• 18 ngôn ngữ mới có thể được dịch (danh sách đầy đủ [url=https://github.com/Angeltrisi/MoreLocales/blob/master/README.md]ở đây[/url])
+
+• Một menu ngôn ngữ hoàn toàn mới
+
+• Giờ đây, bạn có thể tự do sử dụng kí tự Hangul, Hangul, Hiragana, Katakana, Việt Nam và Thái mà không làm ảnh hưởng đến phông chữ mặc định của game
+
+[i]Bạn thích mod này? Hãy like mod này![/i]
+
+[img]https://i.imgur.com/ki1CPZe.gif[/img]
+
+[hr][/hr]
+[b]Chú ý[/b]
+Mod này hiện đang thiếu bản địa hóa cho nội dung nguyên bản của game của một số ngôn ngữ mới, tuy nhiên, nếu bạn muốn giúp cho việc dịch thuật, bạn có thể tham gia kênh Discord hoặc đóng góp trực tiếp thông qua Github.
+
+Nếu bạn đang thấy mod này ngay sau ra mặt và là một người dùng, lưu ý rằng mod sẽ không làm gì ngoài cho bạn một cái menu ngôn ngữ cho đến khi các modder khác thêm bản dịch thuật tương ứng vào mod của họ, và đến khi những người khác bản địa hóa cho nội dung nguyên bản của game vào mod này.
+Tôi đang trong quá trình chuyển nội dung bản địa hóa của đội dịch thuật Thái vào mod, nhưng làm việc này sẽ tốn một khoảng thời gian
+
+[quote=tModLoader]
+Phát triển bởi qAngel[/quote]

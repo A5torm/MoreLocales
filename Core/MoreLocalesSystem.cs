@@ -50,6 +50,7 @@ namespace MoreLocales.Core
             if (!MoreLocalesSets._didFirstLoad)
                 MoreLocalesAPI.InitModLocalizationFlags();
             MoreLocalesSets.ReloadedLocalizations();
+            LangFeaturesPlus.boundDirectPluralizeTextCache.Clear();
         }
         private static void GoToBetterLangMenuInstead(ILContext il)
         {

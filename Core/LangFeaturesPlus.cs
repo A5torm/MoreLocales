@@ -7,6 +7,7 @@ using Terraria.Localization;
 using System.Reflection;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 namespace MoreLocales.Core
 {
@@ -230,6 +231,8 @@ namespace MoreLocales.Core
             if (!(modPrefix?.Mod ?? MoreLocales.Instance).TryGetInflectionFileKey(out string inflectionFile))
                 return ogText;
 
+            // Main.NewText($"{gender}{pluralization}");
+
             string prefixName = vanilla ? PrefixID.Search.GetName(prefix) : modPrefix.Name;
 
             string genderName = GenderNames[(byte)gender];
@@ -237,12 +240,63 @@ namespace MoreLocales.Core
             string englishName = vanilla ? LangUtils.GetVanillaLocalizationValues(ogText, GameCulture.DefaultCulture)[0] : string.Empty;
             string defaultFunc() => (vanilla ? englishName : ogText.Value);
 
-            LocalizedText possiblyFinal = Language.GetOrRegister($"{inflectionFile}.Prefixes.{prefixName}.{genderName}", defaultFunc).WithFormatArgs((byte)pluralization);
+            LocalizedText possiblyFinal = Language.GetOrRegister($"{inflectionFile}.Prefixes.{prefixName}.{genderName}", defaultFunc).WithIndexFormat((byte)pluralization);
 
             if (possiblyFinal.Value == englishName)
                 return ogText;
             return possiblyFinal;
         }
+        /// <summary>
+        /// Allows you to work with what's usually used as a pluralization system (things like <c>"It has been {0} {^0:day;days}."</c>), but by supplying indices to those arrays (in this case <c>["day","days"]</c>) directly, meaning it can be used for direct pluralization via <see cref="Pluralization"/>, or even just dynamically choosing elements from each array to display stuff dynamically.<para/>
+        /// This must be used <b>before</b> any formatting via <see cref="LocalizedText.Format(object[])"/>, <see cref="LocalizedText.WithFormatArgs(object[])"/>, etc.
+        /// </summary>
+        /// <param name="baseText"></param>
+        /// <param name="indices"></param>
+        /// <returns></returns>
+        public static LocalizedText WithIndexFormat(this LocalizedText baseText, params int[] indices)
+        {
+            string key = baseText.Key;
+            DirectPluralizationTextBinding key2 = new(key, indices);
+            if (boundDirectPluralizeTextCache.TryGetValue(key2, out var value))
+            {
+                return value;
+            }
+
+            value = new LocalizedText(key, LanguageManager.Instance.GetTextValue(key));
+
+            string finalFormatted = value.Value;
+            bool hasPlurals = LocalizedText.PluralizationPatternRegex.IsMatch(finalFormatted);
+            value._hasPlurals = hasPlurals;
+
+            if (!hasPlurals)
+                return baseText;
+
+            finalFormatted = LocalizedText.PluralizationPatternRegex.Replace(finalFormatted, (m) =>
+            {
+                // in {^0:day;days}, this would be 0
+                int num = Convert.ToInt32(m.Groups[1].Value);
+
+                // in {^0:day;days}, this would be ["day", "days"]
+                string[] array = m.Groups[2].Value.Split(';');
+
+                // to get the real index, we get the index (from indices) at the index provided by the text itself
+                // for example:
+                // Text: {^0:I;We} haven't eaten for {^1:a day;a couple days;several days}!
+                // let's say we want to get "We haven't eaten for several days!", so we supply [1, 2] as indices.
+                // so, for the first match, the text accesses index 0, which is 1 in our array, and then we index into the string array with the obtained index to get "We"
+                // same thing for the second one: the text accesses index 1, which we suppied as 2, and then we index into the string array to get "several days".
+                int index = indices[num];
+                return array[Math.Min(index, array.Length - 1)];
+            });
+
+            value.SetValue(finalFormatted);
+
+            boundDirectPluralizeTextCache.Add(key2, value);
+
+            return value;
+        }
+        internal static readonly Dictionary<DirectPluralizationTextBinding, LocalizedText> boundDirectPluralizeTextCache = [];
+        internal record struct DirectPluralizationTextBinding(string Key, int[] Indices);
         internal static void EnsureKeysForPrefixExist(int prefix, bool addComments)
         {
             bool vanilla = prefix < PrefixID.Count;
@@ -335,7 +389,8 @@ namespace MoreLocales.Core
 
             LocalizedText data = null;
 
-            if (!(modItem?.Mod ?? MoreLocales.Instance).TryGetInflectionFileKey(out string inflectionFile))
+            Mod sourceMod = modItem?.Mod ?? MoreLocales.Instance;
+            if (!(sourceMod).TryGetInflectionFileKey(out string inflectionFile))
                 return InflectionData.Default;
 
             string key = $"{inflectionFile}.Items.{itemName}";
@@ -350,7 +405,7 @@ namespace MoreLocales.Core
                 LangUtils.AddComment(key, $"DisplayName: {commentBody}", HjsonCommentType.Hash);
             }
 
-            if (TryParse(data.Value, out InflectionData inflectionData))
+            if (TryParse(data.Value, out InflectionData inflectionData, sourceMod))
                 return inflectionData;
 
             return InflectionData.Default;

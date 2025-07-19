@@ -10,7 +10,7 @@ Chinese - Traditional (zh-Hant) <img src="https://catamphetamine.github.io/count
 Turkish (tr-TR) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/TR.svg" width="20">  
 Thai (th-TH) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/TH.svg" width="20">  
 Ukrainian (uk-UA) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/UA.svg" width="20">  
-Spanish - Latin America (es-LA) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/MX.svg" width="20">  
+Spanish - Mexico (es-MX) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/MX.svg" width="20">  
 Czech (cs-CZ) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/CZ.svg" width="20">  
 Hungarian (hu-HU) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/HU.svg" width="20">  
 Portuguese - Portugal (pt-PT) <img src="https://catamphetamine.github.io/country-flag-icons/3x2/PT.svg" width="20">  
@@ -37,7 +37,7 @@ qAngel
 ### Art
 qAngel  
 ### Localization
-qAngel - Spanish (Both)  
+qAngel - Spanish (Spain)  
 InfinaMii, TechnicalityCreations - English (United Kingdom)  
 Alone - Indonesian  
 Thai Localization Team - Thai  
