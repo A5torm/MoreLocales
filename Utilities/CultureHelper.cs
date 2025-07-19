@@ -119,7 +119,7 @@ namespace MoreLocales.Utilities
     /// </summary>
     /// <param name="Type">Whether or not the adjective should go before or after the noun.</param>
     /// <param name="Connector">The string to insert between the adjective and the noun, if any.</param>
-    public readonly record struct AdjectiveOrder(AdjectiveOrderType Type = AdjectiveOrderType.Before, string Connector = "")
+    public readonly record struct AdjectiveOrder(AdjectiveOrderType Type = AdjectiveOrderType.Before, string Connector = " ")
     {
         private static readonly AdjectiveOrder _before = new();
         private static readonly AdjectiveOrder _after = new(AdjectiveOrderType.After);
