@@ -42,7 +42,7 @@ namespace MoreLocales.Core
     /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
     /// </param>
     public readonly struct GrammarData(PluralizationStyle pluralizationStyle = PluralizationStyle.Simple, Func<int, int, int, int> customPluralizationRule = null,
-        AdjectiveOrder adjectiveOrder = new(), Func<GrammaticalGender, Pluralization, bool> contextChangesAdjective = null)
+        AdjectiveOrder? adjectiveOrder = null, Func<GrammaticalGender, Pluralization, bool> contextChangesAdjective = null)
     {
         /// <summary>
         /// The pluralization style that should be used for this <see cref="MoreLocalesCulture"/>.<para/>
@@ -58,7 +58,7 @@ namespace MoreLocales.Core
         /// <summary>
         /// The adjective-noun order formatter for this <see cref="MoreLocalesCulture"/>.
         /// </summary>
-        public readonly AdjectiveOrder AdjectiveOrder = adjectiveOrder;
+        public readonly AdjectiveOrder AdjectiveOrder = adjectiveOrder ?? AdjectiveOrder.BeforeWithSpace;
         /// <summary>
         /// Whether or not a pair of gender and pluralization data from a noun should change the form of the adjective attached to it. <br/>
         /// For example, in English, adjective form never changes, so you'd always return true. In Spanish, the adjective changes if the gender isn't masculine or if the noun is plural. <para/>

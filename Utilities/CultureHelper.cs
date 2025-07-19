@@ -143,6 +143,10 @@ namespace MoreLocales.Utilities
         /// </summary>
         public static AdjectiveOrder AfterWithSpace => _afterWithSpace;
         /// <summary>
+        /// Creates a default <see cref="AdjectiveOrder"/> instance with the values of <see cref="BeforeWithSpace"/>
+        /// </summary>
+        public AdjectiveOrder() : this(AdjectiveOrderType.Before, " ") { }
+        /// <summary>
         /// Formats the adjective and noun together
         /// </summary>
         public string Apply(string noun, string adjective)
