@@ -208,28 +208,31 @@ namespace MoreLocales.Core
 
             if (self._spriteCharacters.TryGetValue(character, out var value))
             {
-                for (int i = 0; i < children.Length; i++)
+                if (children is not null)
                 {
-                    ChildFont c = children[i];
-
-                    if (c.OverrideParent is null || !c.OverrideParent())
-                        continue;
-
-                    Asset<DynamicSpriteFont> font = c.Font;
-
-                    if (!font.IsLoaded)
-                        font.Wait();
-
-                    if (font.Value._spriteCharacters.TryGetValue(character, out var overriddenValue))
+                    for (int i = 0; i < children.Length; i++)
                     {
-                        _currentlyDrawnFont = font.Value;
-                        return overriddenValue;
+                        ChildFont c = children[i];
+
+                        if (c.OverrideParent is null || !c.OverrideParent())
+                            continue;
+
+                        Asset<DynamicSpriteFont> font = c.Font;
+
+                        if (!font.IsLoaded)
+                            font.Wait();
+
+                        if (font.Value._spriteCharacters.TryGetValue(character, out var overriddenValue))
+                        {
+                            _currentlyDrawnFont = font.Value;
+                            return overriddenValue;
+                        }
                     }
                 }
                 _currentlyDrawnFont = self;
                 return value;
             }
-            else
+            else if (children is not null)
             {
                 for (int i = 0; i < children.Length; i++)
                 {
