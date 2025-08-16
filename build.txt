@@ -2,5 +2,5 @@ displayName = Localization Plus (More Languages Mod)
 author = qAngel
 homepage = https://github.com/queueAngel/MoreLocales
 side = Client
-buildIgnore = *.csproj, *.user, obj\*, bin\*, lib\*, .vs\*, Resources\*, compatibleModsList.txt, WorkshopDescriptions\*
-version = 2.0.0.2
+buildIgnore = *.csproj, *.user, obj\*, bin\*, lib\*, .vs\*, Resources\*, Properties\*, compatibleModsList.txt, WorkshopDescriptions\*
+version = 2.1.0.0

@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria.GameContent;
+using Terraria.Initializers;
 using static ReLogic.Graphics.DynamicSpriteFont;
+using static Terraria.Localization.NetworkText;
 
 namespace MoreLocales.Core
 {
@@ -15,7 +17,7 @@ namespace MoreLocales.Core
     /// </summary>
     /// <param name="Font">The child font</param>
     /// <param name="OverrideParent">Whether or not this font should override the parent font's character if the parent font contains that character</param>
-    public readonly record struct ChildFont(Asset<DynamicSpriteFont> Font, Func<bool> OverrideParent = null);
+    public readonly record struct ChildFont(Asset<DynamicSpriteFont> Font, Func<DynamicSpriteFont, bool> OverrideParent = null);
     /// <summary>
     /// Contains data to include fonts inside other fonts.
     /// </summary>
@@ -39,7 +41,7 @@ namespace MoreLocales.Core
                     child.Font.Wait();
             }
         }
-        internal static ChildFontData Create(string[] fileNames, Func<bool>[] overrideConds)
+        internal static ChildFontData Create(string[] fileNames, Func<DynamicSpriteFont, bool>[] overrideConds)
         {
             if (fileNames.Length != overrideConds.Length)
                 throw new ArgumentException("FileNames and OverrideConds params must be the same length");
@@ -111,8 +113,22 @@ namespace MoreLocales.Core
 
         private static FieldInfo charSpacing;
 
+        public static Asset<DynamicSpriteFont> VanillaItemStack = GetVanilla("Fonts/Item_Stack");
+        public static Asset<DynamicSpriteFont> VanillaMouseText = GetVanilla("Fonts/Mouse_Text");
+        public static Asset<DynamicSpriteFont> VanillaDeathText = GetVanilla("Fonts/Death_Text");
+        public static Asset<DynamicSpriteFont> VanillaCombatText = GetVanilla("Fonts/Combat_Text");
+        public static Asset<DynamicSpriteFont> VanillaCritText = GetVanilla("Fonts/Combat_Crit");
+        public static HashSet<DynamicSpriteFont> VanillaFonts =
+        [
+            VanillaItemStack.Value,
+            VanillaMouseText.Value,
+            VanillaDeathText.Value,
+            VanillaCombatText.Value,
+            VanillaCritText.Value,
+        ];
         public static bool CharDataInlined { get; set; } = false;
 
+        private static Asset<DynamicSpriteFont> GetVanilla(string name) => AssetInitializer.LoadAsset<DynamicSpriteFont>(name, AssetRequestMode.ImmediateLoad);
         /// <summary>
         /// I'm sorry.
         /// </summary>
@@ -120,8 +136,9 @@ namespace MoreLocales.Core
 
         public static void DoLoad()
         {
-            static bool japaneseActive() => CultureHelper.CustomCultureActive(CultureNamePlus.Japanese);
-            static bool koreanActive() => CultureHelper.CustomCultureActive(CultureNamePlus.Korean);
+            static bool japaneseActive(DynamicSpriteFont parent) => CultureHelper.CustomCultureActive(CultureNamePlus.Japanese);
+            static bool koreanActive(DynamicSpriteFont parent) => CultureHelper.CustomCultureActive(CultureNamePlus.Korean);
+            static bool isVanillaFont(DynamicSpriteFont parent) => VanillaFonts.Contains(parent);
 
             /*
             foreach (var file in MoreLocales.Instance.File.files.Keys)
@@ -130,12 +147,12 @@ namespace MoreLocales.Core
             }
             */
 
-            Func<bool>[] commonOverrideConds =
+            Func<DynamicSpriteFont, bool>[] commonOverrideConds =
             [
                 japaneseActive,
                 koreanActive,
                 null,
-                null
+                isVanillaFont
             ];
 
             string[] itemStackChildrenNames =
@@ -143,35 +160,35 @@ namespace MoreLocales.Core
                 $"{itemStackName}JP",
                 $"{itemStackName}KR",
                 $"{itemStackName}TH",
-                $"{itemStackName}VN"
+                $"{itemStackName}EXT"
             ];
             string[] mouseTextChildrenNames =
             [
                 $"{mouseTextName}JP",
                 $"{mouseTextName}KR",
                 $"{mouseTextName}TH",
-                $"{mouseTextName}VN"
+                $"{mouseTextName}EXT"
             ];
             string[] deathTextChildrenNames =
             [
                 $"{deathTextName}JP",
                 $"{deathTextName}KR",
                 $"{deathTextName}TH",
-                $"{deathTextName}VN"
+                $"{deathTextName}EXT"
             ];
             string[] combatTextChildrenNames =
             [
                 $"{combatTextName}JP",
                 $"{combatTextName}KR",
                 $"{combatTextName}TH",
-                $"{mouseTextName}VN" // yes this is on purpose
+                $"{mouseTextName}EXT" // yes this is on purpose
             ];
             string[] critTextChildrenNames =
             [
                 $"{critTextName}JP",
                 $"{critTextName}KR",
                 $"{critTextName}TH",
-                $"{critTextName}VN"
+                $"{critTextName}EXT"
             ];
 
             ItemStackChildren = ChildFontData.Create(itemStackChildrenNames, commonOverrideConds);
@@ -214,7 +231,7 @@ namespace MoreLocales.Core
                     {
                         ChildFont c = children[i];
 
-                        if (c.OverrideParent is null || !c.OverrideParent())
+                        if (c.OverrideParent is null || !c.OverrideParent(self))
                             continue;
 
                         Asset<DynamicSpriteFont> font = c.Font;

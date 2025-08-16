@@ -4,14 +4,15 @@
 	<Asset Type="Graphics:DynamicFontDescription">
 		<!--
 		Modify this string to change the default font that will be imported.
+		(NOTE IF YOU SEE THIS: qAndy IS MY PERSONAL VERSION OF Andy WHICH I CANNOT SHARE DUE TO LICENSING ISSUES)
 		-->
-		<FontName>Andy</FontName>
+		<FontName>qAndy</FontName>
 		
 		<!--
 		Size is a float value, measured in points. Modify this value to change
 		the size of the font.
 		-->
-		<Size>17</Size>
+		<Size>40</Size>
 		
 		<!--
 		Spacing is a float value, measured in pixels. Modify this value to change
@@ -57,78 +58,115 @@
 		-->
 		<CharacterRegions>
 
-			<!-- English before numbers -->
+			<!-- Latin Characters (For Latin, Romance Languages, and Slavic Non-Cyrillic) -->
+
 			<CharacterRegion>
-				<Start>&#x20;</Start>
-				<End>&#x2F;</End>
+				<Start>&#x00A1;</Start>
+				<End>&#x0131;</End>
 			</CharacterRegion>
 
-			<!-- Numbers -->
 			<CharacterRegion>
-				<FontName>PericlesW01-Regular</FontName>
-				<Size>16.5</Size>
-				<Style>Regular</Style>
-				<Start>&#x30;</Start>
-				<End>&#x39;</End>
+				<Start>&#x0141;</Start>
+				<End>&#x0148;</End>
 			</CharacterRegion>
 
-			<!-- English after numbers -->
 			<CharacterRegion>
-				<Start>&#x3A;</Start>
-				<End>&#xA9;</End>
+				<Start>&#x014C;</Start>
+				<End>&#x0155;</End>
 			</CharacterRegion>
 
-			<!-- Latin Characters -->
 			<CharacterRegion>
-				<FontName>Comic Sans MS</FontName>
-				<Size>14</Size>
-				<Style>Regular</Style>
-				<Start>&#xAA;</Start>
-				<End>&#x385;</End>
+				<Start>&#x0158;</Start>
+				<End>&#x0161;</End>
 			</CharacterRegion>
-			
+
+			<CharacterRegion>
+				<Start>&#x0164;</Start>
+				<End>&#x0165;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0168;</Start>
+				<End>&#x0171;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0178;</Start>
+				<End>&#x017E;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0218;</Start>
+				<End>&#x021B;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0232;</Start>
+				<End>&#x0233;</End>
+			</CharacterRegion>
+
+			<!-- Cyrillic Characters (For Russian and Ukrianian) -->
+
+			<CharacterRegion>
+				<Start>&#x0401;</Start>
+				<End>&#x0401;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0404;</Start>
+				<End>&#x0404;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0406;</Start>
+				<End>&#x0407;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0410;</Start>
+				<End>&#x044F;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0451;</Start>
+				<End>&#x0451;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0454;</Start>
+				<End>&#x0454;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0456;</Start>
+				<End>&#x0457;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0490;</Start>
+				<End>&#x0491;</End>
+			</CharacterRegion>
+
 			<!-- More Latin Characters (For Vietnamese) -->
+
 			<CharacterRegion>
-				<FontName>Segoe UI</FontName>
-				<Size>14</Size>
-				<Style>Bold</Style>
+				<Start>&#x01A0;</Start>
+				<End>&#x01A1;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x01AF;</Start>
+				<End>&#x01B0;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
 				<Start>&#x1E00;</Start>
-				<End>&#x1EFF;</End>
+				<End>&#x1E9A;</End>
 			</CharacterRegion>
 
-			<!-- Extra Symbols -->
 			<CharacterRegion>
-				<FontName>Comic Sans MS</FontName>
-				<Size>15</Size>
-				<Style>Regular</Style>
-				<Start>&#x2013;</Start>
-				<End>&#x303F;</End>
-			</CharacterRegion>
-
-			<!-- Cyrillic (Russian) -->
-			<CharacterRegion>
-				<Size>16</Size>
-				<Style>Regular</Style>
-				<Start>&#x0400;</Start>
-				<End>&#x04FF;</End>
-			</CharacterRegion>
-
-			<!-- Simplified Chinese -->
-			<CharacterRegion>
-				<FontName>Source Han Sans SC</FontName>
-				<Size>15</Size>
-				<Style>Regular</Style>
-				<Start>&#x4E00;</Start>
-				<End>&#x9FFF;</End>
-			</CharacterRegion>
-
-			<!-- Full Width English (For Simplified Chinese) -->
-			<CharacterRegion>
-				<FontName>Source Han Sans SC</FontName>
-				<Size>15</Size>
-				<Style>Regular</Style>
-				<Start>&#xFF01;</Start>
-				<End>&#xFF60;</End>
+				<Start>&#x1EA0;</Start>
+				<End>&#x1EF9;</End>
 			</CharacterRegion>
 
 		</CharacterRegions>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<XnaContent xmlns:Graphics="ReLogic.Content.Pipeline">
+	<Asset Type="Graphics:DynamicFontDescription">
+		<!--
+		Modify this string to change the default font that will be imported.
+		(NOTE IF YOU SEE THIS: qAndy IS MY PERSONAL VERSION OF Andy WHICH I CANNOT SHARE DUE TO LICENSING ISSUES)
+		-->
+		<FontName>qAndy</FontName>
+		
+		<!--
+		Size is a float value, measured in points. Modify this value to change
+		the size of the font.
+		-->
+		<Size>14</Size>
+		
+		<!--
+		Spacing is a float value, measured in pixels. Modify this value to change
+		the amount of spacing in between characters.
+		-->
+		<Spacing>0</Spacing>
+		
+		<!--
+		UseKerning controls the layout of the font. If this value is true, kerning information
+		will be used when placing characters.
+		-->
+		<UseKerning>true</UseKerning>
+		
+		<!--
+		Style controls the default style of the font. Valid entries are "Regular", "Bold", "Italic",
+		and "Bold, Italic", and are case sensitive.
+		-->
+		<Style>Bold</Style>
+		
+		<!--
+		DefaultCharacter is the default character will be substituted if you draw
+		or measure text that contains characters which were not included in the font.
+		(However, you still need to include DefaultCharacter in the CharacterRegions below)
+		-->
+		<DefaultCharacter>*</DefaultCharacter>
+
+		<!--
+		VerticalOffset controls how the maximum height of the font is determined.
+		"DefaultFontAscent" will use the maximum ascent size of the default font for reference.
+		"MaxAscent" will use the maximum ascent size found across all fonts used for reference.
+		
+		"DefaultFontAscent" is the suggested option here.
+		-->
+		<VerticalOffset>DefaultFontAscent</VerticalOffset>
+
+
+		<!--
+		CharacterRegions control what letters are available in the font. Every
+		character from Start to End will be built and made available for drawing.
+		The characters are ordered according to the Unicode standard.
+		
+		Character regions may also override the default FontName, Size, and Style. (See above for details)
+		-->
+		<CharacterRegions>
+
+			<!-- Latin Characters (For Latin, Romance Languages, and Slavic Non-Cyrillic) -->
+
+			<CharacterRegion>
+				<Start>&#x00A1;</Start>
+				<End>&#x0131;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0141;</Start>
+				<End>&#x0148;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x014C;</Start>
+				<End>&#x0155;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0158;</Start>
+				<End>&#x0161;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0164;</Start>
+				<End>&#x0165;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0168;</Start>
+				<End>&#x0171;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0178;</Start>
+				<End>&#x017E;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0218;</Start>
+				<End>&#x021B;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0232;</Start>
+				<End>&#x0233;</End>
+			</CharacterRegion>
+
+			<!-- Cyrillic Characters (For Russian and Ukrianian) -->
+
+			<CharacterRegion>
+				<Start>&#x0401;</Start>
+				<End>&#x0401;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0404;</Start>
+				<End>&#x0404;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0406;</Start>
+				<End>&#x0407;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0410;</Start>
+				<End>&#x044F;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0451;</Start>
+				<End>&#x0451;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0454;</Start>
+				<End>&#x0454;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0456;</Start>
+				<End>&#x0457;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x0490;</Start>
+				<End>&#x0491;</End>
+			</CharacterRegion>
+
+			<!-- More Latin Characters (For Vietnamese) -->
+
+			<CharacterRegion>
+				<Start>&#x01A0;</Start>
+				<End>&#x01A1;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x01AF;</Start>
+				<End>&#x01B0;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x1E00;</Start>
+				<End>&#x1E9A;</End>
+			</CharacterRegion>
+
+			<CharacterRegion>
+				<Start>&#x1EA0;</Start>
+				<End>&#x1EF9;</End>
+			</CharacterRegion>
+
+		</CharacterRegions>
+	</Asset>
+</XnaContent>
