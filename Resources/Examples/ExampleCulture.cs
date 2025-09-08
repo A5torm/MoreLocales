@@ -49,7 +49,7 @@ namespace MoreLocales.Resources.Examples
             return Main.rand.Next(3);
         }
         // Not really necessary, but a little performance improvement is always good.
-        public override bool ContextChangesAdjective(GrammaticalGender gender, Pluralization pluralization)
+        public override bool ContextChangesAdjective(GrammaticalGender gender, GrammaticalNumber pluralization)
         {
             return gender == GrammaticalGender.Feminine;
         }

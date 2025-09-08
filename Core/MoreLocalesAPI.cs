@@ -42,7 +42,7 @@ namespace MoreLocales.Core
     /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
     /// </param>
     public readonly struct GrammarData(PluralizationStyle pluralizationStyle = PluralizationStyle.Simple, Func<int, int, int, int> customPluralizationRule = null,
-        AdjectiveOrder? adjectiveOrder = null, Func<GrammaticalGender, Pluralization, bool> contextChangesAdjective = null)
+        AdjectiveOrder? adjectiveOrder = null, Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective = null)
     {
         /// <summary>
         /// The pluralization style that should be used for this <see cref="MoreLocalesCulture"/>.<para/>
@@ -66,7 +66,7 @@ namespace MoreLocales.Core
         /// For more info on pluralization type, see <see cref="CustomPluralizationRule"/>.<para/>
         /// <b>Note:</b> Setting this is not necessary for a new culture to function. It simply allows for culling unnecessary calculations for slighly better performance.
         /// </summary>
-        public readonly Func<GrammaticalGender, Pluralization, bool> ContextChangesAdjective = contextChangesAdjective;
+        public readonly Func<GrammaticalGender, GrammaticalNumber, bool> ContextChangesAdjective = contextChangesAdjective;
         #region what's a sourcegen
         /// <summary>
         /// Makes a new <see cref="GrammarData"/> instance with only <see cref="GrammarData.ContextChangesAdjective"/> set.
@@ -75,7 +75,7 @@ namespace MoreLocales.Core
         /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
         /// </param>
         /// <returns></returns>
-        public static GrammarData Context(Func<GrammaticalGender, Pluralization, bool> contextChangesAdjective) => new(contextChangesAdjective: contextChangesAdjective);
+        public static GrammarData Context(Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective) => new(contextChangesAdjective: contextChangesAdjective);
         /// <summary>
         /// Makes a new <see cref="GrammarData"/> instance with only <see cref="GrammarData.PluralizationRule"/> and <see cref="GrammarData.AdjectiveOrder"/> set.
         /// </summary>
@@ -99,7 +99,7 @@ namespace MoreLocales.Core
         /// </param>
         /// <returns></returns>
         public static GrammarData OrderContext
-            (AdjectiveOrder adjectiveOrder, Func<GrammaticalGender, Pluralization, bool> contextChangesAdjective)
+            (AdjectiveOrder adjectiveOrder, Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective)
             => new(adjectiveOrder: adjectiveOrder, contextChangesAdjective: contextChangesAdjective);
         /// <summary>
         /// Makes a new <see cref="GrammarData"/> instance with only <see cref="GrammarData.PluralizationRule"/> and <see cref="GrammarData.ContextChangesAdjective"/> set.
@@ -111,7 +111,7 @@ namespace MoreLocales.Core
         /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
         /// </param>
         /// <returns></returns>
-        public static GrammarData StyleContext(PluralizationStyle pluralizationStyle, Func<GrammaticalGender, Pluralization, bool> contextChangesAdjective)
+        public static GrammarData StyleContext(PluralizationStyle pluralizationStyle, Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective)
             => new(pluralizationStyle: pluralizationStyle, contextChangesAdjective: contextChangesAdjective);
         /// <summary>
         /// Makes a new <see cref="GrammarData"/> instance with <see cref="GrammarData.PluralizationRule"/>, <see cref="AdjectiveOrder"/> and <see cref="GrammarData.ContextChangesAdjective"/> set.
@@ -128,7 +128,7 @@ namespace MoreLocales.Core
         /// <returns></returns>
         public static GrammarData StyleOrderContext
             (PluralizationStyle pluralizationStyle, AdjectiveOrder adjectiveOrder,
-            Func<GrammaticalGender, Pluralization, bool> contextChangesAdjective) => new(pluralizationStyle, null, adjectiveOrder, contextChangesAdjective);
+            Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective) => new(pluralizationStyle, null, adjectiveOrder, contextChangesAdjective);
         #endregion
     }
     /// <summary>
@@ -308,7 +308,7 @@ namespace MoreLocales.Core
         private static void SingleModLocalizationFlags(Mod mod)
         {
             _localizationFlags[mod] = 0ul;
-            HashSet <GameCulture> cultures = [];
+            HashSet<GameCulture> cultures = [];
 
             var files = mod.GetLocalizationFiles();
 

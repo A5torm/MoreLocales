@@ -8,6 +8,7 @@ using System.Reflection;
 using Terraria.ID;
 using System.Collections.Generic;
 using Terraria.UI;
+using MoreLocales.Core.Inflections;
 
 namespace MoreLocales.Core
 {
@@ -48,7 +49,11 @@ namespace MoreLocales.Core
         public override void OnLocalizationsLoaded()
         {
             if (!MoreLocalesSets._didFirstLoad)
+            {
                 MoreLocalesAPI.InitModLocalizationFlags();
+                LPlusFile.Initialize();
+            }
+            LPlusFile.UpdateCurrent();
             MoreLocalesSets.ReloadedLocalizations();
             LangFeaturesPlus.boundDirectPluralizeTextCache.Clear();
         }
@@ -169,11 +174,82 @@ namespace MoreLocales.Core
             return;
             if (Main.keyState.IsKeyDown(Keys.F) && !Main.oldKeyState.IsKeyDown(Keys.F))
             {
+                /*
+                foreach (var thing in LPlusFile.Current.Recognize.InflectionRecognizers)
+                {
+                    Main.NewText($"{thing.Key}:{string.Join<InflectionPattern>(" | ", thing.Value)}");
+                }
+                */
+                /*
+                Item held = Main.LocalPlayer.HeldItem;
+                if (held != null && !held.IsAir && held.type > ItemID.None)
+                {
+                    if (held.prefix > 0)
+                    {
+                        var prefix = MoreLocalesSets.Prefixes[held.prefix];
+                        if (prefix.AlternateForms != null)
+                        {
+                            prefix.AlternateForms.Clear();
+                            InflectionData inflectTo = InflectionData.FemSg;
+                            if (!prefix.EnsureExists(inflectTo))
+                                Main.NewText($"Inflecting {prefix.BaseForm} for {inflectTo} is impossible.");
+                            else
+                                Main.NewText(prefix.Get(inflectTo));
+                            InflectableWord w = new(Lang.prefix[held.prefix].Value);
+                        }
+                    }
+                    MoreLocalesSets.CachedInflectionData[held.type].Data.Inflection.Deconstruct(out GrammaticalGender g, out GrammaticalNumber n);
+                    Main.NewText($"{g}:{n}");
+                }
+                */
+                
+                /*
+                var set = MoreLocalesSets.Prefixes;
+                for (int i = 0; i < set.Length; i++)
+                {
+                    var s = set[i];
+                    string str = s.Get();
+                    if (str != null)
+                        Main.NewText(str);
+                }
+                */
+                /*
+                foreach (var thing in LPlusFile._lplusFiles)
+                {
+                    Main.NewText(thing.Key);
+                    foreach (var otherThing in thing.Value)
+                    {
+                        Main.NewText(otherThing.Key);
+                        foreach (var othererThing in otherThing.Value)
+                        {
+                            Main.NewText(othererThing);
+                        }
+                    }
+                }
+                */
+                
+                /*
+                LPlusFile f = LPlusFile.Current;
+                if (f != null)
+                {
+                    Main.NewText(f.Source);
+                }
+                */
+                
+                /*
+                if (InflectionPattern.TryParse("-anos", out var result))
+                {
+                    result.TryReplace("Republicanos", "hehnihtemon", out var rarasult);
+                    Main.NewText(rarasult.ToString());
+                }
+                */
+                /*
                 for (int i = 0; i < MoreLocalesAPI.extraCulturesV2.Length; i++)
                 {
                     var culture = MoreLocalesAPI.extraCulturesV2[i];
                     Main.NewText($"{culture.Name}, {culture.Mod?.Name ?? "null"}, {culture.FunctionalOwner}");
                 }
+                */
                 /*
                 Main.NewText(Language.Exists("Mods.MoreLocales.VanillaData.InflectionData.Prefixes.Large"));
                 Main.NewText(LangUtils.CategoryExists("Mods.MoreLocales.VanillaData.InflectionData.Prefixes.Large"));

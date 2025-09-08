@@ -179,11 +179,26 @@ Cultures: {
 	}
 }
 
-Misc.Error.FontPatchingError:
-	'''
-	There was an error during font patching.
-	Localized fonts will not show up correctly.
-	Please report this bug to the Localization Plus devs immediately.
-	In the meantime, you can try relaunching the game.
-	Click OK to continue anyway.
-	'''
+Misc: {
+	Error: {
+		FontPatchingError:
+			'''
+			There was an error during font patching.
+			Localized fonts will not show up correctly.
+			Please report this bug to the Localization Plus devs immediately.
+			In the meantime, you can try relaunching the game.
+			Click OK to continue anyway.
+			'''
+		InvalidGrammaticalGender: Character {0} doesn't correspond to any grammatical gender.
+		InvalidGrammaticalNumber: Character {0} doesn't correspond to any default grammatical number.
+		LPlusNone: Unknown error when parsing file {0} at position {1}, line '{2}'.
+		LPlusEntryOutside: Error in file {0}: Entry {2} is outside a section.
+		LPlusSubsectionWithoutSection: Error in file {0}: Subsection {2} is not under any section.
+		LPlusInvalidSectionOrSubsection: Error in file {0}: Section or subsection {2} wasn't recognized or is malformed.
+		LPlusSectionTagsUnexpected: Error in file {0}: One or more tags in section or subsection {2} weren't recognized or are unexpected.
+		LPlusMalformedEntry: Entry '{2}' doesn't have a value; it is malformed.
+		LPlusUnexpectedEntry: Error in file {0}: Number of entries in section or subsection '{2}' wasn't expected.
+		LPlusBadEntryFormat: Error in file {0}: Entry in section or subsection '{2}' is not the correct format. Please read the inflection file docs again.
+		LPlusBadSimpleMatch: The string '{2}' is not a valid simple match pattern. Please read the inflection file docs again. If you meant to use RegEx, suffix the key with R.
+	}
+}

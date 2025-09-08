@@ -12,6 +12,14 @@ namespace MoreLocales.Utilities
             int end = Math.Min(start + 1, values.Length - 1);
             return Color.Lerp(values[start], values[end], p - start);
         }
+        public static string Merge(ReadOnlySpan<char> a, ReadOnlySpan<char> b, out int length)
+        {
+            length = a.Length + b.Length;
+            Span<char> builder = stackalloc char[length];
+            a.CopyTo(builder);
+            b.CopyTo(builder.Slice(a.Length));
+            return builder.ToString();
+        }
         public static void Begin(this SpriteBatch spriteBatch, SpriteBatchData spriteBatchData)
         {
             spriteBatch.Begin

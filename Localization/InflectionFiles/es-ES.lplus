@@ -1,0 +1,17 @@
+[Inflections]
+GenderNumber: MascFem - SgPl
+
+[Recognize]
+Word: !de, !para, !con
+
+MascSg: -o,  -e,   -ón,   -án,   -ín,   -or,   -al,   -ul,   -il,   -az
+FemSg:  -a,  X,    -ona,  -ana,  -ina,  -ora,  X,     -ula,  X,     X
+MascPl: -os, -es,  -ones, -anes, -ines, -ores, -ales, -ules, -iles, -aces
+FemPl:  -as, X,    -onas, -anas, -inas, -oras, X,     -ulas, X,     X
+
+[Items]
+<SDMG>
+Gender: Fem
+
+[Prefixes]
+<Light:Ligero>

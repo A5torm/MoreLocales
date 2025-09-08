@@ -71,6 +71,9 @@ namespace MoreLocales.Common
         }
         public override void LeftClick(UIMouseEvent evt)
         {
+            if (!Main.playerInventory)
+                return;
+
             SoundEngine.PlaySound(in SoundID.MenuOpen);
 
             IngameFancyUI.OpenUIState(MoreLocalesSystem.betterLangMenu);

@@ -1,23 +1,24 @@
 ﻿using MoreLocales.Config;
+using MoreLocales.Core.Inflections;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
-using System.Reflection;
-using System.IO;
-using System.Text;
-using System.Collections.Generic;
 
 namespace MoreLocales.Core
 {
     /// <summary>
     /// Container for all features of Localization+ that are not (directly) related to extra language support.
     /// </summary>
-    public static class LangFeaturesPlus
+    public static partial class LangFeaturesPlus
     {
         private const string StringToReplace = "{Prefix}";
         private static readonly string[] GenderNames = Enum.GetNames<GrammaticalGender>();
+        private static readonly string[] NumberNames = Enum.GetNames<GrammaticalNumber>();
         private delegate void VoidsOrig();
         private delegate void HandleFileChangedOrRenamed_orig(string modName, string fileName);
         internal static int noFileWatcherTimer = 0;
@@ -34,7 +35,7 @@ namespace MoreLocales.Core
         {
             if (noFileWatcherTimer > 0)
                 return;
-            
+
             orig(modName, fileName);
         }
         internal static string UniqueFileID(string modName, GameCulture culture, string filePrefix) => $"{modName}/{culture.Name}/{filePrefix}";
@@ -204,6 +205,7 @@ namespace MoreLocales.Core
                 MonoModHooks.DumpIL(m, il);
             }
         }
+        private static readonly LocalizedText DummyText = new(string.Empty, string.Empty);
         /// <summary>
         /// Retrieves a LocalizedText that contains the gendered and pluralized form of a prefix depending on the item it's applied to (if applicable)
         /// </summary>
@@ -217,37 +219,26 @@ namespace MoreLocales.Core
             if (prefix == 0 || !ClientSideConfig.Instance.LocalizedPrefixGenderPluralization)
                 return ogText;
 
-            MoreLocalesSets.CachedInflectionData[context.type].Deconstruct(out GrammaticalGender gender, out Pluralization pluralization);
-
+            ref var data = ref MoreLocalesSets.CachedInflectionData[context.type];
+            if (!data.Valid)
+                return ogText;
+            InflectionData inflection = data.Data.Inflection;
+            inflection.Deconstruct(out var gender, out var pluralization);
             if (!LanguageManager.Instance.ActiveCulture.InflectionDataChangesAdjectiveForm(gender, pluralization))
                 return ogText; // adjective form stays the same
 
-            bool vanilla = prefix < PrefixID.Count;
-            ModPrefix modPrefix = null;
-
-            if (!vanilla)
-                modPrefix = PrefixLoader.GetPrefix(prefix);
-
-            if (!(modPrefix?.Mod ?? MoreLocales.Instance).TryGetInflectionFileKey(out string inflectionFile))
+            ref var prefixData = ref MoreLocalesSets.Prefixes[prefix];
+            if (prefixData.Uninflectable)
                 return ogText;
 
-            // Main.NewText($"{gender}{pluralization}");
-
-            string prefixName = vanilla ? PrefixID.Search.GetName(prefix) : modPrefix.Name;
-
-            string genderName = GenderNames[(byte)gender];
-
-            string englishName = vanilla ? LangUtils.GetVanillaLocalizationValues(ogText, GameCulture.DefaultCulture)[0] : string.Empty;
-            string defaultFunc() => (vanilla ? englishName : ogText.Value);
-
-            LocalizedText possiblyFinal = Language.GetOrRegister($"{inflectionFile}.Prefixes.{prefixName}.{genderName}", defaultFunc).WithIndexFormat((byte)pluralization);
-
-            if (possiblyFinal.Value == englishName)
+            if (!prefixData.EnsureExists(inflection))
                 return ogText;
-            return possiblyFinal;
+
+            DummyText.SetValue(prefixData.Get(inflection));
+            return DummyText;
         }
         /// <summary>
-        /// Allows you to work with what's usually used as a pluralization system (things like <c>"It has been {0} {^0:day;days}."</c>), but by supplying indices to those arrays (in this case <c>["day","days"]</c>) directly, meaning it can be used for direct pluralization via <see cref="Pluralization"/>, or even just dynamically choosing elements from each array to display stuff dynamically.<para/>
+        /// Allows you to work with what's usually used as a pluralization system (things like <c>"It has been {0} {^0:day;days}."</c>), but by supplying indices to those arrays (in this case <c>["day","days"]</c>) directly, meaning it can be used for direct pluralization via <see cref="GrammaticalNumber"/>, or even just dynamically choosing elements from each array to display stuff dynamically.<para/>
         /// This must be used <b>before</b> any formatting via <see cref="LocalizedText.Format(object[])"/>, <see cref="LocalizedText.WithFormatArgs(object[])"/>, etc.
         /// </summary>
         /// <param name="baseText"></param>
@@ -297,39 +288,10 @@ namespace MoreLocales.Core
         }
         internal static readonly Dictionary<DirectPluralizationTextBinding, LocalizedText> boundDirectPluralizeTextCache = [];
         internal record struct DirectPluralizationTextBinding(string Key, int[] Indices);
-        internal static void EnsureKeysForPrefixExist(int prefix, bool addComments)
-        {
-            bool vanilla = prefix < PrefixID.Count;
-            ModPrefix modPrefix = null;
-
-            if (!vanilla)
-                modPrefix = PrefixLoader.GetPrefix(prefix);
-
-            if (!(modPrefix?.Mod ?? MoreLocales.Instance).TryGetInflectionFileKey(out string inflectionFile))
-                return;
-
-            string prefixName = vanilla ? PrefixID.Search.GetName(prefix) : modPrefix.Name;
-
-            string fullNoGender = $"{inflectionFile}.Prefixes.{prefixName}";
-
-            for (int i = 0; i < GenderNames.Length; i++)
-            {
-                Language.GetOrRegister($"{fullNoGender}.{GenderNames[i]}", () => Lang.prefix[prefix].Value ?? prefixName);
-
-                if (addComments)
-                {
-                    string commentBody =
-                        vanilla
-                        ? string.Join(" | ", LangUtils.GetVanillaLocalizationValues(Lang.prefix[prefix]))
-                        : prefixName;
-                    LangUtils.AddComment(fullNoGender, commentBody, HjsonCommentType.Hash);
-                }
-            }
-        }
 #pragma warning disable CS1572
         /// <summary>
         /// Checks if this culture changes the adjective form based on grammatical gender and/or pluralization of the noun.<para/>
-        /// This is added to a custom culture via the <see cref="GrammarData"/> parameter when registering manually, or <see cref="ModCulture.ContextChangesAdjective(GrammaticalGender, Pluralization)"/> when using the autoloaded culture API.
+        /// This is added to a custom culture via the <see cref="GrammarData"/> parameter when registering manually, or <see cref="ModCulture.ContextChangesAdjective(GrammaticalGender, GrammaticalNumber)"/> when using the autoloaded culture API.
         /// </summary>
         /// <param name="c">The culture to check.</param>
         /// <param name="data">The inflection data to check for.</param>
@@ -339,11 +301,11 @@ namespace MoreLocales.Core
 #pragma warning restore
         public static bool InflectionDataChangesAdjectiveForm(this GameCulture c, InflectionData data)
         {
-            data.Deconstruct(out GrammaticalGender gender, out Pluralization pluralization);
+            data.Deconstruct(out GrammaticalGender gender, out GrammaticalNumber pluralization);
             return c.InflectionDataChangesAdjectiveForm(gender, pluralization);
         }
         /// <inheritdoc cref="InflectionDataChangesAdjectiveForm(GameCulture, InflectionData)"/>
-        public static bool InflectionDataChangesAdjectiveForm(this GameCulture c, GrammaticalGender gender, Pluralization pluralization)
+        public static bool InflectionDataChangesAdjectiveForm(this GameCulture c, GrammaticalGender gender, GrammaticalNumber pluralization)
         {
             var possibleFunc = MoreLocalesAPI.extraCulturesV2[c.LegacyId].GrammarData.ContextChangesAdjective;
             if (possibleFunc is null)
@@ -366,49 +328,182 @@ namespace MoreLocales.Core
             */
         }
         /// <summary>
-        /// Gets this item type's current inflection data.
+        /// Gets this item type's current pattern, inflection data, and paradigm.
         /// </summary>
         /// <param name="type">Item type.</param>
-        /// <param name="addComments">Add comments to the localization file or not.</param>
         /// <returns></returns>
-        public static InflectionData GetItemInflection(int type, bool addComments = false)
+        public static RecognizableWordData GetItemInflection(int type)
         {
-            if (!ItemIsGenderPluralizable(type))
-                return InflectionData.Default;
+            if (!ItemIsGenderPluralizable(type) || LPlusFile.Current is null)
+                return RecognizableWordData.None;
 
-            bool vanilla = type < ItemID.Count;
+            string name = Lang.GetItemNameValue(type);
+            string functional = LPlusFile.Current.Recognize.ExtractFunctionalWord(name);
 
-            ModItem modItem = null;
-            if (!vanilla)
-                modItem = ItemLoader.GetItem(type);
-
-            string itemName = vanilla ? ItemID.Search.GetName(type) : modItem.Name;
-
-            if (itemName == null)
-                return InflectionData.Default;
-
-            LocalizedText data = null;
-
-            Mod sourceMod = modItem?.Mod ?? MoreLocales.Instance;
-            if (!(sourceMod).TryGetInflectionFileKey(out string inflectionFile))
-                return InflectionData.Default;
-
-            string key = $"{inflectionFile}.Items.{itemName}";
-            data = Language.GetOrRegister(key, () => "/");
-
-            if (addComments)
+            var pattern = LPlusFile.Current.Recognize.GetPattern(functional, out var possibleData);
+            if (pattern is null)
+                return RecognizableWordData.None;
+            return new(pattern, possibleData);
+        }
+        /// <summary>
+        /// Maps characters to their corresponding gender.<br/>
+        /// 'M' or 'C' are <see cref="GrammaticalGender.Masculine"/>, 'F' is <see cref="GrammaticalGender.Feminine"/>, and 'N' is <see cref="GrammaticalGender.Neuter"/>;
+        /// </summary>
+        /// <param name="c">The character.</param>
+        /// <param name="throwIfInvalid">Whether to throw an error if the character doesn't correspond to any grammatical gender.</param>
+        /// <returns></returns>
+        public static GrammaticalGender CharToGender(char c, bool throwIfInvalid = false)
+        {
+            switch (c)
             {
-                string commentBody =
-                    vanilla
-                    ? string.Join(" | ", LangUtils.GetVanillaLocalizationValues($"ItemName.{itemName}"))
-                    : Lang.GetItemName(type).Value;
-                LangUtils.AddComment(key, $"DisplayName: {commentBody}", HjsonCommentType.Hash);
+                case '0' or 'M' or 'C':
+                    return GrammaticalGender.Masculine;
+                case '1' or 'F':
+                    return GrammaticalGender.Feminine;
+                case '2' or 'N':
+                    return GrammaticalGender.Neuter;
+                default:
+                    if (throwIfInvalid)
+                        throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidGrammaticalGender").Format(c));
+                    return 0;
             }
-
-            if (TryParse(data.Value, out InflectionData inflectionData, sourceMod))
-                return inflectionData;
-
-            return InflectionData.Default;
+        }
+        /// <summary>
+        /// Maps genders to their common representative characters (M, F, and N).
+        /// </summary>
+        /// <param name="g">The gender.</param>
+        /// <param name="throwIfInvalid">Whether to throw an error if the gender isn't recognized.</param>
+        /// <returns></returns>
+        public static char GenderToChar(GrammaticalGender g, bool throwIfInvalid = false)
+        {
+            if (!Enum.IsDefined(g))
+            {
+                if (throwIfInvalid)
+                    throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidGrammaticalGender").Format(g));
+                return 'M';
+            }
+            return g.ToString()[0];
+        }
+        private static readonly string SingularAliases = "0/S";
+        private static readonly string PluralAliases = "1/P/F";
+        private static readonly string ManyAliases = "2/M";
+        private static readonly string[] DefaultAliases = [SingularAliases, PluralAliases, ManyAliases];
+        /// <summary>
+        /// Maps characters to their corresponding grammatical number.
+        /// 'S' is <see cref="GrammaticalNumber.Singular"/>, 'P' or 'F' are <see cref="GrammaticalNumber.Plural"/>, and 'M' is <see cref="GrammaticalNumber.Many"/>.
+        /// </summary>
+        /// <param name="c">The character.</param>
+        /// <param name="throwIfInvalid">Whether to throw an error if the character doesn't correspond to any default grammatical number.</param>
+        /// <returns></returns>
+        public static GrammaticalNumber CharToNumber(char c, bool throwIfInvalid = false)
+        {
+            for (int i = 0; i < DefaultAliases.Length; i++)
+            {
+                string[] aliases = DefaultAliases[i].Split('/');
+                for (int j = 0; j < aliases.Length; j++)
+                    if (aliases[j][0] == c)
+                        return (GrammaticalNumber)i;
+            }
+            if (throwIfInvalid)
+                throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidGrammaticalNumber").Format(c));
+            return 0;
+        }
+        /// <summary>
+        /// Maps a <see cref="GrammaticalNumber"/> to its corresponding alias string. For parsing from text files.
+        /// </summary>
+        public static string NumberToAliases(GrammaticalNumber n)
+        {
+            if (n > GrammaticalNumber.Many)
+                return null;
+            return DefaultAliases[(byte)n];
+        }
+        /// <summary>
+        /// Maps a <see cref="GrammaticalNumber"/> to its corresponding character.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="throwIfInvalid"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static char NumberToChar(GrammaticalNumber n, bool throwIfInvalid = false)
+        {
+            if (!Enum.IsDefined(n))
+            {
+                if (throwIfInvalid)
+                    throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidGrammaticalNumber").Format(n));
+                return 'S';
+            }
+            if ((int)n == 1)
+                return 'P';
+            return n.ToString()[0];
+        }
+        private static readonly Dictionary<string, GrammaticalGender> _specialGenderAbbv = new()
+        {
+            { "Cmn", GrammaticalGender.Common },
+            { "Nt", GrammaticalGender.Neuter },
+        };
+        private static readonly Dictionary<string, GrammaticalNumber> _specialNumberAbbv = new(StringComparer.Ordinal)
+        {
+            { "Sg", GrammaticalNumber.Singular },
+            { "Fw", GrammaticalNumber.Few },
+            { "Mn", GrammaticalNumber.Many },
+        };
+        /// <summary>
+        /// Splits a string by capital letters.
+        /// </summary>
+        public static readonly Regex SplitByCapitalLetters = SplitByCapitals();
+        /// <summary>
+        /// Tries to parse some inflection name (like MascSg, FemPl, NeutMn), abbreviated or otherwise, and in any order.
+        /// </summary>
+        /// <param name="inflection">An inflection name.</param>
+        /// <param name="gender">Maybe gender.</param>
+        /// <param name="number">Maybe number.</param>
+        /// <returns></returns>
+        public static bool TryParseInflectionName(ReadOnlySpan<char> inflection, out GrammaticalGender? gender, out GrammaticalNumber? number)
+        {
+            gender = null;
+            number = null;
+            int i = 0;
+            foreach (var match in SplitByCapitalLetters.EnumerateMatches(inflection))
+            {
+                if (++i > 2)
+                    return false;
+                ReadOnlySpan<char> subname = inflection.Slice(match.Index, match.Length);
+                if (match.Length < 4)
+                {
+                    string s = subname.ToString(); // TODO: when tmod moves to .NET 10, this allocation won't be necessary due to IAlternateEqualityComparer
+                    if (_specialGenderAbbv.TryGetValue(s, out GrammaticalGender g))
+                        gender = g;
+                    else if (_specialNumberAbbv.TryGetValue(s, out GrammaticalNumber n))
+                        number = n;
+                }
+                if (!gender.HasValue)
+                {
+                    var almostGender = ParsePartialName(in GenderNames, in subname);
+                    if (almostGender != null)
+                        gender = Enum.Parse<GrammaticalGender>(almostGender);
+                }
+                if (!number.HasValue)
+                {
+                    var almostNumber = ParsePartialName(in NumberNames, in subname);
+                    if (almostNumber != null)
+                        number = Enum.Parse<GrammaticalNumber>(almostNumber);
+                }
+            }
+            return true;
+        }
+        private static ReadOnlySpan<char> ParsePartialName(in string[] names, in ReadOnlySpan<char> subname)
+        {
+            for (int i = 0; i < names.Length; i++)
+            {
+                ReadOnlySpan<char> name = names[i];
+                for (int j = name.Length; j >= 1; j--)
+                {
+                    ReadOnlySpan<char> partialName = name.Slice(0, j);
+                    if (partialName.Equals(subname, StringComparison.Ordinal))
+                        return name;
+                }
+            }
+            return null;
         }
         /// <summary>
         /// Attempts to parse a string containing inflection data into <see cref="InflectionData"/>.
@@ -425,20 +520,14 @@ namespace MoreLocales.Core
             if (values.Length == 0 || values.Length > 2)
                 return false;
 
-            uint finalGender = 0;
+            GrammaticalGender finalGender = GrammaticalGender.Masculine;
 
             // we want to default to 0 for an entry like "/M" for a language with adjective pluralization but no grammatical gender
             if (!string.IsNullOrEmpty(values[0]))
             {
                 char gender = char.ToUpper(values[0][0]);
 
-                finalGender = gender switch
-                {
-                    '0' or 'M' or 'C' => 0,
-                    '1' or 'F' => 1,
-                    '2' or 'N' => 2,
-                    _ => 0
-                };
+                finalGender = CharToGender(gender);
             }
 
             uint finalPluralization = 0;
@@ -455,42 +544,13 @@ namespace MoreLocales.Core
                 }
                 else if (sourceMod != null)
                 {
-                    // custom alias support
-                    if (!sourceMod.TryGetInflectionFileKey(out string inflectionFile))
-                        return false;
-
-                    LocalizedText customAliasEntry = Language.GetOrRegister($"{inflectionFile}.PluralizationAliases");
-
                     string[] aliasesCollection = new string[3];
-                    if (!string.IsNullOrEmpty(customAliasEntry.Value)) // we have aliases
-                    {
-                        string[] aliases = customAliasEntry.Value.ToUpper().Split('/');
-
-                        if (aliases.Length > aliasesCollection.Length)
-                            Array.Resize(ref aliasesCollection, aliases.Length);
-
-                        for (int i = 0; i < aliases.Length; i++)
-                        {
-                            string alias = aliases[i];
-                            if (!string.IsNullOrEmpty(alias))
-                            {
-                                aliasesCollection[i] += alias;
-                            }
-                        }
-                    }
                     // parse
                     for (int i = 0; i < aliasesCollection.Length; i++)
                     {
                         if (string.IsNullOrEmpty(aliasesCollection[i]))
-                            aliasesCollection[i] = i switch
-                            {
-                                // main aliases
-                                0 => "0/S",
-                                1 => "1/P/F",
-                                2 => "2/M",
-                                _ => null,
-                            };
-                        if (aliasesCollection[i].Split("/").Contains(values[1].ToUpper()))
+                            aliasesCollection[i] = NumberToAliases((GrammaticalNumber)i);
+                        if (aliasesCollection[i].Split('/').Contains(values[1].ToUpper()))
                         {
                             finalPluralization = (uint)i;
                             break;
@@ -510,119 +570,14 @@ namespace MoreLocales.Core
         /// <param name="data"></param>
         /// <param name="gender"></param>
         /// <param name="pluralization"></param>
-        public static void Deconstruct(this InflectionData data, out GrammaticalGender gender, out Pluralization pluralization)
+        public static void Deconstruct(this InflectionData data, out GrammaticalGender gender, out GrammaticalNumber pluralization)
         {
             gender = (GrammaticalGender)((byte)data & 0xF);
-            pluralization = (Pluralization)((byte)data >> 4);
+            pluralization = (GrammaticalNumber)((byte)data >> 4);
         }
-        /// <summary>
-        /// Tries to get the inflection file key for a given mod.<para/>
-        /// A mod can choose to opt out of having an inflection file generated by calling <see cref="MoreLocales.ProtectModFromInflectionFileGeneration(Mod)"/><br/>
-        /// or calling <see cref="Mod.Call(object[])"/> on MoreLocales' instance with the mod/mod name as a single argument. (Must be done during <see cref="Mod.Load"/> or earlier)
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="inflectionFileKey"></param>
-        /// <returns></returns>
-        public static bool TryGetInflectionFileKey(this Mod target, out string inflectionFileKey)
-        {
-            inflectionFileKey = null;
 
-            if (Main.dedServ)
-                return false;
-
-            if (MoreLocales.inflectionFileKeys.TryGetValue(target, out string possibleInflectionFileKey))
-            {
-                if (possibleInflectionFileKey is null)
-                    return false;
-                inflectionFileKey = possibleInflectionFileKey;
-                return true;
-            }
-
-            string possibleKey = target.GetLocalizationKey($"{(target == MoreLocales.Instance ? "VanillaData." : string.Empty)}InflectionData");
-
-            if (LangUtils.CategoryExists(possibleKey) || Language.Exists($"{possibleKey}.PluralizationAliases"))
-            {
-                MoreLocales.inflectionFileKeys.Add(target, possibleKey);
-                inflectionFileKey = possibleInflectionFileKey;
-                return true;
-            }
-
-            // generate the file in ModPath/Localization if possible
-
-            if (!LangUtils.ModIsValidForWriting(target))
-                return false;
-
-            string localizationFolderPath = Path.Combine(target.SourceFolder, "Localization");
-
-            if (!Directory.Exists(localizationFolderPath))
-                Directory.CreateDirectory(localizationFolderPath);
-
-            string newFilePath = Path.Combine(localizationFolderPath, $"en-US_{target.GetLocalizationKey("InflectionData")}.hjson");
-
-            File.WriteAllText(newFilePath, InflectionDataFileTemplate, Encoding.UTF8);
-
-            // it doesn't matter if the file exists on disk now because it has to be packed into the actual mod for it to work, so return false
-            // just a warn will work for now but i wonder if there's a better way to signal that the mod has to be rebuilt
-
-            MoreLocales.Instance.Logger.Warn($"Inflection file has been generated for mod {target.Name}.\nIf you wish to opt out, read this: https://github.com/queueAngel/MoreLocales/wiki/MoreLocales-is-generating-a-localization-file-when-I-don't-want-it-to \nThe mod needs to be rebuilt in order for the file to do anything.");
-
-            return false;
-        }
-        private const string InflectionDataFileTemplate = @"# This file contains custom localization data defined by LocalizationPlus. It was automatically generated.
-# To opt out, read this: https://github.com/queueAngel/MoreLocales/wiki/MoreLocales-is-generating-a-localization-file-when-I-don't-want-it-to
-
-# Gender and Pluralization (Used mainly for the Localized Prefixes config option)
-
-# If your language does not have the concept of grammatical gender,
-# and does not distinguish between one or many of a certain thing,
-# you can leave this section of the file completely untouched.
-
-# If your language has either, you can change the data fields that are necessary for your language.
-# The gender & pluralization data entries are structured in the following way:
-
-# Gender/Pluralization
-
-# If you wish to let both fields use their default values, keep the entry as ""/"".
-# Gender can similarly be skipped by simply leaving the gender field empty like so: ""/Pluralization"".
-# And pluralization can be skipped like this: ""Gender"" or like this: ""Gender/"".
-
-
-# Gender
-
-# For gender, the following starting characters are valid. You may also write the internal number value instead.
-# Gender defaults to 'M' if not specified.
-
-# 'M'		(Masculine)		Internally - 0
-# 'F'		(Feminine)		Internally - 1
-# 'N'		(Neuter)		Internally - 2
-# 'C'		(Common)		Internally - 0
-
-
-# Pluralization
-
-# Pluralization is a tad bit more complex. Internally, the game uses certain formulas to determine pluralization types.
-# Refer to this list to view your language's pluralization rules and types:
-# https://docs.translatehouse.org/projects/localization-guide/en/latest/l10n/pluralforms.html
-# This might also be a good resource:
-# https://www.unicode.org/cldr/charts/43/supplemental/language_plural_rules.html
-
-# There are two ways of writing pluralization types: Using the provided aliases, or the special format.
-# If you wish, you can add your own aliases for pluralization types if a type's value is larger than 2, or for whatever other reason. (Edit the value of PluralizationAliases)
-# Otherwise, read below.
-
-# For pluralization, the following starting characters are valid. You may also write the internal number value instead (except for the special format).
-# Pluralization defaults to 'S' if not specified.
-
-# 'S'		(Singular)		Internally - 0
-# 'P'		(Plural)		Internally - 1
-# 'F'		(Few)			Internally - 1
-# 'M'		(Many)			Internally - 2
-# You can also specify any pluralization type with the following special format:
-# 'Pn', where 'n' is any pluralization type.
-# For example, 'M' with the special format would be written 'P2'.
-
-PluralizationAliases: """"
-";
+        [GeneratedRegex(@"\p{Lu}\p{Ll}*")]
+        private static partial Regex SplitByCapitals();
     }
     /// <summary>
     /// Container for grammatical gender and pluralization.
@@ -633,6 +588,10 @@ PluralizationAliases: """"
         /// No inflection.
         /// </summary>
         Default = 0,
+        MascSg = 0,
+        MascPl = 0b_00010000,
+        FemSg = 0b_00000001,
+        FemPl = 0b_00010001,
     }
     /// <summary>
     /// Grammatical gender.
@@ -642,7 +601,11 @@ PluralizationAliases: """"
         /// <summary>
         /// Masculine grammatical gender. Also known as Common gender in certain languages.
         /// </summary>
-        Masculine = 0,//, Common = 0,
+        Masculine = 0,
+        /// <summary>
+        /// Common (masculine) grammatical gender. (same value as <see cref="Masculine"/>)
+        /// </summary>
+        Common = 0,
         /// <summary>
         /// Feminine grammatical gender.
         /// </summary>
@@ -655,7 +618,7 @@ PluralizationAliases: """"
     /// <summary>
     /// Grammatical pluralization.
     /// </summary>
-    public enum Pluralization : byte
+    public enum GrammaticalNumber : byte
     {
         /// <summary>
         /// Singular noun.

@@ -84,7 +84,7 @@ namespace MoreLocales.Core
         /// Called early on when attempting to inflect a prefix. If this returns false, the regular form of the prefix will be used.
         /// </summary>
         /// <returns>Whether or not the given data can change an adjective's form in this culture.</returns>
-        public virtual bool ContextChangesAdjective(GrammaticalGender gender, Pluralization pluralization)
+        public virtual bool ContextChangesAdjective(GrammaticalGender gender, GrammaticalNumber pluralization)
         {
             return true;
         }

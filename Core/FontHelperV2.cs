@@ -8,7 +8,6 @@ using System.Reflection;
 using Terraria.GameContent;
 using Terraria.Initializers;
 using static ReLogic.Graphics.DynamicSpriteFont;
-using static Terraria.Localization.NetworkText;
 
 namespace MoreLocales.Core
 {
