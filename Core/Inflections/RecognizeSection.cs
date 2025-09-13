@@ -29,7 +29,7 @@ namespace MoreLocales.Core.Inflections
         public static bool Parse(string fileName, string name, in Dictionary<string, List<LPlusFileEntry>> raw, out RecognizeSection section)
         {
             section = default;
-            if (raw is null || raw.Count > 1 || !SectionsHelper.Is<RecognizeSection>(in fileName, in name, out string[] tags))
+            if (raw is null || raw.Count > 2 || !SectionsHelper.Is<RecognizeSection>(in fileName, in name, out string[] tags))
                 return false;
 
             var entries = raw["RECOGNIZE_META"];
@@ -49,10 +49,10 @@ namespace MoreLocales.Core.Inflections
                 }
             }
 
-            section = new(wordEntry, entries);
+            section = new(in wordEntry, entries, raw.GetValueOrDefault("Exceptions"));
             return true;
         }
-        public RecognizeSection(LPlusFileEntry? wordEntry, List<LPlusFileEntry> inflectionEntries)
+        public RecognizeSection(in LPlusFileEntry? wordEntry, List<LPlusFileEntry> inflectionEntries, List<LPlusFileEntry> exceptionEntries)
         {
             // parse word recognizer patterns
             if (wordEntry.HasValue)
@@ -64,6 +64,27 @@ namespace MoreLocales.Core.Inflections
                 {
                     if (!InflectionPattern.TryParse(word[i], out WordRecognizers[i]))
                         throw new LPlusFileParsingException(LPlusError.BadSimpleMatch, null, default, word[i]);
+                }
+            }
+
+            // parse exception patterns
+            List<InflectionException> exceptions = null;
+            if (exceptionEntries != null)
+            {
+                exceptions = new(exceptionEntries.Count);
+                foreach (var exceptionEntry in CollectionsMarshal.AsSpan(exceptionEntries))
+                {
+                    if (!LangFeaturesPlus.TryParseInflectionName(exceptionEntry.Key, out GrammaticalGender? g, out GrammaticalNumber? n) || (!g.HasValue || !n.HasValue))
+                        throw new LPlusFileParsingException(LPlusError.BadEntryFormat, "UNKNOWN", default, exceptionEntry.ToString());
+
+                    InflectionData d = (InflectionData)g.Value | (InflectionData)((byte)n.Value << 4);
+                    string[] exceptionsRaw = exceptionEntry.GetValues();
+                    for (int i = 0; i < exceptionsRaw.Length; i++)
+                    {
+                        if (!InflectionPattern.TryParse(exceptionsRaw[i], out var exceptionPattern))
+                            throw new LPlusFileParsingException(LPlusError.BadSimpleMatch, null, default, exceptionsRaw[i]);
+                        exceptions.Add(new(exceptionPattern, d));
+                    }
                 }
             }
 
@@ -80,7 +101,7 @@ namespace MoreLocales.Core.Inflections
                 InflectionPattern[] paradigmPattern = new InflectionPattern[paradigms.Length];
                 for (int i = 0; i < paradigms.Length; i++)
                 {
-                    if (!InflectionPattern.TryParse(paradigms[i], out paradigmPattern[i]))
+                    if (!InflectionPattern.TryParse(paradigms[i], out paradigmPattern[i], exceptions))
                         throw new LPlusFileParsingException(LPlusError.BadSimpleMatch, null, default, paradigms[i]);
                 }
 
@@ -204,7 +225,7 @@ namespace MoreLocales.Core.Inflections
             foreach (var kvp in InflectionRecognizers)
             {
                 InflectionPattern bestForInflection = GetPattern(kvp.Value, word, out var paradigm0);
-                if (bestForInflection is null || !bestForInflection.TryMatch(word))
+                if (bestForInflection is null)
                     continue;
                 BetterMatch(ref bestMatch, bestForInflection);
                 inflection = kvp.Key;
@@ -221,12 +242,32 @@ namespace MoreLocales.Core.Inflections
                 latestBest = possibleNewBest;
         }
     }
+    public readonly record struct InflectionException(InflectionPattern Pattern, InflectionData Data);
     public sealed class InflectionPattern(InflectionPatternType type, string match, bool not)
     {
+        public InflectionException[] Exceptions;
         public InflectionPatternType Type = type;
         public string Match = match;
         public bool Not = not;
         public bool Single = type != InflectionPatternType.DoesntExist && match.Length == 1;
+        public bool CheckException(ReadOnlySpan<char> word, out InflectionPattern pattern, out InflectionData inflection)
+        {
+            pattern = null;
+            inflection = InflectionData.Default;
+            if (Exceptions is null)
+                return false;
+            for (int i = 0; i < Exceptions.Length; i++)
+            {
+                ref var exception = ref Exceptions[i];
+                if (exception.Pattern.TryMatch(word))
+                {
+                    pattern = exception.Pattern;
+                    inflection = exception.Data;
+                    return true;
+                }
+            }
+            return false;
+        }
         public bool TryMatch(ReadOnlySpan<char> word)
         {
             if (word.Length == 0)
@@ -299,7 +340,7 @@ namespace MoreLocales.Core.Inflections
                 return false;
             return TryReplace(word, replacement.Match, out result);
         }
-        public static bool TryParse(string pattern, out InflectionPattern result)
+        public static bool TryParse(string pattern, out InflectionPattern result, List<InflectionException> exceptions = null)
         {
             result = default;
             if (string.IsNullOrEmpty(pattern))
@@ -355,6 +396,23 @@ namespace MoreLocales.Core.Inflections
                 }
             }
             result = new(type, pattern.Substring(actualStartIndex, actualLength), not);
+
+            if (exceptions != null)
+            {
+                InflectionException[] finalExceptions = new InflectionException[exceptions.Count];
+                int count = 0;
+                for (int i = exceptions.Count - 1; i >= 0; i--)
+                {
+                    InflectionException exception = exceptions[i];
+                    if (result.TryMatch(exception.Pattern.Match))
+                    {
+                        finalExceptions[count++] = exception;
+                        exceptions.RemoveAt(i);
+                    }
+                }
+                Array.Resize(ref finalExceptions, count);
+                result.Exceptions = finalExceptions;
+            }
             return true;
         }
         /// <inheritdoc/>

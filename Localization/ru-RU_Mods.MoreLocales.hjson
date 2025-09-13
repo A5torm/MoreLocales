@@ -196,9 +196,36 @@ Misc: {
 		// LPlusSubsectionWithoutSection: Error in file {0}: Subsection {2} is not under any section.
 		// LPlusInvalidSectionOrSubsection: Error in file {0}: Section or subsection {2} wasn't recognized or is malformed.
 		// LPlusSectionTagsUnexpected: Error in file {0}: One or more tags in section or subsection {2} weren't recognized or are unexpected.
+		// LPlusSectionTagsUnexpectedCount: Error in file {0}: The amount of tags in section or subsection {2} wasn't expected.
 		// LPlusMalformedEntry: Entry '{2}' doesn't have a value; it is malformed.
 		// LPlusUnexpectedEntry: Error in file {0}: Number of entries in section or subsection '{2}' wasn't expected.
 		// LPlusBadEntryFormat: Error in file {0}: Entry in section or subsection '{2}' is not the correct format. Please read the inflection file docs again.
-		// LPlusBadSimpleMatch: The string '{2}' is not a valid simple match pattern. Please read the inflection file docs again. If you meant to use RegEx, suffix the key with R.
+		// LPlusBadSimpleMatch: The string '{2}' is not a valid simple match pattern. Please read the inflection file docs again.
+	}
+}
+
+Commands: {
+	TestPrefixesCommand: {
+		Error: {
+			// LanguageNoInflections: The current language, {0}, with language code {1}, doesn't have an associated inflection file; prefix forms will be the same as the defaults.
+			/* NoArgs:
+				'''
+				Please provide a valid item identifier.
+				For vanilla items, this can be the numerical ID or internal name.
+				For modded items, this has to be the internal name in this format: ModInternalName/ItemInternalName
+				''' */
+			/* UnknownItem:
+				'''
+				Item '{0}' wasn't found.
+				{$NoArgs}
+				''' */
+		}
+
+		// Success.BasicInfo: Item {0} has the inflection {1} with paradigm {2}.
+	}
+
+	ItemInflectionsCommand: {
+		// Error.LanguageNoInflections: The current language, {0}, with language code {1}, doesn't have an associated inflection file; items will all have the default inflection.
+		// Advice: This command clogs chat very easily. It is better to use it through the tModLoader console instead. You can do this in multiplayer or by adding -c after the command.
 	}
 }

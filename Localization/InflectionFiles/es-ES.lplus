@@ -4,14 +4,40 @@ GenderNumber: MascFem - SgPl
 [Recognize]
 Word: !de, !para, !con
 
-MascSg: -o,  -e,   -ón,   -án,   -ín,   -or,   -al,   -ul,   -il,   -az
-FemSg:  -a,  X,    -ona,  -ana,  -ina,  -ora,  X,     -ula,  X,     X
-MascPl: -os, -es,  -ones, -anes, -ines, -ores, -ales, -ules, -iles, -aces
-FemPl:  -as, X,    -onas, -anas, -inas, -oras, X,     -ulas, X,     X
+MascSg: -o,  -e,   -ón,   -án,   -ín,   -or,   -al,   -ul,   -il,   -az,   -er,   -asma
+FemSg:  -a,  X,    -ona,  -ana,  -ina,  -ora,  X,     -ula,  X,     X,     X,     X
+MascPl: -os, -es,  -ones, -anes, -ines, -ores, -ales, -ules, -iles, -aces, -eres, -asmas
+FemPl:  -as, X,    -onas, -anas, -inas, -oras, X,     -ulas, X,     X,     X,     X
+
+<Exceptions>
+MascSg: paraguas, día
+FemSg: flor, mano, llave, sangre
 
 [Items]
+
+# Compound nouns are generally masculine, i. e. 'El latespinas', 'El lanzahojas'.
+
+<ThornWhip>
+Inflection: MascSg
+
+<LeafBlower>
+Inflection: MascSg
+
+# Acronyms are impossible to regularize using this system, so they need to be done separately.
+
+<PDA>
+Gender: Masc
+
 <SDMG>
 Gender: Fem
+
+# Unadapted nicknames are a similar situation.
+
+<Uzi>
+Gender: Fem
+
+# This is a common change for all vanilla languages;
+# 'Light' the adjective was unanimously translated as either the noun, or a transliteration, in other languages.
 
 [Prefixes]
 <Light:Ligero>

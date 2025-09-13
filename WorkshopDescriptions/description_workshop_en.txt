@@ -27,5 +27,3 @@ Have you ever been disappointed in the lack of language variety Terraria offers 
 The mod currently contains scarce localizations for vanilla content in a small amount of the new languages, however, if you'd like to help out with making some translations, you can join the Discord or make direct contributions through GitHub.
 
 PLEASE read the Pinned Discussions in the Discussions tab on Steam before asking questions!
-
-[spoiler]British English, 日本語 Japanese, 한국어 Korean, 中文 Traditional Chinese, Türkçe Turkish, ภาษาไทย Thai, Українська Ukrainian, Español Mexico México Mexicano Spanish, Čeština Czech, Magyar Hungarian, Português Portugal Portuguese, Svenska Swedish, Nederlands Dutch, Dansk Danish, Tiếng Việt Vietnamese, Suomi Finnish, Română Romanian, Bahasa Indonesia Indonesian[/spoiler]

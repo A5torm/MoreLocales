@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -9,26 +10,15 @@ using Terraria.ModLoader.Core;
 
 namespace MoreLocales.Core.Inflections
 {
-    internal enum LPlusError
+    internal partial class LPlusFile(InflectionsSection inflections, RecognizeSection recognize, ItemsSection items, PrefixesSection prefixes)
     {
-        None,
-        EntryOutside,
-        SubsectionWithoutSection,
-        InvalidSectionOrSubsection,
-        SectionTagsUnexpected,
-        MalformedEntry,
-        UnexpectedEntry,
-        UnexpectedEntryCount,
-        BadEntryFormat,
-        BadSimpleMatch,
-    }
-    internal partial class LPlusFile(InflectionsSection inflections, RecognizeSection recognize)
-    {
-        internal static Regex Split;
+        internal static Regex Split = SplitRegex();
         public static LPlusFile Current { get; internal set; }
         internal static Dictionary<Mod, Dictionary<string, List<TmodFile.FileEntry>>> _lplusFiles;
         public InflectionsSection Inflections = inflections;
         public RecognizeSection Recognize = recognize;
+        public ItemsSection Items = items;
+        public PrefixesSection Prefixes = prefixes;
         public Mod Source { get; private set; }
         internal static void UpdateCurrent()
         {
@@ -57,10 +47,13 @@ namespace MoreLocales.Core.Inflections
             }
             */
         }
+        internal void SetupNameOverrides()
+        {
+            Items.SetupItemNameOverrides();
+            Prefixes.SetupPrefixNameOverrides();
+        }
         internal static void Initialize()
         {
-            Split = SplitRegex();
-
             List<(Mod mod, string langCode, TmodFile.FileEntry file)> simpleList = [];
             Mod[] mods = ModLoader.Mods;
             int modsCount = 0;
@@ -76,19 +69,19 @@ namespace MoreLocales.Core.Inflections
             }
 
             _lplusFiles = new(modsCount);
-            foreach (var t in CollectionsMarshal.AsSpan(simpleList))
+            foreach (var (mod, langCode, file) in CollectionsMarshal.AsSpan(simpleList))
             {
-                if (!_lplusFiles.TryGetValue(t.mod, out var dict))
+                if (!_lplusFiles.TryGetValue(mod, out var dict))
                 {
                     dict = [];
-                    _lplusFiles.Add(t.mod, dict);
+                    _lplusFiles.Add(mod, dict);
                 }
-                if (!dict.TryGetValue(t.langCode, out var list))
+                if (!dict.TryGetValue(langCode, out var list))
                 {
                     list = [];
-                    dict.Add(t.langCode, list);
+                    dict.Add(langCode, list);
                 }
-                list.Add(t.file);
+                list.Add(file);
             }
         }
         internal static List<(Mod mod, string langCode, TmodFile.FileEntry file)> GetInflectionFiles(Mod mod)
@@ -175,6 +168,9 @@ namespace MoreLocales.Core.Inflections
         {
             InflectionsSection inflectionSection = default;
             RecognizeSection recognizeSection = default;
+            ItemsSection itemsSection = default;
+            PrefixesSection prefixesSection = default;
+
             foreach (var kvp in shallowData)
             {
                 string sectionName = kvp.Key;
@@ -188,12 +184,19 @@ namespace MoreLocales.Core.Inflections
                 {
                     recognizeSection = recogSection;
                 }
+                else if (ItemsSection.Parse(fileName, sectionName, in subsections, out var iSection))
+                {
+                    itemsSection = iSection;
+                }
+                else if (PrefixesSection.Parse(fileName, sectionName, in subsections, out var pSection))
+                {
+                    prefixesSection = pSection;
+                }
             }
-            return new LPlusFile(inflectionSection, recognizeSection);
+            return new LPlusFile(inflectionSection, recognizeSection, itemsSection, prefixesSection);
         }
         internal static LPlusFile Parse(string content, string fileName)
         {
-            var notNewline = SplitRegex();
             return DeepParse(fileName, ShallowParse(Split.Split(content), fileName));
         }
 
@@ -238,9 +241,5 @@ namespace MoreLocales.Core.Inflections
         {
             return Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         }
-    }
-    internal sealed class LPlusFileParsingException(LPlusError error, string fileName, Point16 position, string line) : Exception
-    {
-        public override string Message => MoreLocales.Instance.GetLocalization($"Misc.Error.LPlus{error}").Format(fileName, position, line);
     }
 }

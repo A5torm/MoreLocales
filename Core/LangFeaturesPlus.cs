@@ -343,6 +343,8 @@ namespace MoreLocales.Core
             var pattern = LPlusFile.Current.Recognize.GetPattern(functional, out var possibleData);
             if (pattern is null)
                 return RecognizableWordData.None;
+            if (pattern.CheckException(functional, out var exceptionPattern, out var exceptionInflection))
+                return new(exceptionPattern, new(exceptionInflection, -1));
             return new(pattern, possibleData);
         }
         /// <summary>

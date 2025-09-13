@@ -54,6 +54,7 @@ namespace MoreLocales.Core
                 LPlusFile.Initialize();
             }
             LPlusFile.UpdateCurrent();
+            LPlusFile.Current?.SetupNameOverrides();
             MoreLocalesSets.ReloadedLocalizations();
             LangFeaturesPlus.boundDirectPluralizeTextCache.Clear();
         }
@@ -171,9 +172,17 @@ namespace MoreLocales.Core
         /// <inheritdoc/>
         public override void PostUpdateDusts()
         {
-            return;
             if (Main.keyState.IsKeyDown(Keys.F) && !Main.oldKeyState.IsKeyDown(Keys.F))
             {
+                /*
+                if (LPlusFile.Current != null)
+                {
+                    string test = LPlusFile.Current.Recognize.ExtractFunctionalWord("Gafas de protección");
+                    Main.NewText(test ?? "null");
+                    InflectableWord w = new(test);
+                    Main.NewText(w.BaseData.Inflection);
+                }
+                */
                 /*
                 foreach (var thing in LPlusFile.Current.Recognize.InflectionRecognizers)
                 {
@@ -184,6 +193,7 @@ namespace MoreLocales.Core
                 Item held = Main.LocalPlayer.HeldItem;
                 if (held != null && !held.IsAir && held.type > ItemID.None)
                 {
+                    
                     if (held.prefix > 0)
                     {
                         var prefix = MoreLocalesSets.Prefixes[held.prefix];
@@ -195,14 +205,15 @@ namespace MoreLocales.Core
                                 Main.NewText($"Inflecting {prefix.BaseForm} for {inflectTo} is impossible.");
                             else
                                 Main.NewText(prefix.Get(inflectTo));
-                            InflectableWord w = new(Lang.prefix[held.prefix].Value);
+                            // InflectableWord w = new(Lang.prefix[held.prefix].Value);
                         }
                     }
+                    
                     MoreLocalesSets.CachedInflectionData[held.type].Data.Inflection.Deconstruct(out GrammaticalGender g, out GrammaticalNumber n);
                     Main.NewText($"{g}:{n}");
                 }
                 */
-                
+
                 /*
                 var set = MoreLocalesSets.Prefixes;
                 for (int i = 0; i < set.Length; i++)
@@ -227,7 +238,7 @@ namespace MoreLocales.Core
                     }
                 }
                 */
-                
+
                 /*
                 LPlusFile f = LPlusFile.Current;
                 if (f != null)
@@ -235,7 +246,7 @@ namespace MoreLocales.Core
                     Main.NewText(f.Source);
                 }
                 */
-                
+
                 /*
                 if (InflectionPattern.TryParse("-anos", out var result))
                 {
