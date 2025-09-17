@@ -64,12 +64,14 @@ namespace MoreLocales.Core.Inflections
                 string finalItemName = modName is null ? itemName : $"{modName}/{itemName}";
                 if (ItemID.Search.TryGetId(finalItemName, out int itemID))
                 {
+                    // name override
                     if (itemTags != null)
                     {
                         if (itemTags.Length != 1)
                             throw new LPlusFileParsingException(LPlusError.SectionTagsUnexpectedCount, fileName, default, itemName);
                         nameOverrides[i++] = new(itemID, itemTags[0]);
                     }
+                    // inflection override
                     if (subsectionWithFields.Value is null)
                         continue;
                     GrammaticalGender? possibleGenderOverride = null;
@@ -96,7 +98,7 @@ namespace MoreLocales.Core.Inflections
                                 if (possibleNumberOverride.HasValue || possibleGenderOverride.HasValue)
                                     throw new LPlusFileParsingException(LPlusError.OverrideOverlap, fileName, default, finalItemName);
                                 if (!LangFeaturesPlus.TryParseInflectionName(inflectionOverride.Value, out possibleGenderOverride, out possibleNumberOverride))
-                                    throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidInflection").Format(inflectionOverride.Value));
+                                    throw new Exception(MoreLocales.InvalidInflectionError.Format(inflectionOverride.Value));
                                 break;
                             default:
                                 throw new LPlusFileParsingException(LPlusError.MalformedEntry, fileName, default, inflectionOverride.ToString());
@@ -107,8 +109,15 @@ namespace MoreLocales.Core.Inflections
                 }
             }
 
-            Array.Resize(ref nameOverrides, i);
-            Array.Resize(ref inflectionOverrides, j);
+            if (i != 0)
+                Array.Resize(ref nameOverrides, i);
+            else
+                nameOverrides = null;
+
+            if (j != 0)
+                Array.Resize(ref inflectionOverrides, j);
+            else
+                inflectionOverrides = null;
 
             section = new(nameOverrides, inflectionOverrides);
             return true;

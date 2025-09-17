@@ -39,6 +39,7 @@ namespace MoreLocales
 	{
         internal static LocalizedText InvalidGrammaticalGenderError;
         internal static LocalizedText InvalidGrammaticalNumberError;
+        internal static LocalizedText InvalidInflectionError;
         internal static Dictionary<Mod, string> inflectionFileKeys = [];
         /// <summary>
         /// The instance of MoreLocales.
@@ -70,6 +71,7 @@ namespace MoreLocales
         {
             InvalidGrammaticalGenderError = GetLocalization("Misc.Error.InvalidGrammaticalGender");
             InvalidGrammaticalNumberError = GetLocalization("Misc.Error.InvalidGrammaticalNumber");
+            InvalidInflectionError = GetLocalization("Misc.Error.InvalidInflection");
 
             LangUtils.InitCategories();
 

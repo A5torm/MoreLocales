@@ -198,7 +198,7 @@ Misc: {
 			''' */
 		// InvalidGrammaticalGender: Character or name {0} doesn't correspond to any grammatical gender.
 		// InvalidGrammaticalNumber: Character or name {0} doesn't correspond to any default grammatical number.
-		// InvalidInflection: Name {0} couldn't be recognized as a valid inflection name.
+		// InvalidInflection: Name {0} couldn't be recognized as a valid inflection name. Make sure the name contains both gender and number.
 		// LPlusNone: Unknown error when parsing file {0} at position {1}, line '{2}'.
 		// LPlusEntryOutside: Error in file {0}: Entry {2} is outside a section.
 		// LPlusSubsectionWithoutSection: Error in file {0}: Subsection {2} is not under any section.

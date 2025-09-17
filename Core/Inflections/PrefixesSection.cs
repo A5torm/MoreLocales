@@ -9,9 +9,11 @@ using Terraria.ID;
 
 namespace MoreLocales.Core.Inflections
 {
-    internal struct PrefixesSection(NameOverride[] nameOverrides)
+    internal readonly record struct PrefixFormOverride(int ID, InflectionData Inflection, string FormOverride);
+    internal struct PrefixesSection(NameOverride[] nameOverrides, PrefixFormOverride[] formOverrides)
     {
         public NameOverride[] NameOverrides = nameOverrides;
+        public PrefixFormOverride[] FormOverrides = formOverrides;
         public readonly void SetupPrefixNameOverrides()
         {
             if (NameOverrides is null)
@@ -24,7 +26,16 @@ namespace MoreLocales.Core.Inflections
         }
         public readonly void SetupPrefixFormOverrides()
         {
-
+            if (FormOverrides is null)
+                return;
+            for (int i = 0; i < FormOverrides.Length; i++)
+            {
+                var formOverride = FormOverrides[i];
+                ref InflectableWord prefix = ref MoreLocalesSets.Prefixes[formOverride.ID];
+                if (prefix.AlternateForms is null) // this is null in certain cases. not any cases that actually matter though
+                    continue;
+                prefix.AlternateForms.Add(formOverride.Inflection, formOverride.FormOverride);
+            }
         }
         public static bool Parse(string fileName, string name, in Dictionary<string, List<LPlusFileEntry>> raw, out PrefixesSection section)
         {
@@ -41,9 +52,10 @@ namespace MoreLocales.Core.Inflections
                     throw new LPlusFileParsingException(LPlusError.SectionTagsUnexpectedCount, fileName, default, name);
                 modName = tags[0];
             }
-            // now go through each item
+            // now go through each prefix
             NameOverride[] nameOverrides = new NameOverride[raw.Count];
             int i = 0;
+            List<PrefixFormOverride> formOverrides = new(raw.Count);
             foreach (var subsectionWithFields in raw)
             {
                 SectionsHelper.Tags(in fileName, subsectionWithFields.Key, out var prefixName, out var prefixTags);
@@ -56,14 +68,26 @@ namespace MoreLocales.Core.Inflections
                             throw new LPlusFileParsingException(LPlusError.SectionTagsUnexpectedCount, fileName, default, prefixName);
                         nameOverrides[i++] = new(prefixID, prefixTags[0]);
                     }
-                    // add code for inflection overrides
+                    // now try parsing assignments individual forms of this prefix. these will be added to the AlternateForms dictionary of each prefix
+                    if (subsectionWithFields.Value is null)
+                        continue;
+                    foreach (var formOverride in CollectionsMarshal.AsSpan(subsectionWithFields.Value))
+                    {
+                        if (!LangFeaturesPlus.TryParseInflectionName(formOverride.Key, out GrammaticalGender? parsedGender, out GrammaticalNumber? parsedNumber)
+                            || !parsedGender.HasValue || !parsedNumber.HasValue)
+                            throw new Exception(MoreLocales.InvalidInflectionError.Format(formOverride.Key));
+                        InflectionData inflection = (InflectionData)((byte)parsedGender.Value | ((byte)parsedNumber.Value << 4));
+                        formOverrides.Add(new(prefixID, inflection, formOverride.Value));
+                    }
                 }
             }
-            Array.Resize(ref nameOverrides, i);
 
-            // now try parsing assignments individual forms of this prefix. these will be added to the AlternateForms dictionary of each prefix
+            if (i != 0)
+                Array.Resize(ref nameOverrides, i);
+            else
+                nameOverrides = null;
 
-            section = new(nameOverrides);
+            section = new(nameOverrides, formOverrides.Count == 0 ? null : formOverrides.ToArray());
             return true;
         }
     }
