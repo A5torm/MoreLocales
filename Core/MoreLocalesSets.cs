@@ -88,7 +88,7 @@ namespace MoreLocales.Core
             if (Brackets != BracketType.None)
                 baseForm = baseForm[1..^1];
             
-            var possiblePattern = LPlusFile.Current.Recognize.GetPattern(baseForm, out var possibleBaseData);
+            var possiblePattern = LPlusFile.Current.Inflections.GetPattern(baseForm, out var possibleBaseData);
             if (possiblePattern is null)
             {
                 Uninflectable = true;
@@ -110,7 +110,7 @@ namespace MoreLocales.Core
                 return false;
             if (!AlternateForms.TryGetValue(inflectionData, out string possibleInflectedForm))
             {
-                if (!LPlusFile.Current.Recognize.Inflect(BaseForm, BasePattern, new InflectionAndParadigm(inflectionData, BaseData.Paradigm), out possibleInflectedForm))
+                if (!LPlusFile.Current.Inflections.Inflect(BaseForm, BasePattern, new InflectionAndParadigm(inflectionData, BaseData.Paradigm), out possibleInflectedForm))
                     possibleInflectedForm = "X";
                 AlternateForms.Add(inflectionData, possibleInflectedForm);
             }

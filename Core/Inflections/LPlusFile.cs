@@ -10,13 +10,12 @@ using Terraria.ModLoader.Core;
 
 namespace MoreLocales.Core.Inflections
 {
-    internal partial class LPlusFile(InflectionsSection inflections, RecognizeSection recognize, ItemsSection items, PrefixesSection prefixes)
+    internal partial class LPlusFile(InflectionsSection inflections, ItemsSection items, PrefixesSection prefixes)
     {
         internal static Regex Split = SplitRegex();
         public static LPlusFile Current { get; internal set; }
         internal static Dictionary<Mod, Dictionary<string, List<TmodFile.FileEntry>>> _lplusFiles;
         public InflectionsSection Inflections = inflections;
-        public RecognizeSection Recognize = recognize;
         public ItemsSection Items = items;
         public PrefixesSection Prefixes = prefixes;
         public Mod Source { get; private set; }
@@ -171,8 +170,7 @@ namespace MoreLocales.Core.Inflections
         }
         internal static LPlusFile DeepParse(string fileName, Dictionary<string, Dictionary<string, List<LPlusFileEntry>>> shallowData)
         {
-            InflectionsSection inflectionSection = default;
-            RecognizeSection recognizeSection = default;
+            InflectionsSection inflectionsSection = default;
             ItemsSection itemsSection = default;
             PrefixesSection prefixesSection = default;
 
@@ -181,13 +179,9 @@ namespace MoreLocales.Core.Inflections
                 string sectionName = kvp.Key;
                 var subsections = kvp.Value;
 
-                if (InflectionsSection.Parse(fileName, sectionName, in subsections, out var inflSection))
+                if (InflectionsSection.Parse(fileName, sectionName, in subsections, out var recogSection))
                 {
-                    inflectionSection = inflSection;
-                }
-                else if (RecognizeSection.Parse(fileName, sectionName, in subsections, out var recogSection))
-                {
-                    recognizeSection = recogSection;
+                    inflectionsSection = recogSection;
                 }
                 else if (ItemsSection.Parse(fileName, sectionName, in subsections, out var iSection))
                 {
@@ -198,7 +192,7 @@ namespace MoreLocales.Core.Inflections
                     prefixesSection = pSection;
                 }
             }
-            return new LPlusFile(inflectionSection, recognizeSection, itemsSection, prefixesSection);
+            return new LPlusFile(inflectionsSection, itemsSection, prefixesSection);
         }
         internal static LPlusFile Parse(string content, string fileName)
         {

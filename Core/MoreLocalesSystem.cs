@@ -179,14 +179,14 @@ namespace MoreLocales.Core
                 /*
                 if (LPlusFile.Current != null)
                 {
-                    string test = LPlusFile.Current.Recognize.ExtractFunctionalWord("Gafas de protección");
+                    string test = LPlusFile.Current.Inflections.ExtractFunctionalWord("Gafas de protección");
                     Main.NewText(test ?? "null");
                     InflectableWord w = new(test);
                     Main.NewText(w.BaseData.Inflection);
                 }
                 */
                 /*
-                foreach (var thing in LPlusFile.Current.Recognize.InflectionRecognizers)
+                foreach (var thing in LPlusFile.Current.Inflections.InflectionRecognizers)
                 {
                     Main.NewText($"{thing.Key}:{string.Join<InflectionPattern>(" | ", thing.Value)}");
                 }

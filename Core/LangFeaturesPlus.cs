@@ -338,9 +338,9 @@ namespace MoreLocales.Core
                 return RecognizableWordData.None;
 
             string name = Lang.GetItemNameValue(type);
-            string functional = LPlusFile.Current.Recognize.ExtractFunctionalWord(name);
+            string functional = LPlusFile.Current.Inflections.ExtractFunctionalWord(name);
 
-            var pattern = LPlusFile.Current.Recognize.GetPattern(functional, out var possibleData);
+            var pattern = LPlusFile.Current.Inflections.GetPattern(functional, out var possibleData);
             if (pattern is null)
                 return RecognizableWordData.None;
             if (pattern.CheckException(functional, out var exceptionPattern, out var exceptionInflection))

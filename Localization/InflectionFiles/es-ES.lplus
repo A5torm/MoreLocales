@@ -1,7 +1,4 @@
 [Inflections]
-GenderNumber: MascFem - SgPl
-
-[Recognize]
 Word: !de, !para, !con
 
 MascSg: -o,  -e,   -ón,   -án,   -ín,   -or,   -al,   -ul,   -il,   -az,   -er,   -asma
