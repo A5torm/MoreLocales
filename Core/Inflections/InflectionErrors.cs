@@ -20,6 +20,7 @@ namespace MoreLocales.Core.Inflections
         UnexpectedEntryCount,
         BadEntryFormat,
         BadSimpleMatch,
+        OverrideOverlap,
     }
     internal sealed class LPlusFileParsingException(LPlusError error, string fileName, Point16 position, string line) : Exception
     {

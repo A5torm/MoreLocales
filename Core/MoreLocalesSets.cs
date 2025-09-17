@@ -8,13 +8,13 @@ namespace MoreLocales.Core
     /// <summary>
     /// Holds the data for a read-only word that can be used to inflect other words.
     /// </summary>
-    public readonly struct RecognizableWordData(InflectionPattern pattern, InflectionAndParadigm data)
+    public struct RecognizableWordData(InflectionPattern pattern, InflectionAndParadigm data)
     {
         private static readonly RecognizableWordData _none;
         /// <summary>
         /// Whether this is valid data or not.
         /// </summary>
-        public bool Valid => Pattern != null;
+        public readonly bool Valid => Pattern != null;
         /// <summary>
         /// No data.
         /// </summary>
@@ -26,7 +26,7 @@ namespace MoreLocales.Core
         /// <summary>
         /// The inflection and paradigm of this word.
         /// </summary>
-        public readonly InflectionAndParadigm Data = data;
+        public InflectionAndParadigm Data = data;
     }
     /// <summary>
     /// Holds the data for a word's base form and its inflections.

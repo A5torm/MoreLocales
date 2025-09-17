@@ -52,6 +52,11 @@ namespace MoreLocales.Core.Inflections
             Items.SetupItemNameOverrides();
             Prefixes.SetupPrefixNameOverrides();
         }
+        internal void SetupInflectionAndFormOverrides()
+        {
+            Items.SetupItemInflectionOverrides();
+            Prefixes.SetupPrefixFormOverrides();
+        }
         internal static void Initialize()
         {
             List<(Mod mod, string langCode, TmodFile.FileEntry file)> simpleList = [];

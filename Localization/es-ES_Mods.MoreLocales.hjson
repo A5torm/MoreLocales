@@ -185,8 +185,9 @@ Misc: {
 			Mientras tanto, puedes intentar relanzar el juego.
 			Clic a Continuar/OK para continuar aún así.
 			'''
-		// InvalidGrammaticalGender: Character {0} doesn't correspond to any grammatical gender.
-		// InvalidGrammaticalNumber: Character {0} doesn't correspond to any default grammatical number.
+		// InvalidGrammaticalGender: Character or name {0} doesn't correspond to any grammatical gender.
+		// InvalidGrammaticalNumber: Character or name {0} doesn't correspond to any default grammatical number.
+		// InvalidInflection: Name {0} couldn't be recognized as a valid inflection name.
 		// LPlusNone: Unknown error when parsing file {0} at position {1}, line '{2}'.
 		// LPlusEntryOutside: Error in file {0}: Entry {2} is outside a section.
 		// LPlusSubsectionWithoutSection: Error in file {0}: Subsection {2} is not under any section.
@@ -197,6 +198,7 @@ Misc: {
 		// LPlusUnexpectedEntry: Error in file {0}: Number of entries in section or subsection '{2}' wasn't expected.
 		// LPlusBadEntryFormat: Error in file {0}: Entry in section or subsection '{2}' is not the correct format. Please read the inflection file docs again.
 		// LPlusBadSimpleMatch: The string '{2}' is not a valid simple match pattern. Please read the inflection file docs again.
+		// LPlusOverrideOverlap: Error in file {0}: Inflection overrides for item '{2}' overlap. If you're using 'Inflection:', do not use 'Gender:' or 'Number:', and viceversa.
 	}
 }
 

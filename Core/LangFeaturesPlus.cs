@@ -366,7 +366,7 @@ namespace MoreLocales.Core
                     return GrammaticalGender.Neuter;
                 default:
                     if (throwIfInvalid)
-                        throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidGrammaticalGender").Format(c));
+                        throw new Exception(MoreLocales.InvalidGrammaticalGenderError.Format(c));
                     return 0;
             }
         }
@@ -381,7 +381,7 @@ namespace MoreLocales.Core
             if (!Enum.IsDefined(g))
             {
                 if (throwIfInvalid)
-                    throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidGrammaticalGender").Format(g));
+                    throw new Exception(MoreLocales.InvalidGrammaticalGenderError.Format(g));
                 return 'M';
             }
             return g.ToString()[0];
@@ -407,7 +407,7 @@ namespace MoreLocales.Core
                         return (GrammaticalNumber)i;
             }
             if (throwIfInvalid)
-                throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidGrammaticalNumber").Format(c));
+                throw new Exception(MoreLocales.InvalidGrammaticalNumberError.Format(c));
             return 0;
         }
         /// <summary>
@@ -431,7 +431,7 @@ namespace MoreLocales.Core
             if (!Enum.IsDefined(n))
             {
                 if (throwIfInvalid)
-                    throw new Exception(MoreLocales.Instance.GetLocalization("Misc.Error.InvalidGrammaticalNumber").Format(n));
+                    throw new Exception(MoreLocales.InvalidGrammaticalNumberError.Format(n));
                 return 'S';
             }
             if ((int)n == 1)
@@ -459,7 +459,7 @@ namespace MoreLocales.Core
         /// <param name="inflection">An inflection name.</param>
         /// <param name="gender">Maybe gender.</param>
         /// <param name="number">Maybe number.</param>
-        /// <returns></returns>
+        /// <returns>Whether or not the inflection name was successfully parsed.</returns>
         public static bool TryParseInflectionName(ReadOnlySpan<char> inflection, out GrammaticalGender? gender, out GrammaticalNumber? number)
         {
             gender = null;
@@ -491,6 +491,40 @@ namespace MoreLocales.Core
                         number = Enum.Parse<GrammaticalNumber>(almostNumber);
                 }
             }
+            return true;
+        }
+        /// <summary>
+        /// Tries to parse some gender name (like Masc, Fem, Neut), abbreviated or otherwise.
+        /// </summary>
+        /// <param name="genderName">A gender name.</param>
+        /// <param name="gender">The parsed gender.</param>
+        /// <returns>Whether or not the gender name was successfully parsed.</returns>
+        public static bool TryParseGenderName(ReadOnlySpan<char> genderName, out GrammaticalGender gender)
+        {
+            gender = default;
+            if (genderName.Length < 4 && _specialGenderAbbv.TryGetValue(genderName.ToString(), out gender)) // TODO: when tmod moves to .NET 10, this allocation won't be necessary due to IAlternateEqualityComparer
+                return true;
+            var almostGender = ParsePartialName(in GenderNames, in genderName);
+            if (almostGender == null)
+                return false;
+            gender = Enum.Parse<GrammaticalGender>(almostGender);
+            return true;
+        }
+        /// <summary>
+        /// Tries to parse some number name (like Sg, Pl, Mn), abbreviated or otherwise.
+        /// </summary>
+        /// <param name="numberName">A number name.</param>
+        /// <param name="number">The parsed number.</param>
+        /// <returns>Whether or not the number name was successfully parsed.</returns>
+        public static bool TryParseNumberName(ReadOnlySpan<char> numberName, out GrammaticalNumber number)
+        {
+            number = default;
+            if (numberName.Length < 3 && _specialNumberAbbv.TryGetValue(numberName.ToString(), out number)) // TODO: when tmod moves to .NET 10, this allocation won't be necessary due to IAlternateEqualityComparer
+                return true;
+            var almostNumber = ParsePartialName(in NumberNames, in numberName);
+            if (almostNumber == null)
+                return false;
+            number = Enum.Parse<GrammaticalNumber>(almostNumber);
             return true;
         }
         private static ReadOnlySpan<char> ParsePartialName(in string[] names, in ReadOnlySpan<char> subname)
@@ -577,7 +611,24 @@ namespace MoreLocales.Core
             gender = (GrammaticalGender)((byte)data & 0xF);
             pluralization = (GrammaticalNumber)((byte)data >> 4);
         }
-
+        /// <summary>
+        /// Mutates <paramref name="baseData"/> with the values provided for gender and number if they're not null;
+        /// </summary>
+        /// <param name="baseData">The inflection data to mutate.</param>
+        /// <param name="maybeGender">The gender to mutate it with.</param>
+        /// <param name="maybeNumber">The number to mutate it with.</param>
+        /// <returns></returns>
+        public static void Set(this ref InflectionData baseData, GrammaticalGender? maybeGender = null, GrammaticalNumber? maybeNumber = null)
+        {
+            if (maybeGender.HasValue)
+            {
+                baseData = (InflectionData)(((byte)baseData & 0xF0) | (byte)maybeGender.Value);
+            }
+            if (maybeNumber.HasValue)
+            {
+                baseData = (InflectionData)(((byte)baseData & 0xF) | ((byte)maybeNumber.Value << 4));
+            }
+        }
         [GeneratedRegex(@"\p{Lu}\p{Ll}*")]
         private static partial Regex SplitByCapitals();
     }

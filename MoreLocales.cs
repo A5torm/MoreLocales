@@ -37,6 +37,8 @@ namespace MoreLocales
     /// </summary>
 	public class MoreLocales : Mod
 	{
+        internal static LocalizedText InvalidGrammaticalGenderError;
+        internal static LocalizedText InvalidGrammaticalNumberError;
         internal static Dictionary<Mod, string> inflectionFileKeys = [];
         /// <summary>
         /// The instance of MoreLocales.
@@ -66,6 +68,9 @@ namespace MoreLocales
         /// <inheritdoc/>
         public override void PostSetupContent()
         {
+            InvalidGrammaticalGenderError = GetLocalization("Misc.Error.InvalidGrammaticalGender");
+            InvalidGrammaticalNumberError = GetLocalization("Misc.Error.InvalidGrammaticalNumber");
+
             LangUtils.InitCategories();
 
             BetterLangMenuV2.InitAssetsSafe();

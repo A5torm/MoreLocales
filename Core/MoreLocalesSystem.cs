@@ -56,6 +56,7 @@ namespace MoreLocales.Core
             LPlusFile.UpdateCurrent();
             LPlusFile.Current?.SetupNameOverrides();
             MoreLocalesSets.ReloadedLocalizations();
+            LPlusFile.Current?.SetupInflectionAndFormOverrides();
             LangFeaturesPlus.boundDirectPluralizeTextCache.Clear();
         }
         private static void GoToBetterLangMenuInstead(ILContext il)
@@ -172,6 +173,7 @@ namespace MoreLocales.Core
         /// <inheritdoc/>
         public override void PostUpdateDusts()
         {
+            return;
             if (Main.keyState.IsKeyDown(Keys.F) && !Main.oldKeyState.IsKeyDown(Keys.F))
             {
                 /*

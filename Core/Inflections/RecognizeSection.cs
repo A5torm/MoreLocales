@@ -14,7 +14,7 @@ namespace MoreLocales.Core.Inflections
     /// Take Spanish '-o' vs '-ón' as an example.<br/>
     /// Both are masculine endings, but they are inflected differently from each other, so they are part of different paradigms.
     /// </param>
-    public readonly record struct InflectionAndParadigm(InflectionData Inflection, int Paradigm)
+    public readonly record struct InflectionAndParadigm(InflectionData Inflection, int Paradigm = -1)
     {
         private static InflectionAndParadigm _none;
         public static InflectionAndParadigm None => _none;
