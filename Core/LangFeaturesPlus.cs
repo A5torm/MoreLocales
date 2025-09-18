@@ -622,12 +622,23 @@ namespace MoreLocales.Core
         {
             if (maybeGender.HasValue)
             {
-                baseData = (InflectionData)(((byte)baseData & 0xF0) | (byte)maybeGender.Value);
+                if (maybeNumber.HasValue)
+                {
+                    baseData = (InflectionData)((byte)maybeGender.Value | ((byte)maybeNumber.Value << 4));
+                    return;
+                }
+                baseData.Set(maybeGender.Value);
             }
             if (maybeNumber.HasValue)
-            {
-                baseData = (InflectionData)(((byte)baseData & 0xF) | ((byte)maybeNumber.Value << 4));
-            }
+                baseData.Set(maybeNumber.Value);
+        }
+        public static void Set(this ref InflectionData baseData, GrammaticalGender gender)
+        {
+            baseData = (InflectionData)(((byte)baseData & 0xF0) | (byte)gender);
+        }
+        public static void Set(this ref InflectionData baseData, GrammaticalNumber number)
+        {
+            baseData = (InflectionData)(((byte)baseData & 0xF) | ((byte)number << 4));
         }
         [GeneratedRegex(@"\p{Lu}\p{Ll}*")]
         private static partial Regex SplitByCapitals();

@@ -33,8 +33,9 @@ Gender: Fem
 <Uzi>
 Gender: Fem
 
+[Prefixes]
+
 # This is a common change for all vanilla languages;
 # 'Light' the adjective was unanimously translated as either the noun, or a transliteration, in other languages.
 
-[Prefixes]
 <Light:Ligero>

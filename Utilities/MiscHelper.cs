@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MoreLocales.Utilities
 {
@@ -19,6 +20,39 @@ namespace MoreLocales.Utilities
             a.CopyTo(builder);
             b.CopyTo(builder.Slice(a.Length));
             return builder.ToString();
+        }
+        public static T[] Merge<T>(T[] a, T[] b)
+        {
+            T[] builder = new T[a.Length + b.Length];
+            a.CopyTo(builder.AsSpan());
+            b.CopyTo(builder.AsSpan().Slice(a.Length));
+            return builder;
+        }
+        public static T[] MaybeMerge<T>(T[] a, T[] b)
+        {
+            if (a is null)
+                return b;
+            if (b is null)
+                return a;
+            return Merge(a, b);
+        }
+        public static Dictionary<TKey, TValue[]> MaybeMerge<TKey, TValue>(Dictionary<TKey, TValue[]> a, Dictionary<TKey, TValue[]> b)
+        {
+            if (a is null)
+                return b;
+            if (b is null)
+                return a;
+            foreach (var kvp in b)
+            {
+                if (!a.TryGetValue(kvp.Key, out TValue[] value))
+                {
+                    value = kvp.Value;
+                    a.Add(kvp.Key, value);
+                    continue;
+                }
+                a[kvp.Key] = MaybeMerge(value, kvp.Value);
+            }
+            return a;
         }
         public static void Begin(this SpriteBatch spriteBatch, SpriteBatchData spriteBatchData)
         {

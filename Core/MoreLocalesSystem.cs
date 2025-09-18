@@ -179,6 +179,22 @@ namespace MoreLocales.Core
                 /*
                 if (LPlusFile.Current != null)
                 {
+                    ref var infl = ref LPlusFile.Current.Inflections;
+                    ref var it = ref LPlusFile.Current.Items;
+                    ref var pre = ref LPlusFile.Current.Prefixes;
+                    Main.NewText(string.Join<InflectionPattern>('|', infl.WordRecognizers));
+                    foreach (var kvp in infl.InflectionRecognizers)
+                    {
+                        Main.NewText($"{kvp.Key}::{string.Join<InflectionPattern>('=', kvp.Value)}");
+                    }
+                    MoreLocalesSets.CachedInflectionData[Main.LocalPlayer.HeldItem.type].Data.Deconstruct(out InflectionData inflection, out int paradigm);
+                    inflection.Deconstruct(out GrammaticalGender gender, out GrammaticalNumber number);
+                    Main.NewText($"{gender}{number}");
+                }
+                */
+                /*
+                if (LPlusFile.Current != null)
+                {
                     string test = LPlusFile.Current.Inflections.ExtractFunctionalWord("Gafas de protección");
                     Main.NewText(test ?? "null");
                     InflectableWord w = new(test);

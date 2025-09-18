@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 
@@ -15,6 +12,11 @@ namespace MoreLocales.Core.Inflections
     {
         public NameOverride[] NameOverrides = nameOverrides;
         public ItemInflectionOverride[] InflectionOverrides = inflectionOverrides;
+        public void Merge(in ItemsSection other)
+        {
+            NameOverrides = MiscHelper.MaybeMerge(NameOverrides, other.NameOverrides);
+            InflectionOverrides = MiscHelper.MaybeMerge(InflectionOverrides, other.InflectionOverrides);
+        }
         public readonly void SetupItemNameOverrides()
         {
             if (NameOverrides is null)

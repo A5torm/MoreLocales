@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,7 +9,7 @@ using Terraria.ModLoader.Core;
 
 namespace MoreLocales.Core.Inflections
 {
-    internal partial class LPlusFile(InflectionsSection inflections, ItemsSection items, PrefixesSection prefixes)
+    internal partial class LPlusFile(InflectionsSection inflections = default, ItemsSection items = default, PrefixesSection prefixes = default)
     {
         internal static Regex Split = SplitRegex();
         public static LPlusFile Current { get; internal set; }
@@ -23,28 +22,35 @@ namespace MoreLocales.Core.Inflections
         {
             Current = null;
             ref MoreLocalesCulture c = ref MoreLocalesAPI.ActiveCulture;
-            if (!_lplusFiles.TryGetValue(MoreLocales.Instance, out var dict))
+            Mod source = c.FunctionalOwner;
+            if (!_lplusFiles.TryGetValue(source, out var dict))
                 return;
-            if (!dict.TryGetValue(c.Culture.Name, out var files))
-                return;
-            TmodFile.FileEntry file = files[0];
-            using Stream stream = MoreLocales.Instance.File.GetStream(file);
-            using StreamReader reader = new(stream, Encoding.UTF8, true);
-            string content = reader.ReadToEnd();
-            Current = Parse(content, file.Name);
-            Current.Source = MoreLocales.Instance;
-            // todo: add support for merging
-            /*
+            string langCode = c.Culture.Name;
+
             foreach (var kvp in _lplusFiles)
             {
-                if (!kvp.Value.TryGetValue(c.Culture.Name, out var cultureFiles))
+                if (!kvp.Value.TryGetValue(langCode, out var cultureFiles))
                     continue;
+                Current ??= new()
+                {
+                    Source = source
+                };
                 foreach (var file in CollectionsMarshal.AsSpan(cultureFiles))
                 {
-
+                    using Stream stream = source.File.GetStream(file);
+                    using StreamReader reader = new(stream, Encoding.UTF8, true);
+                    string content = reader.ReadToEnd();
+                    Current.Add(content, file.Name);
                 }
             }
-            */
+        }
+        internal void Add(string content, string fileName)
+        {
+            var shallowData = ShallowParse(Split.Split(content), fileName);
+            DeepParse(fileName, shallowData, out var inflectionsSection, out var itemsSection, out var prefixesSection);
+            Inflections.Merge(in inflectionsSection);
+            Items.Merge(in itemsSection);
+            Prefixes.Merge(in prefixesSection);
         }
         internal void SetupNameOverrides()
         {
@@ -168,20 +174,21 @@ namespace MoreLocales.Core.Inflections
 
             return data;
         }
-        internal static LPlusFile DeepParse(string fileName, Dictionary<string, Dictionary<string, List<LPlusFileEntry>>> shallowData)
+        internal static void DeepParse(string fileName, Dictionary<string, Dictionary<string, List<LPlusFileEntry>>> shallowData,
+            out InflectionsSection inflectionsSection, out ItemsSection itemsSection, out PrefixesSection prefixesSection)
         {
-            InflectionsSection inflectionsSection = default;
-            ItemsSection itemsSection = default;
-            PrefixesSection prefixesSection = default;
+            inflectionsSection = default;
+            itemsSection = default;
+            prefixesSection = default;
 
             foreach (var kvp in shallowData)
             {
                 string sectionName = kvp.Key;
                 var subsections = kvp.Value;
 
-                if (InflectionsSection.Parse(fileName, sectionName, in subsections, out var recogSection))
+                if (InflectionsSection.Parse(fileName, sectionName, in subsections, out var inflecSection))
                 {
-                    inflectionsSection = recogSection;
+                    inflectionsSection = inflecSection;
                 }
                 else if (ItemsSection.Parse(fileName, sectionName, in subsections, out var iSection))
                 {
@@ -192,13 +199,7 @@ namespace MoreLocales.Core.Inflections
                     prefixesSection = pSection;
                 }
             }
-            return new LPlusFile(inflectionsSection, itemsSection, prefixesSection);
         }
-        internal static LPlusFile Parse(string content, string fileName)
-        {
-            return DeepParse(fileName, ShallowParse(Split.Split(content), fileName));
-        }
-
         [GeneratedRegex(@"\r?\n")]
         private static partial Regex SplitRegex();
     }

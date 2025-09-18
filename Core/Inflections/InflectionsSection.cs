@@ -26,6 +26,11 @@ namespace MoreLocales.Core.Inflections
     {
         public InflectionPattern[] WordRecognizers;
         public Dictionary<InflectionData, InflectionPattern[]> InflectionRecognizers;
+        public void Merge(in InflectionsSection other)
+        {
+            InflectionRecognizers = MiscHelper.MaybeMerge(InflectionRecognizers, other.InflectionRecognizers);
+            WordRecognizers = MiscHelper.MaybeMerge(WordRecognizers, other.WordRecognizers);
+        }
         public static bool Parse(string fileName, string name, in Dictionary<string, List<LPlusFileEntry>> raw, out InflectionsSection section)
         {
             section = default;
@@ -49,10 +54,10 @@ namespace MoreLocales.Core.Inflections
                 }
             }
 
-            section = new(in wordEntry, entries, raw.GetValueOrDefault("Exceptions"));
+            section = new(fileName, in wordEntry, entries, raw.GetValueOrDefault("Exceptions"));
             return true;
         }
-        public InflectionsSection(in LPlusFileEntry? wordEntry, List<LPlusFileEntry> inflectionEntries, List<LPlusFileEntry> exceptionEntries)
+        public InflectionsSection(string fileName, in LPlusFileEntry? wordEntry, List<LPlusFileEntry> inflectionEntries, List<LPlusFileEntry> exceptionEntries)
         {
             // parse word recognizer patterns
             if (wordEntry.HasValue)
@@ -75,7 +80,7 @@ namespace MoreLocales.Core.Inflections
                 foreach (var exceptionEntry in CollectionsMarshal.AsSpan(exceptionEntries))
                 {
                     if (!LangFeaturesPlus.TryParseInflectionName(exceptionEntry.Key, out GrammaticalGender? g, out GrammaticalNumber? n) || (!g.HasValue || !n.HasValue))
-                        throw new LPlusFileParsingException(LPlusError.BadEntryFormat, "UNKNOWN", default, exceptionEntry.ToString());
+                        throw new LPlusFileParsingException(LPlusError.BadEntryFormat, fileName, default, exceptionEntry.ToString());
 
                     InflectionData d = (InflectionData)g.Value | (InflectionData)((byte)n.Value << 4);
                     string[] exceptionsRaw = exceptionEntry.GetValues();
@@ -92,12 +97,12 @@ namespace MoreLocales.Core.Inflections
             foreach (var inflection in CollectionsMarshal.AsSpan(inflectionEntries))
             {
                 if (!LangFeaturesPlus.TryParseInflectionName(inflection.Key, out GrammaticalGender? g, out GrammaticalNumber? n) || (!g.HasValue || !n.HasValue))
-                    throw new LPlusFileParsingException(LPlusError.BadEntryFormat, "UNKNOWN", default, inflection.ToString());
+                    throw new LPlusFileParsingException(LPlusError.BadEntryFormat, fileName, default, inflection.ToString());
 
                 InflectionData d = (InflectionData)g.Value | (InflectionData)((byte)n.Value << 4);
                 string[] paradigms = inflection.GetValues();
-                if (paradigms.Length < 1)
-                    throw new LPlusFileParsingException(LPlusError.BadEntryFormat, "UNKNOWN", default, inflection.ToString());
+                if (paradigms.Length == 0)
+                    throw new LPlusFileParsingException(LPlusError.BadEntryFormat, fileName, default, inflection.ToString());
                 InflectionPattern[] paradigmPattern = new InflectionPattern[paradigms.Length];
                 for (int i = 0; i < paradigms.Length; i++)
                 {
