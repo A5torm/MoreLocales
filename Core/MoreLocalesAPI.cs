@@ -38,11 +38,8 @@ namespace MoreLocales.Core
     /// <param name="adjectiveOrder">
     /// <inheritdoc cref="GrammarData.AdjectiveOrder"/>
     /// </param>
-    /// <param name="contextChangesAdjective">
-    /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
-    /// </param>
     public readonly struct GrammarData(PluralizationStyle pluralizationStyle = PluralizationStyle.Simple, Func<int, int, int, int> customPluralizationRule = null,
-        AdjectiveOrder? adjectiveOrder = null, Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective = null)
+        AdjectiveOrder? adjectiveOrder = null)
     {
         /// <summary>
         /// The pluralization style that should be used for this <see cref="MoreLocalesCulture"/>.<para/>
@@ -60,23 +57,6 @@ namespace MoreLocales.Core
         /// </summary>
         public readonly AdjectiveOrder AdjectiveOrder = adjectiveOrder ?? AdjectiveOrder.BeforeWithSpace;
         /// <summary>
-        /// Whether or not a pair of gender and pluralization data from a noun should change the form of the adjective attached to it. <br/>
-        /// For example, in English, adjective form never changes, so you'd always return true. In Spanish, the adjective changes if the gender isn't masculine or if the noun is plural. <para/>
-        /// This function should take in 'gender, pluralizationType' as parameters, and return the result.<br/>
-        /// For more info on pluralization type, see <see cref="CustomPluralizationRule"/>.<para/>
-        /// <b>Note:</b> Setting this is not necessary for a new culture to function. It simply allows for culling unnecessary calculations for slighly better performance.
-        /// </summary>
-        public readonly Func<GrammaticalGender, GrammaticalNumber, bool> ContextChangesAdjective = contextChangesAdjective;
-        #region what's a sourcegen
-        /// <summary>
-        /// Makes a new <see cref="GrammarData"/> instance with only <see cref="GrammarData.ContextChangesAdjective"/> set.
-        /// </summary>
-        /// <param name="contextChangesAdjective">
-        /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
-        /// </param>
-        /// <returns></returns>
-        public static GrammarData Context(Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective) => new(contextChangesAdjective: contextChangesAdjective);
-        /// <summary>
         /// Makes a new <see cref="GrammarData"/> instance with only <see cref="GrammarData.PluralizationRule"/> and <see cref="GrammarData.AdjectiveOrder"/> set.
         /// </summary>
         /// <param name="pluralizationStyle">
@@ -88,48 +68,6 @@ namespace MoreLocales.Core
         /// <returns></returns>
         public static GrammarData StyleOrder(PluralizationStyle pluralizationStyle, AdjectiveOrder adjectiveOrder)
             => new(pluralizationStyle: pluralizationStyle, adjectiveOrder: adjectiveOrder);
-        /// <summary>
-        /// Makes a new <see cref="GrammarData"/> instance with only <see cref="GrammarData.AdjectiveOrder"/> and <see cref="GrammarData.ContextChangesAdjective"/> set.
-        /// </summary>
-        /// <param name="adjectiveOrder">
-        /// <inheritdoc cref="GrammarData.AdjectiveOrder"/>
-        /// </param>
-        /// <param name="contextChangesAdjective">
-        /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
-        /// </param>
-        /// <returns></returns>
-        public static GrammarData OrderContext
-            (AdjectiveOrder adjectiveOrder, Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective)
-            => new(adjectiveOrder: adjectiveOrder, contextChangesAdjective: contextChangesAdjective);
-        /// <summary>
-        /// Makes a new <see cref="GrammarData"/> instance with only <see cref="GrammarData.PluralizationRule"/> and <see cref="GrammarData.ContextChangesAdjective"/> set.
-        /// </summary>
-        /// <param name="pluralizationStyle">
-        /// <inheritdoc cref="GrammarData.PluralizationRule"/>
-        /// </param>
-        /// <param name="contextChangesAdjective">
-        /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
-        /// </param>
-        /// <returns></returns>
-        public static GrammarData StyleContext(PluralizationStyle pluralizationStyle, Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective)
-            => new(pluralizationStyle: pluralizationStyle, contextChangesAdjective: contextChangesAdjective);
-        /// <summary>
-        /// Makes a new <see cref="GrammarData"/> instance with <see cref="GrammarData.PluralizationRule"/>, <see cref="AdjectiveOrder"/> and <see cref="GrammarData.ContextChangesAdjective"/> set.
-        /// </summary>
-        /// <param name="pluralizationStyle">
-        /// <inheritdoc cref="GrammarData.PluralizationRule"/>
-        /// </param>
-        /// <param name="adjectiveOrder">
-        /// <inheritdoc cref="GrammarData.AdjectiveOrder"/>
-        /// </param>
-        /// <param name="contextChangesAdjective">
-        /// <inheritdoc cref="GrammarData.ContextChangesAdjective"/>
-        /// </param>
-        /// <returns></returns>
-        public static GrammarData StyleOrderContext
-            (PluralizationStyle pluralizationStyle, AdjectiveOrder adjectiveOrder,
-            Func<GrammaticalGender, GrammaticalNumber, bool> contextChangesAdjective) => new(pluralizationStyle, null, adjectiveOrder, contextChangesAdjective);
-        #endregion
     }
     /// <summary>
     /// A structure used for control over the drawing of the language button for a certain culture.<para/>
@@ -387,14 +325,12 @@ namespace MoreLocales.Core
         }
         private static void RegisterVanillaCultures()
         {
-            var basicRomance = GrammarData.OrderContext(AdjectiveOrder.AfterWithSpace, InflectionDelegates.inflectionChangesWhenNotDefault);
+            var basicRomance = new GrammarData(adjectiveOrder: AdjectiveOrder.AfterWithSpace);
 
             RegisterCulture(nameof(English),
-                grammarData: GrammarData.Context(InflectionDelegates.inflectionNeverChanges),
                 buttonDrawData: new(sheetFrame: (int)English));
 
             RegisterCulture(nameof(German),
-                grammarData: GrammarData.Context(InflectionDelegates.inflectionChangesWhenNotDefault),
                 buttonDrawData: new(sheetFrame: (int)German));
 
             RegisterCulture(nameof(Italian),
@@ -402,7 +338,7 @@ namespace MoreLocales.Core
                 buttonDrawData: new(sheetFrame: (int)Italian));
 
             RegisterCulture(nameof(French),
-                grammarData: GrammarData.StyleOrderContext(PluralizationStyle.SimpleWithSingularZero, AdjectiveOrder.AfterWithSpace, InflectionDelegates.inflectionChangesWhenNotDefault),
+                grammarData: GrammarData.StyleOrder(PluralizationStyle.SimpleWithSingularZero, AdjectiveOrder.AfterWithSpace),
                 buttonDrawData: new(sheetFrame: (int)French));
 
             RegisterCulture(nameof(Spanish),
@@ -410,11 +346,11 @@ namespace MoreLocales.Core
                 buttonDrawData: new(sheetFrame: (int)Spanish));
 
             RegisterCulture(nameof(Russian),
-                grammarData: GrammarData.StyleContext(PluralizationStyle.RussianThreeway, InflectionDelegates.inflectionChangesWhenNotDefault),
+                grammarData: new(PluralizationStyle.RussianThreeway),
                 buttonDrawData: new(sheetFrame: (int)Russian));
 
             RegisterCulture(nameof(Chinese),
-                grammarData: GrammarData.StyleOrderContext(PluralizationStyle.None, AdjectiveOrder.Before, InflectionDelegates.inflectionNeverChanges),
+                grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.Before),
                 buttonDrawData: new(sheetFrame: (int)Chinese));
 
             RegisterCulture(nameof(Portuguese),
@@ -422,52 +358,51 @@ namespace MoreLocales.Core
                 buttonDrawData: new(sheetFrame: (int)Portuguese));
 
             RegisterCulture(nameof(Polish),
-                grammarData: GrammarData.StyleContext(PluralizationStyle.PolishThreeway, InflectionDelegates.inflectionChangesWhenNotDefault),
+                grammarData: new(PluralizationStyle.PolishThreeway),
                 buttonDrawData: new(sheetFrame: (int)Polish));
         }
         private static void RegisterNativeCustomCultures()
         {
             Mod mod = MoreLocales.Instance;
 
-            var basicRomance = GrammarData.OrderContext(AdjectiveOrder.AfterWithSpace, InflectionDelegates.inflectionChangesWhenNotDefault);
+            var basicRomance = new GrammarData(adjectiveOrder: AdjectiveOrder.AfterWithSpace);
 
             // MoreLocales provides you with this extension method: Mod.RegisterCulture, for simplicity (mod parameter automatically gets filled).
 
             mod.RegisterCulture(nameof(BritishEnglish),
                 "en-GB",
-                grammarData: GrammarData.Context(InflectionDelegates.inflectionNeverChanges),
                 buttonDrawData: new(sheetFrame: (int)BritishEnglish));
 
             mod.RegisterCulture(nameof(Japanese),
                 "ja-JP",
-                grammarData: GrammarData.StyleOrderContext(PluralizationStyle.None, AdjectiveOrder.Before, InflectionDelegates.inflectionNeverChanges),
+                grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.Before),
                 buttonDrawData: new(sheetFrame: (int)Japanese));
 
             mod.RegisterCulture(nameof(Korean),
                 "ko-KR",
-                grammarData: GrammarData.StyleContext(PluralizationStyle.None, InflectionDelegates.inflectionNeverChanges),
+                grammarData: new(PluralizationStyle.None),
                 buttonDrawData: new(sheetFrame: (int)Korean));
 
             mod.RegisterCulture(nameof(TraditionalChinese),
                 "zh-Hant",
                 (int)Chinese,
-                grammarData: GrammarData.StyleOrderContext(PluralizationStyle.None, AdjectiveOrder.Before, InflectionDelegates.inflectionNeverChanges),
+                grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.Before),
                 buttonDrawData: new(sheetFrame: (int)TraditionalChinese));
 
             mod.RegisterCulture(nameof(Turkish),
                 "tr-TR",
-                grammarData: new(PluralizationStyle.Custom, CultureHelper.turkishPlural, contextChangesAdjective: InflectionDelegates.inflectionNeverChanges),
+                grammarData: new(PluralizationStyle.Custom, CultureHelper.turkishPlural),
                 buttonDrawData: new(sheetFrame: (int)Turkish));
 
             mod.RegisterCulture(nameof(Thai),
                 "th-TH",
-                grammarData: GrammarData.StyleOrderContext(PluralizationStyle.None, AdjectiveOrder.After, InflectionDelegates.inflectionNeverChanges),
+                grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.After),
                 buttonDrawData: new(sheetFrame: (int)Thai));
 
             mod.RegisterCulture(nameof(Ukrainian),
                 "uk-UA",
                 (int)Russian,
-                grammarData: GrammarData.StyleContext(PluralizationStyle.RussianThreeway, InflectionDelegates.inflectionChangesWhenNotDefault),
+                grammarData: new(PluralizationStyle.RussianThreeway),
                 buttonDrawData: new(sheetFrame: (int)Ukrainian));
 
             mod.RegisterCulture(nameof(MexicanSpanish),
@@ -478,13 +413,13 @@ namespace MoreLocales.Core
 
             mod.RegisterCulture(nameof(Czech),
                 "cs-CZ",
-                grammarData: new(PluralizationStyle.Custom, CultureHelper.czechPlural, contextChangesAdjective: InflectionDelegates.inflectionChangesWhenNotDefault),
+                grammarData: new(PluralizationStyle.Custom, CultureHelper.czechPlural),
                 buttonDrawData: new(sheetFrame: (int)Czech));
 
             // hungarian's adjective agreement rules are a little weird, but irrelevant for the mod
             mod.RegisterCulture(nameof(Hungarian),
                 "hu-HU",
-                grammarData: GrammarData.StyleContext(PluralizationStyle.SimpleWithSingularZero, InflectionDelegates.inflectionNeverChanges),
+                grammarData: new(PluralizationStyle.SimpleWithSingularZero),
                 buttonDrawData: new(sheetFrame: (int)Hungarian));
 
             mod.RegisterCulture(nameof(PortugalPortuguese),
@@ -495,37 +430,34 @@ namespace MoreLocales.Core
 
             mod.RegisterCulture(nameof(Swedish),
                 "sv-SE",
-                grammarData: GrammarData.Context(InflectionDelegates.inflectionChangesWhenNotDefault),
                 buttonDrawData: new(sheetFrame: (int)Swedish));
 
             mod.RegisterCulture(nameof(Dutch),
                 "nl-NL",
-                grammarData: GrammarData.Context(InflectionDelegates.inflectionChangesWhenNotDefault),
                 buttonDrawData: new(sheetFrame: (int)Dutch));
 
             mod.RegisterCulture(nameof(Danish),
                 "da-DK",
-                grammarData: GrammarData.StyleContext(PluralizationStyle.SimpleWithSingularZero, InflectionDelegates.inflectionChangesWhenNotDefault),
+                grammarData: new(PluralizationStyle.SimpleWithSingularZero),
                 buttonDrawData: new(sheetFrame: (int)Danish));
 
             mod.RegisterCulture(nameof(Vietnamese),
                 "vi-VN",
                 hasSubtitle: false,
-                grammarData: GrammarData.StyleOrderContext(PluralizationStyle.None, AdjectiveOrder.AfterWithSpace, InflectionDelegates.inflectionNeverChanges),
+                grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.AfterWithSpace),
                 buttonDrawData: new(sheetFrame: (int)Vietnamese));
 
             mod.RegisterCulture(nameof(Finnish),
                 "fi-FI",
-                grammarData: GrammarData.Context(InflectionDelegates.inflectionChangesWhenNotDefault),
                 buttonDrawData: new(sheetFrame: (int)Finnish));
 
             mod.RegisterCulture(nameof(Romanian),
                 "ro-RO",
-                grammarData: new(PluralizationStyle.Custom, CultureHelper.romanianPlural, AdjectiveOrder.AfterWithSpace, InflectionDelegates.inflectionChangesWhenNotDefault),
+                grammarData: new(PluralizationStyle.Custom, CultureHelper.romanianPlural, AdjectiveOrder.AfterWithSpace),
                 buttonDrawData: new(sheetFrame: (int)Romanian));
 
             mod.RegisterCulture(nameof(Indonesian),
-                "id-ID", grammarData: GrammarData.StyleOrderContext(PluralizationStyle.None, AdjectiveOrder.AfterWithSpace, InflectionDelegates.inflectionNeverChanges),
+                "id-ID", grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.AfterWithSpace),
                 buttonDrawData: new(sheetFrame: (int)Indonesian));
         }
         internal static void DoSafeLoad()

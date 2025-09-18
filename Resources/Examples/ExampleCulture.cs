@@ -48,11 +48,6 @@ namespace MoreLocales.Resources.Examples
                 return 0;
             return Main.rand.Next(3);
         }
-        // Not really necessary, but a little performance improvement is always good.
-        public override bool ContextChangesAdjective(GrammaticalGender gender, GrammaticalNumber pluralization)
-        {
-            return gender == GrammaticalGender.Feminine;
-        }
         // We need to make sure the button looks good.
         public override void SetButtonDrawData(ref Asset<Texture2D> sheet, ref int? sheetFrameCount, ref int? sheetFrame)
         {

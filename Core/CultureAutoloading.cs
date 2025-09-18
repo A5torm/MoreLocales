@@ -12,7 +12,6 @@ namespace MoreLocales.Core
     /// </summary>
     public abstract class ModCulture : ILoadable
     {
-        private static readonly MethodInfo BaseContextCullerMethod = typeof(ModCulture).GetMethod(nameof(ContextChangesAdjective));
         private static readonly MethodInfo BaseAvailabilityMethod = typeof(ModCulture).GetMethod(nameof(IsAvailable));
         private static readonly MethodInfo BaseButtonPanelHijackMethod = typeof(ModCulture).GetMethod(nameof(PreDrawButtonPanel));
         private Mod _mod;
@@ -80,15 +79,6 @@ namespace MoreLocales.Core
             return 0;
         }
         /// <summary>
-        /// <b>Note:</b> Overriding this method is not necessary, but it might avoid the game making unnecessary calculations.<para/>
-        /// Called early on when attempting to inflect a prefix. If this returns false, the regular form of the prefix will be used.
-        /// </summary>
-        /// <returns>Whether or not the given data can change an adjective's form in this culture.</returns>
-        public virtual bool ContextChangesAdjective(GrammaticalGender gender, GrammaticalNumber pluralization)
-        {
-            return true;
-        }
-        /// <summary>
         /// Whether or not this culture should show up on the language menu.
         /// </summary>
         public virtual bool IsAvailable()
@@ -148,11 +138,10 @@ namespace MoreLocales.Core
             // checking for overrides is easy,
             // but checking for meaningful overrides requires reflection of both the base method and the implementation by the inheriting class.
             // TileLoader does this all the time to create performant global hooks.
-            bool hasCustomContextCuller = t.GetMethod(nameof(ContextChangesAdjective)) != BaseContextCullerMethod;
             bool hasCustomAvailabilityMethod = t.GetMethod(nameof(IsAvailable)) != BaseAvailabilityMethod;
             bool hasCustomButtonPanelDrawMethod = t.GetMethod(nameof(PreDrawButtonPanel)) != BaseButtonPanelHijackMethod;
 
-            GrammarData data = new(pluralization, hasCustomPluralizationRule ? CustomPluralizationRule : null, orderFormatter, hasCustomContextCuller ? ContextChangesAdjective : null);
+            GrammarData data = new(pluralization, hasCustomPluralizationRule ? CustomPluralizationRule : null, orderFormatter);
 
             Asset<Texture2D> sheet = null;
             int? sheetFrameCount = null;

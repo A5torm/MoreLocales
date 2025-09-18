@@ -216,21 +216,18 @@ namespace MoreLocales.Core
 
             LocalizedText ogText = Lang.prefix[prefix];
 
-            if (prefix == 0 || !ClientSideConfig.Instance.LocalizedPrefixGenderPluralization)
+            if (prefix == 0 || !ClientSideConfig.Instance.LocalizedPrefixGenderPluralization || LPlusFile.Current is null)
                 return ogText;
 
             ref var data = ref MoreLocalesSets.CachedInflectionData[context.type];
             if (!data.Valid)
                 return ogText;
-            InflectionData inflection = data.Data.Inflection;
-            inflection.Deconstruct(out var gender, out var pluralization);
-            if (!LanguageManager.Instance.ActiveCulture.InflectionDataChangesAdjectiveForm(gender, pluralization))
-                return ogText; // adjective form stays the same
 
             ref var prefixData = ref MoreLocalesSets.Prefixes[prefix];
             if (prefixData.Uninflectable)
                 return ogText;
 
+            InflectionData inflection = data.Data.Inflection;
             if (!prefixData.EnsureExists(inflection))
                 return ogText;
 
@@ -288,30 +285,6 @@ namespace MoreLocales.Core
         }
         internal static readonly Dictionary<DirectPluralizationTextBinding, LocalizedText> boundDirectPluralizeTextCache = [];
         internal record struct DirectPluralizationTextBinding(string Key, int[] Indices);
-#pragma warning disable CS1572
-        /// <summary>
-        /// Checks if this culture changes the adjective form based on grammatical gender and/or pluralization of the noun.<para/>
-        /// This is added to a custom culture via the <see cref="GrammarData"/> parameter when registering manually, or <see cref="ModCulture.ContextChangesAdjective(GrammaticalGender, GrammaticalNumber)"/> when using the autoloaded culture API.
-        /// </summary>
-        /// <param name="c">The culture to check.</param>
-        /// <param name="data">The inflection data to check for.</param>
-        /// <param name="gender">The grammatical gender to check for.</param>
-        /// <param name="pluralization">The pluralization to check for.</param>
-        /// <returns></returns>
-#pragma warning restore
-        public static bool InflectionDataChangesAdjectiveForm(this GameCulture c, InflectionData data)
-        {
-            data.Deconstruct(out GrammaticalGender gender, out GrammaticalNumber pluralization);
-            return c.InflectionDataChangesAdjectiveForm(gender, pluralization);
-        }
-        /// <inheritdoc cref="InflectionDataChangesAdjectiveForm(GameCulture, InflectionData)"/>
-        public static bool InflectionDataChangesAdjectiveForm(this GameCulture c, GrammaticalGender gender, GrammaticalNumber pluralization)
-        {
-            var possibleFunc = MoreLocalesAPI.extraCulturesV2[c.LegacyId].GrammarData.ContextChangesAdjective;
-            if (possibleFunc is null)
-                return true;
-            return possibleFunc(gender, pluralization);
-        }
         /// <summary>
         /// Only items that can be reforged should be able to affect adjectives.
         /// </summary>
