@@ -107,7 +107,7 @@ namespace MoreLocales.Utilities
             int fallbackCulture = 1,
             bool hasSubtitle = true,
             bool hasDescription = false,
-            GrammarData grammarData = new(),
+            GrammarData? grammarData = null,
             Func<bool> available = null,
             LanguageButtonDrawData buttonDrawData = new())
         =>

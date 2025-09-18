@@ -42,6 +42,10 @@ namespace MoreLocales.Core
         AdjectiveOrder? adjectiveOrder = null)
     {
         /// <summary>
+        /// Creates a default <see cref="GrammarData"/> instance.
+        /// </summary>
+        public GrammarData() : this(PluralizationStyle.Simple, null, null) { }
+        /// <summary>
         /// The pluralization style that should be used for this <see cref="MoreLocalesCulture"/>.<para/>
         /// If the value of this is <see cref="PluralizationStyle.Custom"/>, setting the value of <see cref="CustomPluralizationRule"/> <b>is mandatory.</b>
         /// </summary>
@@ -101,7 +105,7 @@ namespace MoreLocales.Core
     /// These keys are needed for correct display inside <see cref="MoreLocales"/>'s UI.
     /// </summary>
     public struct MoreLocalesCulture(GameCulture culture, string name, int fallback = 1,
-        bool subtitle = false, bool description = false, GrammarData grammarData = new(),
+        bool subtitle = false, bool description = false, GrammarData? grammarData = null,
         Func<bool> available = null, LanguageButtonDrawData buttonDrawData = new(), Mod mod = null)
     {
         /// <summary>
@@ -128,7 +132,7 @@ namespace MoreLocales.Core
         /// </summary>
         public readonly bool HasDescription = description;
         /// <inheritdoc cref="Core.GrammarData"/>
-        public readonly GrammarData GrammarData = grammarData;
+        public readonly GrammarData GrammarData = grammarData ?? new();
         /// <summary>
         /// Whether or not this culture should be visible on the language menu. Defaults to null (always available).
         /// </summary>
@@ -488,7 +492,7 @@ namespace MoreLocales.Core
             int fallbackCulture = 1,
             bool hasSubtitle = true,
             bool hasDescription = false,
-            GrammarData grammarData = new(),
+            GrammarData? grammarData = null,
             Func<bool> available = null,
             LanguageButtonDrawData buttonDrawData = new(),
             Mod mod = null

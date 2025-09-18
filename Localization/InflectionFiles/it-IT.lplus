@@ -1,0 +1,34 @@
+[Inflections]
+Word: !di, !a, !in, !con, !col, !per
+
+# Feminine plural -e will never be recognized due to how the system works.
+# In the future I will try to remedy this using the extra context given by an item's name.
+# For now, just put feminine plural words ending in -e in exceptions.
+
+MascSg: -o, -e, X
+FemSg:  -a, X,  -one
+MascPl: -i, -i, X
+FemPl:  -e, X,  -oni
+
+<Exceptions>
+FemSg: mano, chiave
+FemPl: ali
+
+[Items]
+
+# I'm unclear on how compound nouns work in Italian someone help me
+
+<LeafBlower>
+Inflection: MascSg
+
+# Unadapted nicknames are a similar situation.
+
+<Uzi>
+Inflection: FemSg
+
+[Prefixes]
+
+# This is a common change for all vanilla languages;
+# 'Light' the adjective was unanimously translated as either the noun, or a transliteration, in other languages.
+
+<Light:Leggero>

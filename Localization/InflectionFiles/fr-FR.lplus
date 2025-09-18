@@ -1,0 +1,24 @@
+[Inflections]
+Word: !de, !en, !à, !avec
+
+MascSg: -eau,   -el,    -al,   -eux,   -eur,   -u,   -ur,   -f,   -ef,   -er,   -t,   -et,    -é,   -ge,  -me,  -n,   -ien,    -nt,   -nd,  -ment,  -oc,  -rd,  -il,  -e,   X
+FemSg:  -elle,  -elle,  -ale,  -euse,  -euse,  -ue,  -ure,  -ve,  -ève,  -ère,  -te,  -ette,  -ée,  X,    X,    -ne,  -ienne,  -nte,  -nde,  X,      X,    X,    X,    X,   -ice
+MascPl: -eaux,  -els,   -aux,  -eux,   -eurs,  -us,  -urs,  -fs,  -efs,  -ers,  -ts,  -ets,   -és,  -ges, -mes, -ns,  -iens,   -nts,  -nds,  -ments, -ocs, -rds, -ils, -es, X
+FemPl:  -elles, -elles, -ales, -euses, -euses, -ues, -ures, -ves, -èves, -ères, -tes, -ettes, -ées, X,    X,    -nes, -iennes, -ntes, -ndes, X,      X,    X,    X,    X,   -ices
+
+<Exceptions>
+FemSg: fleur, hache, pioche, main, clé, clef
+
+[Prefixes]
+
+# This is a common change for all vanilla languages;
+# 'Light' the adjective was unanimously translated as either the noun, or a transliteration, in other languages.
+
+<Light:(Léger)>
+
+# Other changes
+
+# Slow was translated as 'slowness' for some reason.
+<Slow:(Lent)>
+# Massive is just weird, this corrects it.
+<Massive:(Imposant)>

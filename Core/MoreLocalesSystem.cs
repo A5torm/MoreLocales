@@ -173,7 +173,6 @@ namespace MoreLocales.Core
         /// <inheritdoc/>
         public override void PostUpdateDusts()
         {
-            return;
             if (Main.keyState.IsKeyDown(Keys.F) && !Main.oldKeyState.IsKeyDown(Keys.F))
             {
                 /*
@@ -189,7 +188,7 @@ namespace MoreLocales.Core
                     }
                     MoreLocalesSets.CachedInflectionData[Main.LocalPlayer.HeldItem.type].Data.Deconstruct(out InflectionData inflection, out int paradigm);
                     inflection.Deconstruct(out GrammaticalGender gender, out GrammaticalNumber number);
-                    Main.NewText($"{gender}{number}");
+                    Main.NewText($"{gender}{number}:{paradigm}");
                 }
                 */
                 /*

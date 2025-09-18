@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Terraria;
 
 namespace MoreLocales.Core.Inflections
 {
@@ -211,11 +212,8 @@ namespace MoreLocales.Core.Inflections
             {
                 InflectionPattern p = arr[i];
 
-                if (p.TryMatch(word))
-                {
-                    BetterMatch(ref bestMatch, in p);
+                if (p.TryMatch(word) && BetterMatch(ref bestMatch, in p))
                     paradigm = i;
-                }
             }
             return bestMatch;
         }
@@ -239,12 +237,14 @@ namespace MoreLocales.Core.Inflections
             data = new(inflection, paradigm);
             return bestMatch;
         }
-        public static void BetterMatch(ref InflectionPattern latestBest, in InflectionPattern possibleNewBest)
+        public static bool BetterMatch(ref InflectionPattern latestBest, in InflectionPattern possibleNewBest)
         {
-            if (latestBest is null)
+            if (latestBest is null || possibleNewBest.Match.Length > latestBest.Match.Length)
+            {
                 latestBest = possibleNewBest;
-            else if (possibleNewBest.Match.Length > latestBest.Match.Length)
-                latestBest = possibleNewBest;
+                return true;
+            }
+            return false;
         }
     }
     public readonly record struct InflectionException(InflectionPattern Pattern, InflectionData Data);
