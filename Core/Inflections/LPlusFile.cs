@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mono.Cecil;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -23,10 +24,15 @@ namespace MoreLocales.Core.Inflections
             Current = null;
             ref MoreLocalesCulture c = ref MoreLocalesAPI.ActiveCulture;
             Mod source = c.FunctionalOwner;
-            if (!_lplusFiles.TryGetValue(source, out var dict))
-                return;
             string langCode = c.Culture.Name;
+            string fallbackCode = c.FallbackCulture == 1 ? null : MoreLocalesAPI.extraCulturesV2[c.FallbackCulture].Culture.Name;
 
+            if (fallbackCode != null)
+                LoadLPlusFiles(fallbackCode, source);
+            LoadLPlusFiles(langCode, source);
+        }
+        internal static void LoadLPlusFiles(string langCode, Mod source)
+        {
             foreach (var kvp in _lplusFiles)
             {
                 if (!kvp.Value.TryGetValue(langCode, out var cultureFiles))
