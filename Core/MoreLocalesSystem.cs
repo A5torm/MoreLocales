@@ -175,7 +175,7 @@ namespace MoreLocales.Core
         {
             if (Main.keyState.IsKeyDown(Keys.F) && !Main.oldKeyState.IsKeyDown(Keys.F))
             {
-                /*
+                
                 if (LPlusFile.Current != null)
                 {
                     ref var infl = ref LPlusFile.Current.Inflections;
@@ -190,7 +190,7 @@ namespace MoreLocales.Core
                     inflection.Deconstruct(out GrammaticalGender gender, out GrammaticalNumber number);
                     Main.NewText($"{gender}{number}:{paradigm}");
                 }
-                */
+                
                 /*
                 if (LPlusFile.Current != null)
                 {
