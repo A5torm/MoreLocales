@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using Terraria;
 
 namespace MoreLocales.Core.Inflections
@@ -252,9 +253,39 @@ namespace MoreLocales.Core.Inflections
     {
         public InflectionException[] Exceptions;
         public InflectionPatternType Type = type;
+        public RecognizableDiacriticType[] DiacriticsMap = GenerateDiacriticsMap(match);
         public string Match = match;
         public bool Not = not;
-        public bool Single = type != InflectionPatternType.DoesntExist && match.Length == 1;
+        public static RecognizableDiacriticType[] GenerateDiacriticsMap(string match)
+        {
+            if (match is null)
+                return null;
+            RecognizableDiacriticType[] result = null;
+            for (int i = 0; i < match.Length; i++)
+            {
+                char c = match[i];
+                if (!char.IsUpper(c))
+                    continue;
+                result ??= new RecognizableDiacriticType[match.Length];
+                result[i] = c switch
+                {
+                    'N' => RecognizableDiacriticType.StrictNone,
+                    'G' => RecognizableDiacriticType.Grave,
+                    'A' => RecognizableDiacriticType.Acute,
+                    'C' => RecognizableDiacriticType.Circumflex,
+                    'T' => RecognizableDiacriticType.Tilde,
+                    'M' => RecognizableDiacriticType.Macron,
+                    'B' => RecognizableDiacriticType.Breve,
+                    'D' => RecognizableDiacriticType.Diaeresis,
+                    'R' => RecognizableDiacriticType.Ring,
+                    'K' => RecognizableDiacriticType.Caron,
+                    'L' => RecognizableDiacriticType.Cedilla,
+                    'O' => RecognizableDiacriticType.Ogonek,
+                    _ => throw new InvalidOperationException($"Character '{c}' was not recognized as corresponding to any diacritic type.")
+                };
+            }
+            return result;
+        }
         public bool CheckException(ReadOnlySpan<char> word, out InflectionPattern pattern, out InflectionData inflection)
         {
             pattern = null;
@@ -273,27 +304,53 @@ namespace MoreLocales.Core.Inflections
             }
             return false;
         }
+        internal bool CheckStringEquality(ReadOnlySpan<char> word)
+        {
+            if (Match.Length != word.Length)
+            {
+                Main.NewText(Match);
+                Main.NewText(word.ToString());
+                return false;
+            }
+            for (int i = 0; i < Match.Length; i++)
+            {
+                // turn character to form that will actually be compared
+                char c = char.ToLowerInvariant(word[i]);
+                // also get the diacritic map value
+                char d = DiacriticsMap is null ? '\u0000' : (char)DiacriticsMap[i];
+                // most common check, direct character check
+                if (d == 0 && Match[i] == c)
+                    continue;
+                // break up the character into its individual parts
+                string normalized = c.ToString().Normalize(NormalizationForm.FormD);
+                // if the length is one, that means this character has no diacritics, so it only matches for StrictNone
+                if (normalized.Length == 1)
+                {
+                    if (d == '\u0001')
+                        continue;
+                    return false;
+                }
+                // bool to tell us if this character actually has that diacritic or not
+                bool thisHasDiacritic = false;
+                for (int j = 1; j < normalized.Length; j++)
+                {
+                    // this means the diacritic was within the diacritics
+                    if (normalized[j] == d)
+                    {
+                        thisHasDiacritic = true;
+                        break;
+                    }
+                }
+                // if the diacritic wasn't found, it doesn't match
+                if (!thisHasDiacritic)
+                    return false;
+            }
+            return true;
+        }
         public bool TryMatch(ReadOnlySpan<char> word)
         {
             if (word.Length == 0)
                 return false ^ Not;
-            if (Single)
-            {
-                char match = Match[0];
-                switch (Type)
-                {
-                    case InflectionPatternType.Whole:
-                        if (word.Length != 1)
-                            return Not;
-                        goto case InflectionPatternType.Prefix;
-                    case InflectionPatternType.Prefix:
-                        return (char.ToLowerInvariant(word[0]) == match) ^ Not;
-                    case InflectionPatternType.Suffix:
-                        return (char.ToLowerInvariant(word[^1]) == match) ^ Not;
-                }
-            }
-
-            const StringComparison o = StringComparison.Ordinal;
 
             Span<char> sp = stackalloc char[word.Length];
             word.ToLowerInvariant(sp);
@@ -301,9 +358,9 @@ namespace MoreLocales.Core.Inflections
 
             return Type switch
             {
-                InflectionPatternType.Whole => span.Equals(Match, o) ^ Not,
-                InflectionPatternType.Prefix => span.StartsWith(Match, o) ^ Not,
-                InflectionPatternType.Suffix => span.EndsWith(Match, o) ^ Not,
+                InflectionPatternType.Whole => Match.Length != span.Length ? Not : CheckStringEquality(span) ^ Not,
+                InflectionPatternType.Prefix => Match.Length > span.Length ? Not : CheckStringEquality(span.Slice(0, Match.Length)) ^ Not,
+                InflectionPatternType.Suffix => Match.Length > span.Length ? Not : CheckStringEquality(span.Slice(span.Length - Match.Length)) ^ Not,
                 InflectionPatternType.Infix => throw new NotSupportedException("Infixes cannot yet be used, sorry!"),
                 _ => Not
             };
@@ -323,12 +380,35 @@ namespace MoreLocales.Core.Inflections
             };
             return true;
         }
-        public bool TryReplace(ReadOnlySpan<char> word, ReadOnlySpan<char> replacement, out ReadOnlySpan<char> result)
+        public bool TryReplace(ReadOnlySpan<char> word, ReadOnlySpan<char> replacement, out ReadOnlySpan<char> result, RecognizableDiacriticType[] replacementDiacritics = null)
         {
             result = word;
             if (!TryRemove(word, out ReadOnlySpan<char> removed))
                 return false;
+            char[] actualReplacement = null;
 
+            if (replacementDiacritics != null)
+            {
+                for (int i = 0; i < replacement.Length; i++)
+                {
+                    var diacritic = replacementDiacritics[i];
+                    if (diacritic == RecognizableDiacriticType.None)
+                        continue;
+                    actualReplacement ??= replacement.ToArray();
+                    int indexInWord = Type switch
+                    {
+                        InflectionPatternType.Whole => i,
+                        InflectionPatternType.Prefix => i + (Match.Length - replacement.Length),
+                        InflectionPatternType.Suffix => i + removed.Length,
+                        _ => throw new NotSupportedException($"Inflection pattern type '{Type}' is not yet supported!"),
+                    };
+                    if (indexInWord < 0 || indexInWord >= word.Length)
+                        continue;
+                    TextHelper.TryAddDiacritic(word[indexInWord], diacritic, out actualReplacement[i]);
+                }
+            }
+            if (actualReplacement != null)
+                replacement = actualReplacement.AsSpan();
             result = Type switch
             {
                 InflectionPatternType.Whole => replacement,
@@ -343,7 +423,7 @@ namespace MoreLocales.Core.Inflections
             result = word;
             if (Type != replacement.Type)
                 return false;
-            return TryReplace(word, replacement.Match, out result);
+            return TryReplace(word, replacement.Match, out result, replacement.DiacriticsMap);
         }
         public static bool TryParse(string pattern, out InflectionPattern result, List<InflectionException> exceptions = null)
         {
@@ -359,7 +439,6 @@ namespace MoreLocales.Core.Inflections
 
             // todo: support pointing to other columns/rows
 
-            pattern = pattern.ToLowerInvariant();
             if (pattern.Length == 1)
             {
                 result = new(InflectionPatternType.Whole, pattern, false);
@@ -435,13 +514,102 @@ namespace MoreLocales.Core.Inflections
             return startString + endString;
         }
     }
+    /// <summary>
+    /// Type of inflection pattern.<br/>
+    /// Dictates how inflection patterns recognize a word and work with other inflection patterns.
+    /// </summary>
     public enum InflectionPatternType
     {
+        /// <summary>
+        /// Represents a string of letter characters with word endings guaranteed at both ends.
+        /// </summary>
         Whole,
+        /// <summary>
+        /// Represents a string of letter characters with a word ending guaranteed before it.
+        /// </summary>
         Prefix,
+        /// <summary>
+        /// Represents a string of letter characters with a word ending guaranteed after it.
+        /// </summary>
         Suffix,
+        /// <summary>
+        /// Represents a string of letter characters with no word endings guaranteed.
+        /// </summary>
         Infix,
+        /// <summary>
+        /// Represents a pattern which doesn't exist in the main table. Marked as X in LPlus files.
+        /// </summary>
         DoesntExist,
+    }
+    /// <summary>
+    /// An enum containing all diacritics that can be specified for an <see cref="InflectionPattern"/> in an LPlus file.
+    /// </summary>
+    public enum RecognizableDiacriticType
+    {
+        /// <summary>
+        /// Indicates indifference to whether or not a character has a diacritic.
+        /// </summary>
+        None = 0,
+        /// <summary>
+        /// Letters without diacritics.<para/>
+        /// Written 'N' in LPlus files.
+        /// </summary>
+        StrictNone = 1,
+        /// <summary>
+        /// Letters with the grave diacritic, e. g. Àà<para/>
+        /// Written 'G' in LPlus files.
+        /// </summary>
+        Grave = '\u0300',
+        /// <summary>
+        /// Letters with the acute diacritic, e. g. Áá<para/>
+        /// Written 'A' in LPlus files.
+        /// </summary>
+        Acute = '\u0301',
+        /// <summary>
+        /// Letters with the circumflex diacritic, e. g. Ââ<para/>
+        /// Written 'C' in LPlus files.
+        /// </summary>
+        Circumflex = '\u0302',
+        /// <summary>
+        /// Letters with the tilde diacritic, e. g. Ãã<para/>
+        /// Written 'T' in LPlus files.
+        /// </summary>
+        Tilde = '\u0303',
+        /// <summary>
+        /// Letters with the macron diacritic, e. g. Āā<para/>
+        /// Written 'M' in LPlus files.
+        /// </summary>
+        Macron = '\u0304',
+        /// <summary>
+        /// Letters with the breve diacritic, e. g. Ăă<para/>
+        /// Written 'B' in LPlus files.
+        /// </summary>
+        Breve = '\u0306',
+        /// <summary>
+        /// Letters with the diaeresis/umlaut diacritic, e. g. Ää<para/>
+        /// Written 'D' in LPlus files.
+        /// </summary>
+        Diaeresis = '\u0308',
+        /// <summary>
+        /// Letters with the ring diacritic, e. g. Åå<para/>
+        /// Written 'R' in LPlus files.
+        /// </summary>
+        Ring = '\u030A',
+        /// <summary>
+        /// Letters with the caron diacritic, e. g. Ǎǎ<para/>
+        /// Written 'K' in LPlus files.
+        /// </summary>
+        Caron = '\u030C',
+        /// <summary>
+        /// Letters with the cedilla diacritic, e. g. Çç<para/>
+        /// Written 'L' in LPlus files.
+        /// </summary>
+        Cedilla = '\u0327',
+        /// <summary>
+        /// Letters with the ogonek diacritic, e. g. Ąą<para/>
+        /// Written 'O' in LPlus files.
+        /// </summary>
+        Ogonek = '\u0328',
     }
     // le garbage
     /*
@@ -477,7 +645,7 @@ namespace MoreLocales.Core.Inflections
         public SubpatternRecognitionType Type;
         public bool Match(ReadOnlySpan<char> range, ReadOnlySpan<char> matchTarget)
         {
-            if (Type == SubpatternRecognitionType.None)
+            if (Type == SubpatternRecognitionType.StrictNone)
                 return false;
 
             BitsByte b = (byte)Type;
@@ -514,7 +682,7 @@ namespace MoreLocales.Core.Inflections
         /// <summary>
         /// Meta range. Is stored and passed to other ranges if connected.
         /// </summary>
-        None = 0,
+        StrictNone = 0,
         // logical flags
         /// <summary>
         /// Take this entire subpattern as a single text unit that must match the original string exactly.

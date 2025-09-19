@@ -175,7 +175,21 @@ namespace MoreLocales.Core
         {
             if (Main.keyState.IsKeyDown(Keys.F) && !Main.oldKeyState.IsKeyDown(Keys.F))
             {
-                
+                /*
+                if (TextHelper.TryAddDiacritic('a', RecognizableDiacriticType.Ogonek, out char c))
+                    Main.NewText(c);
+                */
+                /*
+                if (LPlusFile.Current != null)
+                {
+                    InflectableWord w = new("Galán");
+                    if (w.EnsureExists(InflectionData.MascPl))
+                        Main.NewText(w.Get(InflectionData.MascPl));
+                    if (w.EnsureExists(InflectionData.FemPl))
+                        Main.NewText(w.Get(InflectionData.FemPl));
+                }
+                */
+                /*
                 if (LPlusFile.Current != null)
                 {
                     ref var infl = ref LPlusFile.Current.Inflections;
@@ -190,7 +204,7 @@ namespace MoreLocales.Core
                     inflection.Deconstruct(out GrammaticalGender gender, out GrammaticalNumber number);
                     Main.NewText($"{gender}{number}:{paradigm}");
                 }
-                
+                */
                 /*
                 if (LPlusFile.Current != null)
                 {
