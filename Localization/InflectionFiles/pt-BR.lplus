@@ -1,32 +1,21 @@
 [Inflections]
-Word: !de, !para, !con
+Word: !de, !do, !para, !con, !em
 
-MascSg: -o,  -e,  -n,   X,      -ul,   -al,   -il,   -or,   X,     -az,   -er,   -asma
-FemSg:  -a,  X,   -na,  -ión,   -ula,  X,     X,     -ora,  -iz,   X,     X,     X
-MascPl: -os, -es, -nes, X,      -ules, -ales, -iles, -ores, X,     -aces, -eres, -asmas
-FemPl:  -as, X,   -nas, -iones, -ulas, X,     X,     -oras, -ices, X,     X,     X
+MascSg: -o,  -e,  -ã,  -m,  X,     -ão,   -ão,  -ão,  -l,  -or,   -n,   -r,   -s,   -z,   X,       -asma
+FemSg:  -a,  X,   X,   X,   -ção,  -ona,  -ãa,  X,    X,   -ora,  X,    X,    X,    X,    -triz,   X
+MascPl: -os, -es, -ãs, -ns, X,     -ões,  -ãos, -ães, -is, -ores, -nes, -res, -ses, -zes, X,       -asmas
+FemPl:  -as, X,   X,   X,   -ções, -onas, -ãas, X,    X,   -oras, X,    X,    X,    X,    -trizes, X
 
 <Exceptions>
-MascSg: paraguas, día
-FemSg: flor, mano, llave, sangre
+MascSg: guarda\-chuva, dia
+FemSg: mão, flor, chave
 
 [Items]
-
-# Compound nouns are generally masculine, i. e. 'El latespinas', 'El lanzahojas'.
-
-<ThornWhip>
-Inflection: MascSg
-
-<LeafBlower>
-Inflection: MascSg
 
 # Acronyms are impossible to regularize using this system, so they need to be done separately.
 
 <PDA>
 Gender: Masc
-
-<SDMG>
-Gender: Fem
 
 # Unadapted nicknames are a similar situation.
 
@@ -38,4 +27,4 @@ Gender: Fem
 # This is a common change for all vanilla languages;
 # 'Light' the adjective was unanimously translated as either the noun, or a transliteration, in other languages.
 
-<Light:(Ligero)>
+<Light:(Leve)>

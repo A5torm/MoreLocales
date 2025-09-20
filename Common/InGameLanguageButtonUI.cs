@@ -46,7 +46,7 @@ namespace MoreLocales.Common
         {
             float dim = button.Height.Pixels;
             button.Top.Set(Main.screenHeight - dim - 12, 0f);
-            button.Left.Set(Main.screenWidth - 200 - dim, 0f);
+            button.Left.Set(Main.screenWidth - 230 - dim, 0f);
         }
     }
     internal class InGameLanguageButton : UIElement

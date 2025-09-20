@@ -9,6 +9,7 @@ using Terraria.ID;
 using System.Collections.Generic;
 using Terraria.UI;
 using MoreLocales.Core.Inflections;
+using System.Linq;
 
 namespace MoreLocales.Core
 {
@@ -199,6 +200,14 @@ namespace MoreLocales.Core
                     foreach (var kvp in infl.InflectionRecognizers)
                     {
                         Main.NewText($"{kvp.Key}::{string.Join<InflectionPattern>('=', kvp.Value)}");
+                        for (int i = 0; i < kvp.Value.Length; i++)
+                        {
+                            var pat = kvp.Value[i];
+                            if (pat.Exceptions != null)
+                            {
+                                Main.NewText(string.Join('Y', pat.Exceptions));
+                            }
+                        }
                     }
                     MoreLocalesSets.CachedInflectionData[Main.LocalPlayer.HeldItem.type].Data.Deconstruct(out InflectionData inflection, out int paradigm);
                     inflection.Deconstruct(out GrammaticalGender gender, out GrammaticalNumber number);

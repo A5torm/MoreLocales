@@ -1,10 +1,10 @@
 [Inflections]
 Word: !de, !para, !con
 
-MascSg: -o,  -e,  -n,   X,      -ul,   -al,   -il,   -or,   X,     -az,   -er,   -asma
-FemSg:  -a,  X,   -na,  -ión,   -ula,  X,     X,     -ora,  -iz,   X,     X,     X
-MascPl: -os, -es, -nes, X,      -ules, -ales, -iles, -ores, X,     -aces, -eres, -asmas
-FemPl:  -as, X,   -nas, -iones, -ulas, X,     X,     -oras, -ices, X,     X,     X
+MascSg: -o,  -e,  -An,   X,      -ul,   -l,   -or,   X,     -az,   -er,   -asma
+FemSg:  -a,  X,   -Nna,  -ión,   -ula,  X,    -ora,  -iz,   X,     X,     X
+MascPl: -os, -es, -Nnes, X,      -ules, -les, -ores, X,     -aces, -eres, -asmas
+FemPl:  -as, X,   -Nnas, -iones, -ulas, X,    -oras, -ices, X,     X,     X
 
 <Exceptions>
 MascSg: paraguas, día

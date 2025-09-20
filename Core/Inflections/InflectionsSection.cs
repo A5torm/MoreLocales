@@ -249,20 +249,29 @@ namespace MoreLocales.Core.Inflections
         }
     }
     public readonly record struct InflectionException(InflectionPattern Pattern, InflectionData Data);
-    public sealed class InflectionPattern(InflectionPatternType type, string match, bool not)
+    public sealed class InflectionPattern
     {
         public InflectionException[] Exceptions;
-        public InflectionPatternType Type = type;
-        public RecognizableDiacriticType[] DiacriticsMap = GenerateDiacriticsMap(match);
-        public string Match = match;
-        public bool Not = not;
-        public static RecognizableDiacriticType[] GenerateDiacriticsMap(string match)
+        public InflectionPatternType Type;
+        public RecognizableDiacriticType[] DiacriticsMap;
+        public string Match;
+        public bool Not;
+        public InflectionPattern(InflectionPatternType type, string match, bool not, uint literalMask = 0u)
+        {
+            Type = type;
+            Match = match;
+            Not = not;
+            DiacriticsMap = GenerateDiacriticsMap(match, literalMask);
+        }
+        public static RecognizableDiacriticType[] GenerateDiacriticsMap(string match, uint literalMask = 0u)
         {
             if (match is null)
                 return null;
             RecognizableDiacriticType[] result = null;
             for (int i = 0; i < match.Length; i++)
             {
+                if ((literalMask & (1u << i)) != 0)
+                    continue;
                 char c = match[i];
                 if (!char.IsUpper(c))
                     continue;
@@ -306,12 +315,6 @@ namespace MoreLocales.Core.Inflections
         }
         internal bool CheckStringEquality(ReadOnlySpan<char> word)
         {
-            if (Match.Length != word.Length)
-            {
-                Main.NewText(Match);
-                Main.NewText(word.ToString());
-                return false;
-            }
             for (int i = 0; i < Match.Length; i++)
             {
                 // turn character to form that will actually be compared
@@ -350,9 +353,11 @@ namespace MoreLocales.Core.Inflections
         public bool TryMatch(ReadOnlySpan<char> word)
         {
             if (word.Length == 0)
-                return false ^ Not;
+                return Not;
 
             Span<char> sp = stackalloc char[word.Length];
+            // this makes using \ in a pattern to match specifically uppercase letters useless. maybe address this later?
+            // though, only language i could see this being a problem for is *maybe* klingon (and even then idk cuz i don't speak it)
             word.ToLowerInvariant(sp);
             ReadOnlySpan<char> span = (ReadOnlySpan<char>)sp;
 
@@ -443,10 +448,10 @@ namespace MoreLocales.Core.Inflections
             {
                 result = new(InflectionPatternType.Whole, pattern, false);
             }
-            int actualStartIndex = 0;
-            int actualLength = 0;
+            string finalMatch = string.Empty;
             bool not = false;
             InflectionPatternType type = InflectionPatternType.Whole;
+            uint literalMask = 0u;
             for (int i = 0; i < pattern.Length; i++)
             {
                 char c = pattern[i];
@@ -455,13 +460,11 @@ namespace MoreLocales.Core.Inflections
                     case '!':
                         if (i != 0)
                             return false;
-                        actualStartIndex++;
                         not = true;
                         break;
                     case '-':
                         if (i == 0 || (i == 1 && not))
                         {
-                            actualStartIndex++;
                             type = InflectionPatternType.Suffix;
                         }
                         else if (i == pattern.Length - 1)
@@ -474,14 +477,21 @@ namespace MoreLocales.Core.Inflections
                         else
                             return false;
                         break;
+                    case '\\':
+                        if (i == pattern.Length - 1)
+                            break;
+                        literalMask |= (1u << finalMatch.Length);
+                        finalMatch += pattern[i + 1];
+                        i++;
+                        break;
                     default:
-                        actualLength++;
+                        finalMatch += c;
                         break;
                 }
             }
-            result = new(type, pattern.Substring(actualStartIndex, actualLength), not);
+            result = new(type, finalMatch, not, literalMask);
 
-            if (exceptions != null)
+            if (exceptions != null && exceptions.Count != 0)
             {
                 InflectionException[] finalExceptions = new InflectionException[exceptions.Count];
                 int count = 0;
