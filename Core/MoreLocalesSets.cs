@@ -33,12 +33,30 @@ public struct RecognizableWordData(InflectionPattern pattern, InflectionAndParad
 /// </summary>
 public readonly struct InflectableWord
 {
-    public enum BracketType : byte
+    /// <summary>
+    /// Types of boundary symbols that could be around a word, like parentheses, curly brackets, etc.
+    /// </summary>
+    public enum BoundaryType : byte
     {
+        /// <summary>
+        /// No boundary symbol.
+        /// </summary>
         None,
+        /// <summary>
+        /// <c>(Word)</c>
+        /// </summary>
         Parentheses,
+        /// <summary>
+        /// <c>{Word}</c>
+        /// </summary>
         CurlyBrackets,
+        /// <summary>
+        /// <c>&lt;Word&gt;</c>
+        /// </summary>
         AngleBrackets,
+        /// <summary>
+        /// <c>[Word]</c>
+        /// </summary>
         SquareBrackets,
     }
     /// <summary>
@@ -64,7 +82,7 @@ public readonly struct InflectableWord
     /// <summary>
     /// Words with brackets will be sanitized and the bracket type will be here.
     /// </summary>
-    public readonly BracketType Brackets;
+    public readonly BoundaryType Brackets;
     /// <summary>
     /// Creates a new instance of <see cref="InflectableWord"/> by providing the base form of a word.
     /// </summary>
@@ -79,13 +97,13 @@ public readonly struct InflectableWord
 
         Brackets = baseForm[0] switch
         {
-            '(' => BracketType.Parentheses,
-            '{' => BracketType.CurlyBrackets,
-            '<' => BracketType.AngleBrackets,
-            '[' => BracketType.SquareBrackets,
-            _ => BracketType.None,
+            '(' => BoundaryType.Parentheses,
+            '{' => BoundaryType.CurlyBrackets,
+            '<' => BoundaryType.AngleBrackets,
+            '[' => BoundaryType.SquareBrackets,
+            _ => BoundaryType.None,
         };
-        if (Brackets != BracketType.None)
+        if (Brackets != BoundaryType.None)
             baseForm = baseForm[1..^1];
 
         var possiblePattern = LPlusFile.Current.Inflections.GetPattern(baseForm, out var possibleBaseData);
@@ -128,14 +146,14 @@ public readonly struct InflectableWord
         string finalWord = BaseForm;
         if (inflection.HasValue && !Uninflectable && AlternateForms.TryGetValue(inflection.Value, out string inflected))
             finalWord = inflected;
-        BracketType b = withBrackets ? Brackets : BracketType.None;
+        BoundaryType b = withBrackets ? Brackets : BoundaryType.None;
         return b switch
         {
-            BracketType.None => finalWord,
-            BracketType.Parentheses => $"({finalWord})",
-            BracketType.CurlyBrackets => $"{{{finalWord}}}",
-            BracketType.AngleBrackets => $"<{finalWord}>",
-            BracketType.SquareBrackets => $"[{finalWord}]",
+            BoundaryType.None => finalWord,
+            BoundaryType.Parentheses => $"({finalWord})",
+            BoundaryType.CurlyBrackets => $"{{{finalWord}}}",
+            BoundaryType.AngleBrackets => $"<{finalWord}>",
+            BoundaryType.SquareBrackets => $"[{finalWord}]",
             _ => finalWord,
         };
     }

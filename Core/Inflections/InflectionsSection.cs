@@ -18,7 +18,10 @@ namespace MoreLocales.Core.Inflections;
 /// </param>
 public readonly record struct InflectionAndParadigm(InflectionData Inflection, int Paradigm = -1)
 {
-    private static InflectionAndParadigm _none;
+    private static readonly InflectionAndParadigm _none;
+    /// <summary>
+    /// Default inflection, paradigm 0.
+    /// </summary>
     public static InflectionAndParadigm None => _none;
 }
 /// <summary>
@@ -282,7 +285,7 @@ internal struct InflectionsSection
             return null;
         InflectionPattern bestMatch = null;
         int paradigm = 0;
-        InflectionData inflection = InflectionData.Default;
+        InflectionData inflection = 0;
         foreach (var kvp in InflectionRecognizers)
         {
             InflectionPattern bestForInflection = GetPattern(kvp.Value, word, out var paradigm0);
@@ -305,26 +308,56 @@ internal struct InflectionsSection
         return false;
     }
 }
+/// <summary>
+/// A structure containing exceptions for a specific <see cref="InflectionPattern"/>.
+/// </summary>
+/// <param name="Pattern">The pattern.</param>
+/// <param name="Data">The inflection that is different from the pattern's inflection.</param>
 public readonly record struct InflectionException(InflectionPattern Pattern, InflectionData Data);
-public sealed class InflectionPattern
+/// <summary>
+/// Describes a pattern for noun recognition or adjective inflection.
+/// </summary>
+/// <remarks>
+/// Creates a basic inflection pattern.
+/// </remarks>
+/// <param name="type">The desired type.</param>
+/// <param name="match">The desired text value.</param>
+/// <param name="not">Whether or not this will be a negative matching pattern.</param>
+/// <param name="literalMask">A mask that tells which characters (that are recognized as special) of <paramref name="match"/> should be literal as opposed to actually special.</param>
+public sealed class InflectionPattern(InflectionPatternType type, string match, bool not, uint literalMask = 0u)
 {
+    /// <summary>
+    /// The exceptions for this pattern, which have a different <see cref="InflectionData"/> value than the parent.
+    /// </summary>
     public InflectionException[] Exceptions;
-    public InflectionPatternType Type;
-    public RecognizableDiacriticType[] DiacriticsMap;
-    public string Match;
-    public bool Not;
-    public InflectionPattern(InflectionPatternType type, string match, bool not, uint literalMask = 0u)
-    {
-        Type = type;
-        Match = match;
-        Not = not;
-        DiacriticsMap = GenerateDiacriticsMap(match, literalMask);
-    }
-    public static RecognizableDiacriticType[] GenerateDiacriticsMap(string match, uint literalMask = 0u)
+    /// <summary>
+    /// The type of this pattern.
+    /// </summary>
+    public InflectionPatternType Type = type;
+    /// <summary>
+    /// If this pattern has special characters, this will be a map to help it make decisions during recognition and generation.
+    /// </summary>
+    public SpecialPatternCharacter[] SpecialMap = GenerateSpecialMap(match, literalMask);
+    /// <summary>
+    /// The raw text value of this pattern.
+    /// </summary>
+    public string Match = match;
+    /// <summary>
+    /// Whether or not this is a negative matching pattern.
+    /// </summary>
+    public bool Not = not;
+    /// <summary>
+    /// Generates a special map for a given raw string inflection pattern.
+    /// </summary>
+    /// <param name="match">The raw text value of the pattern.</param>
+    /// <param name="literalMask">A mask that tells which characters (that are recognized as special) of <paramref name="match"/> should be literal as opposed to actually special.</param>
+    /// <returns>The map.</returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public static SpecialPatternCharacter[] GenerateSpecialMap(string match, uint literalMask = 0u)
     {
         if (match is null)
             return null;
-        RecognizableDiacriticType[] result = null;
+        SpecialPatternCharacter[] result = null;
         for (int i = 0; i < match.Length; i++)
         {
             if ((literalMask & (1u << i)) != 0)
@@ -332,32 +365,39 @@ public sealed class InflectionPattern
             char c = match[i];
             if (!char.IsUpper(c))
                 continue;
-            result ??= new RecognizableDiacriticType[match.Length];
+            result ??= new SpecialPatternCharacter[match.Length];
             result[i] = c switch
             {
-                'N' => RecognizableDiacriticType.StrictNone,
-                'X' => RecognizableDiacriticType.AnyCharacter,
-                'G' => RecognizableDiacriticType.Grave,
-                'A' => RecognizableDiacriticType.Acute,
-                'C' => RecognizableDiacriticType.Circumflex,
-                'T' => RecognizableDiacriticType.Tilde,
-                'M' => RecognizableDiacriticType.Macron,
-                'B' => RecognizableDiacriticType.Breve,
-                'D' => RecognizableDiacriticType.Diaeresis,
-                'R' => RecognizableDiacriticType.Ring,
-                'K' => RecognizableDiacriticType.Caron,
-                'Q' => RecognizableDiacriticType.Comma,
-                'L' => RecognizableDiacriticType.Cedilla,
-                'O' => RecognizableDiacriticType.Ogonek,
+                'N' => SpecialPatternCharacter.StrictNone,
+                'X' => SpecialPatternCharacter.AnyCharacter,
+                'G' => SpecialPatternCharacter.Grave,
+                'A' => SpecialPatternCharacter.Acute,
+                'C' => SpecialPatternCharacter.Circumflex,
+                'T' => SpecialPatternCharacter.Tilde,
+                'M' => SpecialPatternCharacter.Macron,
+                'B' => SpecialPatternCharacter.Breve,
+                'D' => SpecialPatternCharacter.Diaeresis,
+                'R' => SpecialPatternCharacter.Ring,
+                'K' => SpecialPatternCharacter.Caron,
+                'Q' => SpecialPatternCharacter.Comma,
+                'L' => SpecialPatternCharacter.Cedilla,
+                'O' => SpecialPatternCharacter.Ogonek,
                 _ => throw new InvalidOperationException($"Character '{c}' was not recognized as corresponding to any diacritic type.")
             };
         }
         return result;
     }
+    /// <summary>
+    /// Checks if this word is actually considered an exception for this pattern.
+    /// </summary>
+    /// <param name="word">The word to check.</param>
+    /// <param name="pattern">If the word is an exception, then this will be the correct pattern that matches it best, otherwise null.</param>
+    /// <param name="inflection">If the word is an exception, then this will be the inflection that actually matches the <paramref name="word"/>.</param>
+    /// <returns>Whether or not this word is an exception for this pattern.</returns>
     public bool CheckException(ReadOnlySpan<char> word, out InflectionPattern pattern, out InflectionData inflection)
     {
         pattern = null;
-        inflection = InflectionData.Default;
+        inflection = 0;
         if (Exceptions is null)
             return false;
         for (int i = 0; i < Exceptions.Length; i++)
@@ -377,7 +417,7 @@ public sealed class InflectionPattern
         for (int i = 0; i < Match.Length; i++)
         {
             // get the diacritic map value
-            char d = DiacriticsMap is null ? '\u0000' : (char)DiacriticsMap[i];
+            char d = SpecialMap is null ? '\u0000' : (char)SpecialMap[i];
             // if matching to any character, continue
             if (d == '\u0002')
                 continue;
@@ -412,6 +452,12 @@ public sealed class InflectionPattern
         }
         return true;
     }
+    /// <summary>
+    /// Checks if a word matches this pattern.
+    /// </summary>
+    /// <param name="word">The word to check.</param>
+    /// <returns>Whether or not the word matches the pattern.</returns>
+    /// <exception cref="NotSupportedException"></exception>
     public bool TryMatch(ReadOnlySpan<char> word)
     {
         if (word.Length == 0)
@@ -432,6 +478,13 @@ public sealed class InflectionPattern
             _ => Not
         };
     }
+    /// <summary>
+    /// Attempts to remove this pattern from the given word.
+    /// </summary>
+    /// <param name="word">The word to attempt to remove this pattern from.</param>
+    /// <param name="result">The word with this pattern removed. Or the same as the input if not removed.</param>
+    /// <returns>Whether or not the pattern was successfully removed from the word.</returns>
+    /// <exception cref="NotSupportedException"></exception>
     public bool TryRemove(ReadOnlySpan<char> word, out ReadOnlySpan<char> result)
     {
         result = word;
@@ -447,7 +500,18 @@ public sealed class InflectionPattern
         };
         return true;
     }
-    public bool TryReplace(ReadOnlySpan<char> word, ReadOnlySpan<char> replacement, out ReadOnlySpan<char> result, RecognizableDiacriticType[] replacementDiacritics = null)
+    /// <summary>
+    /// Attempts to replace this pattern in a word with the given replacement.
+    /// </summary>
+    /// <param name="word">The word to attempt to replace this pattern from.</param>
+    /// <param name="replacement">The replacement that will be used to replace this pattern.</param>
+    /// <param name="result">The result of the replacement.</param>
+    /// <param name="replacementDiacritics">An array of special pattern character values to take into account when replacing.<para/>
+    /// Can be generated using <see cref="GenerateSpecialMap(string, uint)"/>.
+    /// </param>
+    /// <returns>Whether or not the replacement actually took place.</returns>
+    /// <exception cref="NotSupportedException"></exception>
+    public bool TryReplace(ReadOnlySpan<char> word, ReadOnlySpan<char> replacement, out ReadOnlySpan<char> result, SpecialPatternCharacter[] replacementDiacritics = null)
     {
         result = word;
         if (!TryRemove(word, out ReadOnlySpan<char> removed))
@@ -459,7 +523,7 @@ public sealed class InflectionPattern
             for (int i = 0; i < replacement.Length; i++)
             {
                 var diacritic = replacementDiacritics[i];
-                if (diacritic == RecognizableDiacriticType.None)
+                if (diacritic == SpecialPatternCharacter.None)
                     continue;
                 actualReplacement ??= replacement.ToArray();
                 int indexInWord = Type switch
@@ -471,7 +535,7 @@ public sealed class InflectionPattern
                 };
                 if (indexInWord < 0 || indexInWord >= word.Length)
                     continue;
-                if (diacritic == RecognizableDiacriticType.AnyCharacter)
+                if (diacritic == SpecialPatternCharacter.AnyCharacter)
                     actualReplacement[i] = word[indexInWord];
                 else
                     TextHelper.TryAddDiacritic(word[indexInWord], diacritic, out actualReplacement[i]);
@@ -488,13 +552,29 @@ public sealed class InflectionPattern
         };
         return true;
     }
+    /// <summary>
+    /// Replaces one pattern from a word with another, given that both patterns have the same <see cref="Type"/>.
+    /// </summary>
+    /// <param name="word">The word to replace this pattern from with another.</param>
+    /// <param name="replacement">The pattern to use as a replacement. Must have the same <see cref="Type"/> as this pattern.</param>
+    /// <param name="result">The result of the replacement.</param>
+    /// <returns>Whether or not the replacement actually took place.</returns>
     public bool TryReplace(ReadOnlySpan<char> word, in InflectionPattern replacement, out ReadOnlySpan<char> result)
     {
         result = word;
         if (Type != replacement.Type)
             return false;
-        return TryReplace(word, replacement.Match, out result, replacement.DiacriticsMap);
+        return TryReplace(word, replacement.Match, out result, replacement.SpecialMap);
     }
+    /// <summary>
+    /// Tries to parse an <see cref="InflectionPattern"/> given its raw string representation.
+    /// </summary>
+    /// <param name="pattern">The raw string representation of an <see cref="InflectionPattern"/>.</param>
+    /// <param name="result">The result of parsing.</param>
+    /// <param name="exceptions">A generic list of possible exceptions that is generally passed into multiple <see cref="TryParse(string, out InflectionPattern, List{InflectionException})"/> calls.<para/>
+    /// Elements <b>might</b> be removed from the list if the exceptions inside match this pattern.
+    /// </param>
+    /// <returns></returns>
     public static bool TryParse(string pattern, out InflectionPattern result, List<InflectionException> exceptions = null)
     {
         result = default;
@@ -619,7 +699,7 @@ public enum InflectionPatternType
 /// <summary>
 /// An enum containing all diacritics that can be specified for an <see cref="InflectionPattern"/> in an LPlus file.
 /// </summary>
-public enum RecognizableDiacriticType
+public enum SpecialPatternCharacter
 {
     /// <summary>
     /// Indicates indifference to whether or not a character has a diacritic.

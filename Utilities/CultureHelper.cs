@@ -100,7 +100,7 @@ public static class CultureHelper
     /// <param name="i"></param>
     /// <returns></returns>
     public static string GetRealName(this Item i) => i._nameOverride ?? Lang.GetItemNameValue(i.type);
-    /// <inheritdoc cref="MoreLocalesAPI.RegisterCulture(string, string, int, bool, bool, GrammarData, Func{bool}, LanguageButtonDrawData, Mod)"/>
+    /// <inheritdoc cref="MoreLocalesAPI.RegisterCulture(string, string, int, bool, bool, GrammarData?, Func{bool}, LanguageButtonDrawData, Mod)"/>
     public static ref MoreLocalesCulture RegisterCulture(this Mod mod,
         string internalName,
         string languageCode,

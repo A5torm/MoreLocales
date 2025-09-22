@@ -523,7 +523,7 @@ public static partial class LangFeaturesPlus
     /// <returns>Whether or not the operation was successful.</returns>
     public static bool TryParse(string value, out InflectionData result, Mod sourceMod = null)
     {
-        result = InflectionData.Default;
+        result = 0;
 
         string[] values = value.Split('/');
         if (values.Length == 0 || values.Length > 2)
@@ -585,7 +585,7 @@ public static partial class LangFeaturesPlus
         pluralization = (GrammaticalNumber)((byte)data >> 4);
     }
     /// <summary>
-    /// Mutates <paramref name="baseData"/> with the values provided for gender and number if they're not null;
+    /// Mutates <paramref name="baseData"/> with the values provided for gender and number if they're not null.
     /// </summary>
     /// <param name="baseData">The inflection data to mutate.</param>
     /// <param name="maybeGender">The gender to mutate it with.</param>
@@ -605,10 +605,20 @@ public static partial class LangFeaturesPlus
         if (maybeNumber.HasValue)
             baseData.Set(maybeNumber.Value);
     }
+    /// <summary>
+    /// Mutates <paramref name="baseData"/> with the value provided for gender.
+    /// </summary>
+    /// <param name="baseData">The inflection data to mutate.</param>
+    /// <param name="gender">The gender to mutate it with.</param>
     public static void Set(this ref InflectionData baseData, GrammaticalGender gender)
     {
         baseData = (InflectionData)(((byte)baseData & 0xF0) | (byte)gender);
     }
+    /// <summary>
+    /// Mutates <paramref name="baseData"/> with the value provided for number.
+    /// </summary>
+    /// <param name="baseData">The inflection data to mutate.</param>
+    /// <param name="number">The number to mutate it with.</param>
     public static void Set(this ref InflectionData baseData, GrammaticalNumber number)
     {
         baseData = (InflectionData)(((byte)baseData & 0xF) | ((byte)number << 4));
@@ -622,13 +632,41 @@ public static partial class LangFeaturesPlus
 public enum InflectionData : byte
 {
     /// <summary>
-    /// No inflection.
+    /// No inflection, or masculine singular inflection.
     /// </summary>
-    Default = 0,
     MascSg = 0,
+    /// <summary>
+    /// Masculine plural inflection.
+    /// </summary>
     MascPl = 0b_00010000,
+    /// <summary>
+    /// Masculine many inflection.
+    /// </summary>
+    MascMn = 0b_00100000,
+    /// <summary>
+    /// Feminine singular inflection.
+    /// </summary>
     FemSg = 0b_00000001,
+    /// <summary>
+    /// Feminine plural inflection.
+    /// </summary>
     FemPl = 0b_00010001,
+    /// <summary>
+    /// Feminine many inflection.
+    /// </summary>
+    FemMn = 0b_00100001,
+    /// <summary>
+    /// Neuter singular inflection.
+    /// </summary>
+    NeutSg = 0b_00000010,
+    /// <summary>
+    /// Neuter plural inflection.
+    /// </summary>
+    NeutPl = 0b_00010010,
+    /// <summary>
+    /// Neuter many inflection.
+    /// </summary>
+    NeutMn = 0b_00100010,
 }
 /// <summary>
 /// Grammatical gender.

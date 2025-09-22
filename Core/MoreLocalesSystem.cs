@@ -170,14 +170,14 @@ public class MoreLocalesSystem : ModSystem
 
         Main.spriteBatch.End();
     }
+
     /// <inheritdoc/>
     public override void PostUpdateDusts()
     {
-        return;
-        if (Main.keyState.IsKeyDown(Keys.F) && !Main.oldKeyState.IsKeyDown(Keys.F))
+        // if (Main.keyState.IsKeyDown(Keys.F) && !Main.oldKeyState.IsKeyDown(Keys.F))
         {
             /*
-            if (TextHelper.TryAddDiacritic('a', RecognizableDiacriticType.Ogonek, out char c))
+            if (TextHelper.TryAddDiacritic('a', SpecialPatternCharacter.Ogonek, out char c))
                 Main.NewText(c);
             */
             /*
