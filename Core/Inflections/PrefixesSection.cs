@@ -4,93 +4,92 @@ using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.ID;
 
-namespace MoreLocales.Core.Inflections
+namespace MoreLocales.Core.Inflections;
+
+internal readonly record struct PrefixFormOverride(int ID, InflectionData Inflection, string FormOverride);
+internal struct PrefixesSection(NameOverride[] nameOverrides, PrefixFormOverride[] formOverrides)
 {
-    internal readonly record struct PrefixFormOverride(int ID, InflectionData Inflection, string FormOverride);
-    internal struct PrefixesSection(NameOverride[] nameOverrides, PrefixFormOverride[] formOverrides)
+    public NameOverride[] NameOverrides = nameOverrides;
+    public PrefixFormOverride[] FormOverrides = formOverrides;
+    public void Merge(in PrefixesSection other)
     {
-        public NameOverride[] NameOverrides = nameOverrides;
-        public PrefixFormOverride[] FormOverrides = formOverrides;
-        public void Merge(in PrefixesSection other)
+        NameOverrides = MiscHelper.MaybeMerge(NameOverrides, other.NameOverrides);
+        FormOverrides = MiscHelper.MaybeMerge(FormOverrides, other.FormOverrides);
+    }
+    public readonly void SetupPrefixNameOverrides()
+    {
+        if (NameOverrides is null)
+            return;
+        for (int i = 0; i < NameOverrides.Length; i++)
         {
-            NameOverrides = MiscHelper.MaybeMerge(NameOverrides, other.NameOverrides);
-            FormOverrides = MiscHelper.MaybeMerge(FormOverrides, other.FormOverrides);
+            var nameOverride = NameOverrides[i];
+            Lang.prefix[nameOverride.ID].SetValue(nameOverride.Override);
         }
-        public readonly void SetupPrefixNameOverrides()
+    }
+    public readonly void SetupPrefixFormOverrides()
+    {
+        if (FormOverrides is null)
+            return;
+        for (int i = 0; i < FormOverrides.Length; i++)
         {
-            if (NameOverrides is null)
-                return;
-            for (int i = 0; i < NameOverrides.Length; i++)
-            {
-                var nameOverride = NameOverrides[i];
-                Lang.prefix[nameOverride.ID].SetValue(nameOverride.Override);
-            }
+            var formOverride = FormOverrides[i];
+            ref InflectableWord prefix = ref MoreLocalesSets.Prefixes[formOverride.ID];
+            if (prefix.AlternateForms is null) // this is null in certain cases. not any cases that actually matter though
+                continue;
+            prefix.AlternateForms.Add(formOverride.Inflection, formOverride.FormOverride);
         }
-        public readonly void SetupPrefixFormOverrides()
+    }
+    public static bool Parse(string fileName, string name, in Dictionary<string, List<LPlusFileEntry>> raw, out PrefixesSection section)
+    {
+        section = default;
+        if (raw is null || raw.Count == 0 || !SectionsHelper.Is<PrefixesSection>(in fileName, in name, out var tags))
+            return false;
+        if (raw.ContainsKey("PREFIXES_META"))
+            throw new LPlusFileParsingException(LPlusError.UnexpectedEntry, fileName, default, name);
+        // tag is used to specify mod name for ease of use, though using ModName/ItemInternalName also works.
+        string modName = null;
+        if (tags != null)
         {
-            if (FormOverrides is null)
-                return;
-            for (int i = 0; i < FormOverrides.Length; i++)
-            {
-                var formOverride = FormOverrides[i];
-                ref InflectableWord prefix = ref MoreLocalesSets.Prefixes[formOverride.ID];
-                if (prefix.AlternateForms is null) // this is null in certain cases. not any cases that actually matter though
-                    continue;
-                prefix.AlternateForms.Add(formOverride.Inflection, formOverride.FormOverride);
-            }
+            if (tags.Length != 1)
+                throw new LPlusFileParsingException(LPlusError.SectionTagsUnexpectedCount, fileName, default, name);
+            modName = tags[0];
         }
-        public static bool Parse(string fileName, string name, in Dictionary<string, List<LPlusFileEntry>> raw, out PrefixesSection section)
+        // now go through each prefix
+        NameOverride[] nameOverrides = new NameOverride[raw.Count];
+        int i = 0;
+        List<PrefixFormOverride> formOverrides = new(raw.Count);
+        foreach (var subsectionWithFields in raw)
         {
-            section = default;
-            if (raw is null || raw.Count == 0 || !SectionsHelper.Is<PrefixesSection>(in fileName, in name, out var tags))
-                return false;
-            if (raw.ContainsKey("PREFIXES_META"))
-                throw new LPlusFileParsingException(LPlusError.UnexpectedEntry, fileName, default, name);
-            // tag is used to specify mod name for ease of use, though using ModName/ItemInternalName also works.
-            string modName = null;
-            if (tags != null)
+            SectionsHelper.Tags(in fileName, subsectionWithFields.Key, out var prefixName, out var prefixTags);
+            string finalPrefixName = modName is null ? prefixName : $"{modName}/{prefixName}";
+            if (PrefixID.Search.TryGetId(finalPrefixName, out int prefixID))
             {
-                if (tags.Length != 1)
-                    throw new LPlusFileParsingException(LPlusError.SectionTagsUnexpectedCount, fileName, default, name);
-                modName = tags[0];
-            }
-            // now go through each prefix
-            NameOverride[] nameOverrides = new NameOverride[raw.Count];
-            int i = 0;
-            List<PrefixFormOverride> formOverrides = new(raw.Count);
-            foreach (var subsectionWithFields in raw)
-            {
-                SectionsHelper.Tags(in fileName, subsectionWithFields.Key, out var prefixName, out var prefixTags);
-                string finalPrefixName = modName is null ? prefixName : $"{modName}/{prefixName}";
-                if (PrefixID.Search.TryGetId(finalPrefixName, out int prefixID))
+                if (prefixTags != null)
                 {
-                    if (prefixTags != null)
-                    {
-                        if (prefixTags.Length != 1)
-                            throw new LPlusFileParsingException(LPlusError.SectionTagsUnexpectedCount, fileName, default, prefixName);
-                        nameOverrides[i++] = new(prefixID, prefixTags[0]);
-                    }
-                    // now try parsing assignments individual forms of this prefix. these will be added to the AlternateForms dictionary of each prefix
-                    if (subsectionWithFields.Value is null)
-                        continue;
-                    foreach (var formOverride in CollectionsMarshal.AsSpan(subsectionWithFields.Value))
-                    {
-                        if (!LangFeaturesPlus.TryParseInflectionName(formOverride.Key, out GrammaticalGender? parsedGender, out GrammaticalNumber? parsedNumber)
-                            || !parsedGender.HasValue || !parsedNumber.HasValue)
-                            throw new Exception(MoreLocales.InvalidInflectionError.Format(formOverride.Key));
-                        InflectionData inflection = (InflectionData)((byte)parsedGender.Value | ((byte)parsedNumber.Value << 4));
-                        formOverrides.Add(new(prefixID, inflection, formOverride.Value));
-                    }
+                    if (prefixTags.Length != 1)
+                        throw new LPlusFileParsingException(LPlusError.SectionTagsUnexpectedCount, fileName, default, prefixName);
+                    nameOverrides[i++] = new(prefixID, prefixTags[0]);
+                }
+                // now try parsing assignments individual forms of this prefix. these will be added to the AlternateForms dictionary of each prefix
+                if (subsectionWithFields.Value is null)
+                    continue;
+                foreach (var formOverride in CollectionsMarshal.AsSpan(subsectionWithFields.Value))
+                {
+                    if (!LangFeaturesPlus.TryParseInflectionName(formOverride.Key, out GrammaticalGender? parsedGender, out GrammaticalNumber? parsedNumber)
+                        || !parsedGender.HasValue || !parsedNumber.HasValue)
+                        throw new Exception(MoreLocales.InvalidInflectionError.Format(formOverride.Key));
+                    InflectionData inflection = (InflectionData)((byte)parsedGender.Value | ((byte)parsedNumber.Value << 4));
+                    formOverrides.Add(new(prefixID, inflection, formOverride.Value));
                 }
             }
-
-            if (i != 0)
-                Array.Resize(ref nameOverrides, i);
-            else
-                nameOverrides = null;
-
-            section = new(nameOverrides, formOverrides.Count == 0 ? null : formOverrides.ToArray());
-            return true;
         }
+
+        if (i != 0)
+            Array.Resize(ref nameOverrides, i);
+        else
+            nameOverrides = null;
+
+        section = new(nameOverrides, formOverrides.Count == 0 ? null : formOverrides.ToArray());
+        return true;
     }
 }

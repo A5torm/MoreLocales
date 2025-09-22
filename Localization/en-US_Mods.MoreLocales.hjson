@@ -223,7 +223,11 @@ Commands: {
 				'''
 		}
 
-		Success.BasicInfo: Item {0} has the inflection {1} with paradigm {2}.
+		Success.BasicInfo:
+			'''
+			Item {0} has the inflection {1} with paradigm {2}.
+			Here's how prefixes would look on this item:
+			'''
 	}
 
 	ItemInflectionsCommand: {

@@ -1,5 +1,5 @@
-﻿using System;
-using ReLogic.Content;
+﻿using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;

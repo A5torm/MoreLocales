@@ -13,538 +13,537 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.UI.Chat;
 
-namespace MoreLocales.Common
+namespace MoreLocales.Common;
+
+/// <summary>
+/// <see href="https://bit.ly/3ZwJJaD"/>
+/// </summary>
+public static class BetterLangMenuV2
 {
-    /// <summary>
-    /// <see href="https://bit.ly/3ZwJJaD"/>
-    /// </summary>
-    public static class BetterLangMenuV2
+    private struct ButtonText
     {
-        private struct ButtonText
+        public MultisourceLocalizedText title;
+        public MultisourceLocalizedText subtitle;
+        public MultisourceLocalizedText description;
+        public ButtonText(ref MoreLocalesCulture source)
         {
-            public MultisourceLocalizedText title;
-            public MultisourceLocalizedText subtitle;
-            public MultisourceLocalizedText description;
-            public ButtonText(ref MoreLocalesCulture source)
+            string cultureName = source.Name;
+            string culturesKey = source.FunctionalOwner.GetLocalizationKey("Cultures");
+            string cultureKey = $"{culturesKey}.{cultureName}";
+
+            title = new(Language.GetOrRegister($"{cultureKey}.Title"));
+
+            if (source.HasSubtitle)
+                subtitle = new(Language.GetOrRegister($"{cultureKey}.Subtitle"));
+
+            if (source.HasDescription)
+                description = new(Language.GetOrRegister($"{cultureKey}.Description"));
+        }
+    }
+    private struct ButtonDrawInfo
+    {
+        public bool currentDrawStepStatus;
+        public Vector2 drawPositionCache;
+        public Rectangle flagFrameCache;
+        public int flagWidthCache;
+        public ButtonText buttonText;
+        public Color drawColor;
+        public ButtonDrawState state;
+        public bool hovered;
+        public bool interactable;
+        public DrawData? drawSelectionGraphic;
+    }
+    private enum ButtonDrawState
+    {
+        None,
+        Selected,
+        Unavailable
+    }
+    private static ButtonDrawInfo[] _drawInfoCache;
+    internal static LangMenuV2 FinalRender => ModContent.GetInstance<LangMenuV2>();
+    internal static Asset<Texture2D> _panelTexture;
+    //private static Asset<Texture2D> _panelHighlight;
+    internal static Asset<Texture2D> _flagAtlas;
+    private static Asset<Texture2D> _buttonPanel;
+    internal static Asset<Texture2D> _arrowButtons;
+    internal const int PaddingX = 16;
+    internal const int PaddingY = 16;
+    internal const int PaddingXTotal = PaddingX * 2;
+    internal const int PaddingYTotal = PaddingY * 2;
+    internal static readonly Vector2 PaddingTotal = new(PaddingXTotal, PaddingYTotal);
+    /// <summary>
+    /// The amount of flags (frames) in MoreLocales' flags spritesheet.
+    /// </summary>
+    public const int FlagsCount = 28;
+    internal static int columns = 2;
+    internal static int rows = 5;
+    internal static int currentPage = 0;
+    internal static float currentPageVisual = 0f;
+    internal static int buttonWidth = 1;
+    internal static int buttonHeight = 1;
+    internal static int buttonPaddingX = 16;
+    internal static int buttonPaddingY = 0;
+    // i was using the static constructor before but it stopped working for some reason lol
+    internal static void InitAssetsSafe()
+    {
+        _panelTexture = ModContent.Request<Texture2D>("MoreLocales/Assets/BetterLangPanel");
+        //_panelHighlight = ModContent.Request<Texture2D>("MoreLocales/Assets/BetterLangPanel_Highlight");
+        _flagAtlas = ModContent.Request<Texture2D>("MoreLocales/Assets/Flags");
+        _buttonPanel = ModContent.Request<Texture2D>("MoreLocales/Assets/LangButton", AssetRequestMode.ImmediateLoad);
+        _arrowButtons = ModContent.Request<Texture2D>("MoreLocales/Assets/LangArrow");
+
+        // also finalize button size variables to avoid the one frame of nothingness :)
+        Texture2D buttonDrawTex = _buttonPanel.Value;
+        buttonWidth = buttonDrawTex.Width;
+        buttonHeight = (buttonDrawTex.Height / 2) - 2;
+    }
+    // runs when the custom cultures array has been finalized. called from MoreLocalesSystem
+    internal static void InitArrays()
+    {
+        int length = MoreLocalesAPI.extraCulturesV2.Length;
+
+        _drawInfoCache = new ButtonDrawInfo[length];
+        for (int i = 1; i < _drawInfoCache.Length; i++)
+        {
+            ref var cache = ref _drawInfoCache[i];
+            cache.buttonText = new ButtonText(ref MoreLocalesAPI.extraCulturesV2[i]);
+            cache.drawColor = Color.White;
+        }
+    }
+    private static List<int> indices;
+    internal static void DrawTopLeft(SpriteBatch sb, int width, int height)
+    {
+        Texture2D buttonDrawTex = _buttonPanel.Value;
+
+        // TODO: reduce amount of calculations by caching stuff
+
+        //sb.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, width, height), Color.Red);
+
+        MoreLocalesCulture[] cultures = MoreLocalesAPI.extraCulturesV2;
+
+        currentPageVisual = MathHelper.Lerp(currentPageVisual, currentPage, 0.1f);
+
+        float widthOfVisibleColumns = (buttonWidth + buttonPaddingX) * columns;
+        float pageOffset = currentPageVisual * (widthOfVisibleColumns);
+        float centerOffset = (width - widthOfVisibleColumns + buttonPaddingX) * 0.5f;
+
+        float xOffset = ((int)((-pageOffset + centerOffset) * 0.5f) * 2); // -pageOffset + centerOffset
+
+        float heightOfVisibleRows = (buttonHeight + buttonPaddingY) * rows;
+        // we actually need to remove this amount from heightOfVisibleRows due to the overlap lol
+
+        float yOffset = ((int)(((height - heightOfVisibleRows + buttonPaddingY) * 0.5f) * 0.5f) * 2); // (height - heightOfVisibleRows + buttonPaddingY) * 0.5f;
+
+        int itemsPerPage = Math.Max(columns * rows, 1);
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA I JUSYT REALIZED THIS WON'T WPORK WITH INACTIVE CULTURE. AANIOSDNIOANIOASNIONIOASDNDASNIOSDA
+        // do as patch fix if ppl complains
+        // note: maxpage is also the amount of pages there are total
+        int maxPage = ((cultures.Length - 1) + itemsPerPage - 1) / itemsPerPage;
+
+        if (PageChanged(out int direction))
+        {
+            currentPage += direction;
+
+            float overshoot = 0.05f;
+
+            SoundStyle decline = SoundID.Item150 with { Pitch = -0.4f, PitchVariance = 0f, Volume = 0.2f };
+            if (currentPage < 0)
             {
-                string cultureName = source.Name;
-                string culturesKey = source.FunctionalOwner.GetLocalizationKey("Cultures");
-                string cultureKey = $"{culturesKey}.{cultureName}";
-
-                title = new(Language.GetOrRegister($"{cultureKey}.Title"));
-
-                if (source.HasSubtitle)
-                    subtitle = new(Language.GetOrRegister($"{cultureKey}.Subtitle"));
-
-                if (source.HasDescription)
-                    description = new(Language.GetOrRegister($"{cultureKey}.Description"));
+                currentPage = 0;
+                currentPageVisual -= overshoot;
+                SoundEngine.PlaySound(in decline);
             }
-        }
-        private struct ButtonDrawInfo
-        {
-            public bool currentDrawStepStatus;
-            public Vector2 drawPositionCache;
-            public Rectangle flagFrameCache;
-            public int flagWidthCache;
-            public ButtonText buttonText;
-            public Color drawColor;
-            public ButtonDrawState state;
-            public bool hovered;
-            public bool interactable;
-            public DrawData? drawSelectionGraphic;
-        }
-        private enum ButtonDrawState
-        {
-            None,
-            Selected,
-            Unavailable
-        }
-        private static ButtonDrawInfo[] _drawInfoCache;
-        internal static LangMenuV2 FinalRender => ModContent.GetInstance<LangMenuV2>();
-        internal static Asset<Texture2D> _panelTexture;
-        //private static Asset<Texture2D> _panelHighlight;
-        internal static Asset<Texture2D> _flagAtlas;
-        private static Asset<Texture2D> _buttonPanel;
-        internal static Asset<Texture2D> _arrowButtons;
-        internal const int PaddingX = 16;
-        internal const int PaddingY = 16;
-        internal const int PaddingXTotal = PaddingX * 2;
-        internal const int PaddingYTotal = PaddingY * 2;
-        internal static readonly Vector2 PaddingTotal = new(PaddingXTotal, PaddingYTotal);
-        /// <summary>
-        /// The amount of flags (frames) in MoreLocales' flags spritesheet.
-        /// </summary>
-        public const int FlagsCount = 28;
-        internal static int columns = 2;
-        internal static int rows = 5;
-        internal static int currentPage = 0;
-        internal static float currentPageVisual = 0f;
-        internal static int buttonWidth = 1;
-        internal static int buttonHeight = 1;
-        internal static int buttonPaddingX = 16;
-        internal static int buttonPaddingY = 0;
-        // i was using the static constructor before but it stopped working for some reason lol
-        internal static void InitAssetsSafe()
-        {
-            _panelTexture = ModContent.Request<Texture2D>("MoreLocales/Assets/BetterLangPanel");
-            //_panelHighlight = ModContent.Request<Texture2D>("MoreLocales/Assets/BetterLangPanel_Highlight");
-            _flagAtlas = ModContent.Request<Texture2D>("MoreLocales/Assets/Flags");
-            _buttonPanel = ModContent.Request<Texture2D>("MoreLocales/Assets/LangButton", AssetRequestMode.ImmediateLoad);
-            _arrowButtons = ModContent.Request<Texture2D>("MoreLocales/Assets/LangArrow");
-
-            // also finalize button size variables to avoid the one frame of nothingness :)
-            Texture2D buttonDrawTex = _buttonPanel.Value;
-            buttonWidth = buttonDrawTex.Width;
-            buttonHeight = (buttonDrawTex.Height / 2) - 2;
-        }
-        // runs when the custom cultures array has been finalized. called from MoreLocalesSystem
-        internal static void InitArrays()
-        {
-            int length = MoreLocalesAPI.extraCulturesV2.Length;
-
-            _drawInfoCache = new ButtonDrawInfo[length];
-            for (int i = 1; i < _drawInfoCache.Length; i++)
+            else if (currentPage >= maxPage)
             {
-                ref var cache = ref _drawInfoCache[i];
-                cache.buttonText = new ButtonText(ref MoreLocalesAPI.extraCulturesV2[i]);
-                cache.drawColor = Color.White;
-            }
-        }
-        private static List<int> indices;
-        internal static void DrawTopLeft(SpriteBatch sb, int width, int height)
-        {
-            Texture2D buttonDrawTex = _buttonPanel.Value;
-
-            // TODO: reduce amount of calculations by caching stuff
-
-            //sb.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, width, height), Color.Red);
-
-            MoreLocalesCulture[] cultures = MoreLocalesAPI.extraCulturesV2;
-
-            currentPageVisual = MathHelper.Lerp(currentPageVisual, currentPage, 0.1f);
-
-            float widthOfVisibleColumns = (buttonWidth + buttonPaddingX) * columns;
-            float pageOffset = currentPageVisual * (widthOfVisibleColumns);
-            float centerOffset = (width - widthOfVisibleColumns + buttonPaddingX) * 0.5f;
-
-            float xOffset = ((int)((-pageOffset + centerOffset) * 0.5f) * 2); // -pageOffset + centerOffset
-
-            float heightOfVisibleRows = (buttonHeight + buttonPaddingY) * rows;
-            // we actually need to remove this amount from heightOfVisibleRows due to the overlap lol
-
-            float yOffset = ((int)(((height - heightOfVisibleRows + buttonPaddingY) * 0.5f) * 0.5f) * 2); // (height - heightOfVisibleRows + buttonPaddingY) * 0.5f;
-
-            int itemsPerPage = Math.Max(columns * rows, 1);
-            // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA I JUSYT REALIZED THIS WON'T WPORK WITH INACTIVE CULTURE. AANIOSDNIOANIOASNIONIOASDNDASNIOSDA
-            // do as patch fix if ppl complains
-            // note: maxpage is also the amount of pages there are total
-            int maxPage = ((cultures.Length - 1) + itemsPerPage - 1) / itemsPerPage;
-
-            if (PageChanged(out int direction))
-            {
-                currentPage += direction;
-
-                float overshoot = 0.05f;
-
-                SoundStyle decline = SoundID.Item150 with { Pitch = -0.4f, PitchVariance = 0f, Volume = 0.2f };
-                if (currentPage < 0)
-                {
-                    currentPage = 0;
-                    currentPageVisual -= overshoot;
-                    SoundEngine.PlaySound(in decline);
-                }
-                else if (currentPage >= maxPage)
-                {
-                    currentPage = maxPage - 1;
-                    currentPageVisual += overshoot;
-                    SoundEngine.PlaySound(in decline);
-                }
-                else
-                {
-                    SoundEngine.PlaySound(in SoundID.MenuOpen);
-                }
-            }
-
-            // needed if user resizes the window
-            if (currentPage >= maxPage)
                 currentPage = maxPage - 1;
-
-            BetterLangMenuUI.leftArrowAvailable = true;
-            BetterLangMenuUI.rightArrowAvailable = true;
-            if (currentPage == 0)
-                BetterLangMenuUI.leftArrowAvailable = false;
-            if (currentPage == maxPage - 1)
-                BetterLangMenuUI.rightArrowAvailable = false;
-
-            // i'm not entirely clear on what the better way to do this is
-            // caches visible buttons for later drawing
-            indices ??= new(cultures.Length - 1);
-            for (int i = 1; i < cultures.Length; i++)
-            {
-                ref var culture = ref cultures[i];
-                if (culture.Available is null || culture.Available())
-                    indices.Add(i);
+                currentPageVisual += overshoot;
+                SoundEngine.PlaySound(in decline);
             }
-
-            var span = CollectionsMarshal.AsSpan(indices);
-
-            int itemsRemaining = (maxPage * itemsPerPage) - span.Length;
-
-            // passes start.
-
-            (int column, int row, Vector2 topLeftNoOffset, Vector2 topLeftDraw) GetPlacement(int i)
+            else
             {
-                int c = i % (columns) + (i / itemsPerPage * columns); // the design is very human
-                int r = (i / columns) % rows;
-                Vector2 tlNOff = new((c * (buttonWidth + buttonPaddingX)), (r * (buttonHeight + buttonPaddingY)));
-                Vector2 tlDraw = new(tlNOff.X + xOffset, tlNOff.Y + yOffset);
-                return (c, r, tlNOff, tlDraw);
+                SoundEngine.PlaySound(in SoundID.MenuOpen);
             }
+        }
 
-            // pass 0.5: draw empty spots
+        // needed if user resizes the window
+        if (currentPage >= maxPage)
+            currentPage = maxPage - 1;
 
-            Rectangle frame = new(0, 0, buttonWidth, buttonHeight + 2);
+        BetterLangMenuUI.leftArrowAvailable = true;
+        BetterLangMenuUI.rightArrowAvailable = true;
+        if (currentPage == 0)
+            BetterLangMenuUI.leftArrowAvailable = false;
+        if (currentPage == maxPage - 1)
+            BetterLangMenuUI.rightArrowAvailable = false;
 
-            for (int i = span.Length; i < span.Length + itemsRemaining; i++)
+        // i'm not entirely clear on what the better way to do this is
+        // caches visible buttons for later drawing
+        indices ??= new(cultures.Length - 1);
+        for (int i = 1; i < cultures.Length; i++)
+        {
+            ref var culture = ref cultures[i];
+            if (culture.Available is null || culture.Available())
+                indices.Add(i);
+        }
+
+        var span = CollectionsMarshal.AsSpan(indices);
+
+        int itemsRemaining = (maxPage * itemsPerPage) - span.Length;
+
+        // passes start.
+
+        (int column, int row, Vector2 topLeftNoOffset, Vector2 topLeftDraw) GetPlacement(int i)
+        {
+            int c = i % (columns) + (i / itemsPerPage * columns); // the design is very human
+            int r = (i / columns) % rows;
+            Vector2 tlNOff = new((c * (buttonWidth + buttonPaddingX)), (r * (buttonHeight + buttonPaddingY)));
+            Vector2 tlDraw = new(tlNOff.X + xOffset, tlNOff.Y + yOffset);
+            return (c, r, tlNOff, tlDraw);
+        }
+
+        // pass 0.5: draw empty spots
+
+        Rectangle frame = new(0, 0, buttonWidth, buttonHeight + 2);
+
+        for (int i = span.Length; i < span.Length + itemsRemaining; i++)
+        {
+            (_, _, _, Vector2 topLeftDraw) = GetPlacement(i);
+
+            sb.Draw(buttonDrawTex, topLeftDraw, frame, Color.Black with { A = 64 });
+        }
+
+        // we can use this pass to both set up the draw position cache, and to draw the panel
+        // this pass needs to be done with a for loop, as 'i' gives us the info we need to get the final position of the button
+
+        for (int i = 0; i < span.Length; i++)
+        {
+            // layout should be like this if 2 is columns amt and 5 is rows amt for example:
+
+            // first    second  eleventh    twelfth
+            // third    fourth  thirteenth  fourteenth
+            // fifth    sixth   fifteenth   sixteenth
+            // seventh  eighth  seventeenth eighteenth
+            // ninth    tenth   nineteenth  twentieth
+
+            (int column, int row, Vector2 topLeftNoOffset, Vector2 topLeftDraw) = GetPlacement(i);
+
+            int index = span[i]; // index of the morelocalesculture in morelocalesAPI.extraculturesv2
+
+            ref ButtonDrawInfo info = ref _drawInfoCache[index];
+            info.drawPositionCache = topLeftDraw;
+
+            bool interact = info.interactable = !ButtonActive(index);
+
+            ref MoreLocalesCulture culture = ref cultures[index];
+
+            Color drawColor;
+
+            if (interact)
             {
-                (_, _, _, Vector2 topLeftDraw) = GetPlacement(i);
-
-                sb.Draw(buttonDrawTex, topLeftDraw, frame, Color.Black with { A = 64 });
+                drawColor = Color.White;
+                if (info.hovered)
+                    drawColor.A = 80; // i was just testing but this looks kinda good lol
             }
+            else
+                drawColor = Color.Gray;
 
-            // we can use this pass to both set up the draw position cache, and to draw the panel
-            // this pass needs to be done with a for loop, as 'i' gives us the info we need to get the final position of the button
+            drawColor = info.drawColor = Color.Lerp(info.drawColor, drawColor, 0.2f);
 
-            for (int i = 0; i < span.Length; i++)
+            Vector2 origin = frame.Size() * 0.5f;
+
+            DrawData buttonDrawData = new(buttonDrawTex, topLeftDraw + origin, frame, drawColor, 0f, origin, 1f, SpriteEffects.None);
+            ButtonPanelDraw hijackPanelDraw = culture.ButtonDrawData.HijackPanelDraw;
+
+            bool? decision = hijackPanelDraw == null ? true : hijackPanelDraw(ref buttonDrawData);
+
+            // for panels that use shaders, we need to make sure spritebatch is flushed so only this specific button is affected
+            // otherwise buttons drawn before will be affected as their vertices will be flushed on .End() too.
+
+            // buttonDrawData.shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
+
+            bool willDraw = decision.HasValue && decision.Value;
+
+            if (willDraw)
             {
-                // layout should be like this if 2 is columns amt and 5 is rows amt for example:
+                MiscHelper.SpriteBatchData spriteBatchData = default;
 
-                // first    second  eleventh    twelfth
-                // third    fourth  thirteenth  fourteenth
-                // fifth    sixth   fifteenth   sixteenth
-                // seventh  eighth  seventeenth eighteenth
-                // ninth    tenth   nineteenth  twentieth
-
-                (int column, int row, Vector2 topLeftNoOffset, Vector2 topLeftDraw) = GetPlacement(i);
-
-                int index = span[i]; // index of the morelocalesculture in morelocalesAPI.extraculturesv2
-
-                ref ButtonDrawInfo info = ref _drawInfoCache[index];
-                info.drawPositionCache = topLeftDraw;
-
-                bool interact = info.interactable = !ButtonActive(index);
-
-                ref MoreLocalesCulture culture = ref cultures[index];
-
-                Color drawColor;
-
-                if (interact)
+                if (buttonDrawData.shader > 0)
                 {
-                    drawColor = Color.White;
-                    if (info.hovered)
-                        drawColor.A = 80; // i was just testing but this looks kinda good lol
+                    sb.End(out spriteBatchData);
+                    spriteBatchData.SortMode = SpriteSortMode.Immediate;
+                    sb.Begin(spriteBatchData);
+
+                    var shader = GameShaders.Armor._shaderData[buttonDrawData.shader - 1];
+                    shader.Apply(null, buttonDrawData);
+                }
+
+                buttonDrawData.Draw(sb);
+
+                if (buttonDrawData.shader > 0)
+                {
+                    sb.End();
+                    spriteBatchData.SortMode = SpriteSortMode.Deferred;
+                    sb.Begin(spriteBatchData);
+                }
+
+                if (interact && info.hovered)
+                {
+                    Rectangle frame2 = frame;
+                    frame2.Y += buttonHeight + 2;
+                    Color color = Main.OurFavoriteColor;
+
+                    info.drawSelectionGraphic = buttonDrawData with { sourceRect = frame2, color = color };
                 }
                 else
-                    drawColor = Color.Gray;
-
-                drawColor = info.drawColor = Color.Lerp(info.drawColor, drawColor, 0.2f);
-
-                Vector2 origin = frame.Size() * 0.5f;
-
-                DrawData buttonDrawData = new(buttonDrawTex, topLeftDraw + origin, frame, drawColor, 0f, origin, 1f, SpriteEffects.None);
-                ButtonPanelDraw hijackPanelDraw = culture.ButtonDrawData.HijackPanelDraw;
-
-                bool? decision = hijackPanelDraw == null ? true : hijackPanelDraw(ref buttonDrawData);
-
-                // for panels that use shaders, we need to make sure spritebatch is flushed so only this specific button is affected
-                // otherwise buttons drawn before will be affected as their vertices will be flushed on .End() too.
-
-                // buttonDrawData.shader = GameShaders.Armor.GetShaderIdFromItemId(ItemID.LivingRainbowDye);
-
-                bool willDraw = decision.HasValue && decision.Value;
-
-                if (willDraw)
                 {
-                    MiscHelper.SpriteBatchData spriteBatchData = default;
-
-                    if (buttonDrawData.shader > 0)
-                    {
-                        sb.End(out spriteBatchData);
-                        spriteBatchData.SortMode = SpriteSortMode.Immediate;
-                        sb.Begin(spriteBatchData);
-
-                        var shader = GameShaders.Armor._shaderData[buttonDrawData.shader - 1];
-                        shader.Apply(null, buttonDrawData);
-                    }
-
-                    buttonDrawData.Draw(sb);
-
-                    if (buttonDrawData.shader > 0)
-                    {
-                        sb.End();
-                        spriteBatchData.SortMode = SpriteSortMode.Deferred;
-                        sb.Begin(spriteBatchData);
-                    }
-
-                    if (interact && info.hovered)
-                    {
-                        Rectangle frame2 = frame;
-                        frame2.Y += buttonHeight + 2;
-                        Color color = Main.OurFavoriteColor;
-
-                        info.drawSelectionGraphic = buttonDrawData with { sourceRect = frame2, color = color };
-                    }
-                    else
-                    {
-                        info.drawSelectionGraphic = null;
-                    }
+                    info.drawSelectionGraphic = null;
                 }
-
-                info.currentDrawStepStatus = decision ?? true;
             }
 
-            // second pass: drawing the flag icon and the selection graphic
+            info.currentDrawStepStatus = decision ?? true;
+        }
 
-            Vector2 flagOffset = new(6f);
+        // second pass: drawing the flag icon and the selection graphic
 
-            foreach (var index in span)
+        Vector2 flagOffset = new(6f);
+
+        foreach (var index in span)
+        {
+            ref ButtonDrawInfo info = ref _drawInfoCache[index];
+
+            if (info.currentDrawStepStatus)
             {
-                ref ButtonDrawInfo info = ref _drawInfoCache[index];
-
-                if (info.currentDrawStepStatus)
-                {
-                    ref MoreLocalesCulture culture = ref cultures[index];
-
-                    Vector2 topLeftDraw = info.drawPositionCache;
-
-                    ref Rectangle flagFrame = ref info.flagFrameCache;
-
-                    ref Asset<Texture2D> possibleSheet = ref culture.ButtonDrawData.Sheet;
-                    possibleSheet ??= _flagAtlas;
-
-                    Texture2D sourceTexture = possibleSheet.Value;
-
-                    ref int flagWidth = ref info.flagWidthCache; // used for text pass
-                    if (flagWidth == 0)
-                        flagWidth = sourceTexture.Width;
-
-                    if (flagFrame.IsEmpty)
-                        flagFrame = sourceTexture.Frame(1, culture.ButtonDrawData.SheetFrameCount, 0, culture.ButtonDrawData.SheetFrame);
-
-                    Vector2 origin = flagFrame.Size() * 0.5f;
-                    Vector2 flagDrawPos = topLeftDraw + flagOffset + origin;
-                    sb.Draw(sourceTexture, flagDrawPos, flagFrame, info.drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
-                }
-
-                info.drawSelectionGraphic?.Draw(sb);
-            }
-
-            // final pass: drawing the text
-
-            foreach (var index in span)
-            {
-                ref ButtonDrawInfo info = ref _drawInfoCache[index];
-
-                if (!info.currentDrawStepStatus) // skip if the status for this button is false
-                    continue;
-
                 ref MoreLocalesCulture culture = ref cultures[index];
 
                 Vector2 topLeftDraw = info.drawPositionCache;
 
-                DynamicSpriteFont font = FontAssets.MouseText.Value;
-                ref ButtonText text = ref info.buttonText;
-                Color drawColor = info.drawColor;
+                ref Rectangle flagFrame = ref info.flagFrameCache;
 
-                // draw language code text
+                ref Asset<Texture2D> possibleSheet = ref culture.ButtonDrawData.Sheet;
+                possibleSheet ??= _flagAtlas;
 
-                string cultureName = $"({culture.Culture.Name})";
-                float flagCenterX = topLeftDraw.X + flagOffset.X + (info.flagWidthCache * 0.5f);
-                float cultureScale = 0.75f;
-                float cultureSizeX = font.MeasureString(cultureName).X * cultureScale;
-                float yOff = 40f;
-                Vector2 drawCodePos = new Vector2(flagCenterX - cultureSizeX * 0.5f, topLeftDraw.Y + yOff).Floor();
-                ChatManager.DrawColorCodedStringWithShadow(sb, font, cultureName, drawCodePos, drawColor, 0f, Vector2.Zero, new Vector2(cultureScale));
+                Texture2D sourceTexture = possibleSheet.Value;
 
-                // draw title and subtitle
+                ref int flagWidth = ref info.flagWidthCache; // used for text pass
+                if (flagWidth == 0)
+                    flagWidth = sourceTexture.Width;
 
-                Vector2 centerForTitles = topLeftDraw + new Vector2(buttonWidth + info.flagWidthCache + flagOffset.X, buttonHeight) * 0.5f;
+                if (flagFrame.IsEmpty)
+                    flagFrame = sourceTexture.Frame(1, culture.ButtonDrawData.SheetFrameCount, 0, culture.ButtonDrawData.SheetFrame);
 
-                bool sub = culture.HasSubtitle;
-
-                if (sub)
-                {
-                    float subSize = 0.85f;
-                    string subtitle = text.subtitle.GetForCulture(ref culture, $"Cultures.{culture.Name}.Subtitle").Value;
-                    float xSize = font.MeasureString(subtitle).X * subSize;
-                    Color drawSubColor = Color.Lerp(drawColor, Color.Black, 0.25f);
-                    Vector2 drawSubPos = (centerForTitles - new Vector2(xSize * 0.5f, 0f)).Floor();
-                    ChatManager.DrawColorCodedStringWithShadow(sb, font, subtitle, drawSubPos, drawSubColor, 0f, Vector2.Zero, new Vector2(subSize));
-                }
-
-                string title = info.buttonText.title.GetForCulture(ref culture, $"Cultures.{culture.Name}.Title").Value;
-                float xSizeTitle = font.MeasureString(title).X;
-
-                float xScale = 1f;
-                float availableSize = buttonWidth - flagOffset.X - info.flagWidthCache;
-                if (xSizeTitle > availableSize)
-                {
-                    xScale = (float)availableSize / xSizeTitle;
-                    xSizeTitle = availableSize;
-                }
-
-                Vector2 drawTitlePos = (centerForTitles - new Vector2(xSizeTitle * 0.5f, sub ? 20f : 10f)).Floor();
-                ChatManager.DrawColorCodedStringWithShadow(sb, font, title, drawTitlePos, drawColor, 0f, Vector2.Zero, new Vector2(xScale , 1f));
+                Vector2 origin = flagFrame.Size() * 0.5f;
+                Vector2 flagDrawPos = topLeftDraw + flagOffset + origin;
+                sb.Draw(sourceTexture, flagDrawPos, flagFrame, info.drawColor, 0f, origin, 1f, SpriteEffects.None, 0f);
             }
 
-            // we can reset the list when handling interactions
+            info.drawSelectionGraphic?.Draw(sb);
         }
-        internal static void HandleInteractions(in Rectangle containerScreen)
+
+        // final pass: drawing the text
+
+        foreach (var index in span)
         {
-            if (indices is null)
-                return;
+            ref ButtonDrawInfo info = ref _drawInfoCache[index];
 
-            int mouseX = Main.mouseX;
-            int mouseY = Main.mouseY;
+            if (!info.currentDrawStepStatus) // skip if the status for this button is false
+                continue;
 
-            Span<int> span = CollectionsMarshal.AsSpan(indices);
+            ref MoreLocalesCulture culture = ref cultures[index];
 
-            if (!containerScreen.Contains(mouseX, mouseY))
+            Vector2 topLeftDraw = info.drawPositionCache;
+
+            DynamicSpriteFont font = FontAssets.MouseText.Value;
+            ref ButtonText text = ref info.buttonText;
+            Color drawColor = info.drawColor;
+
+            // draw language code text
+
+            string cultureName = $"({culture.Culture.Name})";
+            float flagCenterX = topLeftDraw.X + flagOffset.X + (info.flagWidthCache * 0.5f);
+            float cultureScale = 0.75f;
+            float cultureSizeX = font.MeasureString(cultureName).X * cultureScale;
+            float yOff = 40f;
+            Vector2 drawCodePos = new Vector2(flagCenterX - cultureSizeX * 0.5f, topLeftDraw.Y + yOff).Floor();
+            ChatManager.DrawColorCodedStringWithShadow(sb, font, cultureName, drawCodePos, drawColor, 0f, Vector2.Zero, new Vector2(cultureScale));
+
+            // draw title and subtitle
+
+            Vector2 centerForTitles = topLeftDraw + new Vector2(buttonWidth + info.flagWidthCache + flagOffset.X, buttonHeight) * 0.5f;
+
+            bool sub = culture.HasSubtitle;
+
+            if (sub)
             {
-                foreach (var index in span)
-                    _drawInfoCache[index].hovered = false;
-
-                indices.Clear();
-                return;
+                float subSize = 0.85f;
+                string subtitle = text.subtitle.GetForCulture(ref culture, $"Cultures.{culture.Name}.Subtitle").Value;
+                float xSize = font.MeasureString(subtitle).X * subSize;
+                Color drawSubColor = Color.Lerp(drawColor, Color.Black, 0.25f);
+                Vector2 drawSubPos = (centerForTitles - new Vector2(xSize * 0.5f, 0f)).Floor();
+                ChatManager.DrawColorCodedStringWithShadow(sb, font, subtitle, drawSubPos, drawSubColor, 0f, Vector2.Zero, new Vector2(subSize));
             }
 
+            string title = info.buttonText.title.GetForCulture(ref culture, $"Cultures.{culture.Name}.Title").Value;
+            float xSizeTitle = font.MeasureString(title).X;
+
+            float xScale = 1f;
+            float availableSize = buttonWidth - flagOffset.X - info.flagWidthCache;
+            if (xSizeTitle > availableSize)
+            {
+                xScale = (float)availableSize / xSizeTitle;
+                xSizeTitle = availableSize;
+            }
+
+            Vector2 drawTitlePos = (centerForTitles - new Vector2(xSizeTitle * 0.5f, sub ? 20f : 10f)).Floor();
+            ChatManager.DrawColorCodedStringWithShadow(sb, font, title, drawTitlePos, drawColor, 0f, Vector2.Zero, new Vector2(xScale, 1f));
+        }
+
+        // we can reset the list when handling interactions
+    }
+    internal static void HandleInteractions(in Rectangle containerScreen)
+    {
+        if (indices is null)
+            return;
+
+        int mouseX = Main.mouseX;
+        int mouseY = Main.mouseY;
+
+        Span<int> span = CollectionsMarshal.AsSpan(indices);
+
+        if (!containerScreen.Contains(mouseX, mouseY))
+        {
             foreach (var index in span)
-            {
-                ref ButtonDrawInfo info = ref _drawInfoCache[index];
-
-                Vector2 positionScreen = info.drawPositionCache + new Vector2(containerScreen.X, containerScreen.Y);
-
-                Rectangle buttonRect = new((int)positionScreen.X, (int)positionScreen.Y, buttonWidth, buttonHeight);
-
-                if (!buttonRect.Contains(mouseX, mouseY))
-                {
-                    info.hovered = false;
-                    continue;
-                }
-
-                // handle description
-
-
-                ref MoreLocalesCulture culture = ref MoreLocalesAPI.extraCulturesV2[index];
-
-                MultisourceLocalizedText possibleDesc = info.buttonText.description;
-                if (possibleDesc != null)
-                {
-                    Main.instance.MouseText(possibleDesc.GetForCulture(ref culture, $"Cultures.{culture.Name}.Description").Value);
-                }
-
-                // handle hovering
-
-                bool interact = info.interactable;
-
-                if (interact && !info.hovered)
-                    SoundEngine.PlaySound(in SoundID.MenuTick);
-                info.hovered = true;
-
-                // handle clicking
-
-                if (interact && Main.mouseLeft && Main.mouseLeftRelease)
-                {
-                    LanguageManager.Instance.SetLanguage(culture.Culture);
-                    SoundEngine.PlaySound(in SoundID.MenuOpen);
-                }
-
-                // we could break here but then hovering wouldn't be handled properly and that's not goods
-                // break;
-            }
+                _drawInfoCache[index].hovered = false;
 
             indices.Clear();
+            return;
         }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool ButtonActive(int index)
-        {
-            return MoreLocalesAPI.extraCulturesV2[index].Culture.LegacyId == LanguageManager.Instance.ActiveCulture.LegacyId;
-        }
-        private static bool PageChanged(out int direction)
-        {
-            static bool JustPressed(Keys key) => Main.keyState.IsKeyDown(key) && !Main.oldKeyState.IsKeyDown(key);
 
-            direction = 0;
+        foreach (var index in span)
+        {
+            ref ButtonDrawInfo info = ref _drawInfoCache[index];
 
-            if (BetterLangMenuUI.hoveredArrowWasPressed)
+            Vector2 positionScreen = info.drawPositionCache + new Vector2(containerScreen.X, containerScreen.Y);
+
+            Rectangle buttonRect = new((int)positionScreen.X, (int)positionScreen.Y, buttonWidth, buttonHeight);
+
+            if (!buttonRect.Contains(mouseX, mouseY))
             {
-                BetterLangMenuUI.hoveredArrowWasPressed = false;
-                direction = (int)BetterLangMenuUI.hoveredArrow;
-            }
-            else
-            {
-                if (JustPressed(Keys.Right))
-                    direction++;
-                if (JustPressed(Keys.Left))
-                    direction--;
+                info.hovered = false;
+                continue;
             }
 
-            return direction != 0;
+            // handle description
+
+
+            ref MoreLocalesCulture culture = ref MoreLocalesAPI.extraCulturesV2[index];
+
+            MultisourceLocalizedText possibleDesc = info.buttonText.description;
+            if (possibleDesc != null)
+            {
+                Main.instance.MouseText(possibleDesc.GetForCulture(ref culture, $"Cultures.{culture.Name}.Description").Value);
+            }
+
+            // handle hovering
+
+            bool interact = info.interactable;
+
+            if (interact && !info.hovered)
+                SoundEngine.PlaySound(in SoundID.MenuTick);
+            info.hovered = true;
+
+            // handle clicking
+
+            if (interact && Main.mouseLeft && Main.mouseLeftRelease)
+            {
+                LanguageManager.Instance.SetLanguage(culture.Culture);
+                SoundEngine.PlaySound(in SoundID.MenuOpen);
+            }
+
+            // we could break here but then hovering wouldn't be handled properly and that's not goods
+            // break;
         }
+
+        indices.Clear();
     }
-    internal readonly struct ShaderThing(Asset<Effect> asset)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static bool ButtonActive(int index)
     {
-        public readonly Asset<Effect> shader = asset;
-        public void Apply(Texture2D tex, float uIntensity)
-        {
-            Effect s = this.shader.Value;
-            s.Parameters[0].SetValue(tex.Size());
-            s.Parameters[1].SetValue(uIntensity);
-            s.CurrentTechnique.Passes[0].Apply();
-        }
+        return MoreLocalesAPI.extraCulturesV2[index].Culture.LegacyId == LanguageManager.Instance.ActiveCulture.LegacyId;
     }
-    internal class LangMenuV2 : ARenderTargetContentByRequest, ILoadable
+    private static bool PageChanged(out int direction)
     {
-        public static ShaderThing sideFadeShader;
-        public void Load(Mod mod)
+        static bool JustPressed(Keys key) => Main.keyState.IsKeyDown(key) && !Main.oldKeyState.IsKeyDown(key);
+
+        direction = 0;
+
+        if (BetterLangMenuUI.hoveredArrowWasPressed)
         {
-            sideFadeShader = new(mod.Assets.Request<Effect>("Assets/SidesFade"));
-            Main.ContentThatNeedsRenderTargets.Add(this);
+            BetterLangMenuUI.hoveredArrowWasPressed = false;
+            direction = (int)BetterLangMenuUI.hoveredArrow;
         }
-        public override void HandleUseReqest(GraphicsDevice device, SpriteBatch spriteBatch)
+        else
         {
-            // my initial approach was just dividing screenwidth by some number and similarly subtracting  some number from screenheight
-            // however, that doesn't feel clean: there's a very large padding difference between the UI frame and the buttons
-            // so instead, we can calculate the amount of buttons we can fit here, and base the final size on that.
-
-            MoreLocalesCulture[] cultures = MoreLocalesAPI.extraCulturesV2;
-
-            int availableHorizontal = (int)(Main.screenWidth * 0.5f);
-            int availableVertical = Main.screenHeight - 430;
-
-            BetterLangMenuV2.columns = Math.Max(availableHorizontal / (BetterLangMenuV2.buttonWidth + BetterLangMenuV2.buttonPaddingX), 1);
-            BetterLangMenuV2.rows = Math.Max(Math.Min((int)(cultures.Length / (float)BetterLangMenuV2.columns), availableVertical / (BetterLangMenuV2.buttonHeight + BetterLangMenuV2.buttonPaddingY)), 1);
-
-            int sizeX = BetterLangMenuV2.columns * (BetterLangMenuV2.buttonWidth + BetterLangMenuV2.buttonPaddingX);
-            int sizeY = BetterLangMenuV2.rows * (BetterLangMenuV2.buttonHeight + BetterLangMenuV2.buttonPaddingY) + BetterLangMenuV2.buttonPaddingX;
-
-            base.PrepareARenderTarget_AndListenToEvents(ref _target, device, sizeX, sizeY, RenderTargetUsage.PlatformContents);
-
-            var oldTargets = device.GetRenderTargets();
-
-            device.SetRenderTarget(_target);
-            device.Clear(Color.Transparent);
-
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone);
-            BetterLangMenuV2.DrawTopLeft(spriteBatch, sizeX, sizeY);
-            spriteBatch.End();
-
-            device.SetRenderTargets(oldTargets);
-            _wasPrepared = true;
+            if (JustPressed(Keys.Right))
+                direction++;
+            if (JustPressed(Keys.Left))
+                direction--;
         }
-        public void Unload()
-        {
-            Main.ContentThatNeedsRenderTargets.Remove(this);
-        }
+
+        return direction != 0;
+    }
+}
+internal readonly struct ShaderThing(Asset<Effect> asset)
+{
+    public readonly Asset<Effect> shader = asset;
+    public void Apply(Texture2D tex, float uIntensity)
+    {
+        Effect s = this.shader.Value;
+        s.Parameters[0].SetValue(tex.Size());
+        s.Parameters[1].SetValue(uIntensity);
+        s.CurrentTechnique.Passes[0].Apply();
+    }
+}
+internal class LangMenuV2 : ARenderTargetContentByRequest, ILoadable
+{
+    public static ShaderThing sideFadeShader;
+    public void Load(Mod mod)
+    {
+        sideFadeShader = new(mod.Assets.Request<Effect>("Assets/SidesFade"));
+        Main.ContentThatNeedsRenderTargets.Add(this);
+    }
+    public override void HandleUseReqest(GraphicsDevice device, SpriteBatch spriteBatch)
+    {
+        // my initial approach was just dividing screenwidth by some number and similarly subtracting  some number from screenheight
+        // however, that doesn't feel clean: there's a very large padding difference between the UI frame and the buttons
+        // so instead, we can calculate the amount of buttons we can fit here, and base the final size on that.
+
+        MoreLocalesCulture[] cultures = MoreLocalesAPI.extraCulturesV2;
+
+        int availableHorizontal = (int)(Main.screenWidth * 0.5f);
+        int availableVertical = Main.screenHeight - 430;
+
+        BetterLangMenuV2.columns = Math.Max(availableHorizontal / (BetterLangMenuV2.buttonWidth + BetterLangMenuV2.buttonPaddingX), 1);
+        BetterLangMenuV2.rows = Math.Max(Math.Min((int)(cultures.Length / (float)BetterLangMenuV2.columns), availableVertical / (BetterLangMenuV2.buttonHeight + BetterLangMenuV2.buttonPaddingY)), 1);
+
+        int sizeX = BetterLangMenuV2.columns * (BetterLangMenuV2.buttonWidth + BetterLangMenuV2.buttonPaddingX);
+        int sizeY = BetterLangMenuV2.rows * (BetterLangMenuV2.buttonHeight + BetterLangMenuV2.buttonPaddingY) + BetterLangMenuV2.buttonPaddingX;
+
+        base.PrepareARenderTarget_AndListenToEvents(ref _target, device, sizeX, sizeY, RenderTargetUsage.PlatformContents);
+
+        var oldTargets = device.GetRenderTargets();
+
+        device.SetRenderTarget(_target);
+        device.Clear(Color.Transparent);
+
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone);
+        BetterLangMenuV2.DrawTopLeft(spriteBatch, sizeX, sizeY);
+        spriteBatch.End();
+
+        device.SetRenderTargets(oldTargets);
+        _wasPrepared = true;
+    }
+    public void Unload()
+    {
+        Main.ContentThatNeedsRenderTargets.Remove(this);
     }
 }

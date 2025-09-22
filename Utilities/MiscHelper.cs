@@ -1,94 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MoreLocales.Utilities
-{
-    internal static class MiscHelper
-    {
-        // lol. xd, even.
-        public static Color LerpMany(float amount, ReadOnlySpan<Color> values)
-        {
-            float p = MathHelper.Clamp(amount * (values.Length - 1), 0, values.Length - 1);
-            int start = (int)p;
-            int end = Math.Min(start + 1, values.Length - 1);
-            return Color.Lerp(values[start], values[end], p - start);
-        }
-        public static string Merge(ReadOnlySpan<char> a, ReadOnlySpan<char> b, out int length)
-        {
-            length = a.Length + b.Length;
-            Span<char> builder = stackalloc char[length];
-            a.CopyTo(builder);
-            b.CopyTo(builder.Slice(a.Length));
-            return builder.ToString();
-        }
-        public static T[] Merge<T>(T[] a, T[] b)
-        {
-            T[] builder = new T[a.Length + b.Length];
-            a.CopyTo(builder.AsSpan());
-            b.CopyTo(builder.AsSpan().Slice(a.Length));
-            return builder;
-        }
-        public static T[] MaybeMerge<T>(T[] a, T[] b)
-        {
-            if (a is null)
-                return b;
-            if (b is null)
-                return a;
-            return Merge(a, b);
-        }
-        public static Dictionary<TKey, TValue[]> MaybeMerge<TKey, TValue>(Dictionary<TKey, TValue[]> a, Dictionary<TKey, TValue[]> b)
-        {
-            if (a is null)
-                return b;
-            if (b is null)
-                return a;
-            foreach (var kvp in b)
-            {
-                if (!a.TryGetValue(kvp.Key, out TValue[] value))
-                {
-                    value = kvp.Value;
-                    a.Add(kvp.Key, value);
-                    continue;
-                }
-                a[kvp.Key] = MaybeMerge(value, kvp.Value);
-            }
-            return a;
-        }
-        public static void Begin(this SpriteBatch spriteBatch, SpriteBatchData spriteBatchData)
-        {
-            spriteBatch.Begin
-            (
-                spriteBatchData.SortMode, spriteBatchData.BlendState, spriteBatchData.SamplerState, spriteBatchData.DepthStencilState,
-                spriteBatchData.RasterizerState, spriteBatchData.Effect, spriteBatchData.Matrix
-            );
-        }
-        public static void End(this SpriteBatch spriteBatch, out SpriteBatchData spriteBatchData)
-        {
-            spriteBatchData = new SpriteBatchData(spriteBatch);
-            spriteBatch.End();
-        }
-        public struct SpriteBatchData
-        {
-            public SpriteSortMode SortMode;
-            public BlendState BlendState;
-            public SamplerState SamplerState;
-            public DepthStencilState DepthStencilState;
-            public RasterizerState RasterizerState;
-            public Effect Effect;
-            public Matrix Matrix;
-            public SpriteBatchData(SpriteBatch spriteBatch)
-            {
-                if (spriteBatch is null)
-                    return;
+namespace MoreLocales.Utilities;
 
-                SortMode = spriteBatch.sortMode;
-                BlendState = spriteBatch.blendState;
-                SamplerState = spriteBatch.samplerState;
-                DepthStencilState = spriteBatch.depthStencilState;
-                RasterizerState = spriteBatch.rasterizerState;
-                Effect = spriteBatch.customEffect;
-                Matrix = spriteBatch.transformMatrix;
+internal static class MiscHelper
+{
+    // lol. xd, even.
+    public static Color LerpMany(float amount, ReadOnlySpan<Color> values)
+    {
+        float p = MathHelper.Clamp(amount * (values.Length - 1), 0, values.Length - 1);
+        int start = (int)p;
+        int end = Math.Min(start + 1, values.Length - 1);
+        return Color.Lerp(values[start], values[end], p - start);
+    }
+    public static string Merge(ReadOnlySpan<char> a, ReadOnlySpan<char> b, out int length)
+    {
+        length = a.Length + b.Length;
+        Span<char> builder = stackalloc char[length];
+        a.CopyTo(builder);
+        b.CopyTo(builder.Slice(a.Length));
+        return builder.ToString();
+    }
+    public static T[] Merge<T>(T[] a, T[] b)
+    {
+        T[] builder = new T[a.Length + b.Length];
+        a.CopyTo(builder.AsSpan());
+        b.CopyTo(builder.AsSpan().Slice(a.Length));
+        return builder;
+    }
+    public static T[] MaybeMerge<T>(T[] a, T[] b)
+    {
+        if (a is null)
+            return b;
+        if (b is null)
+            return a;
+        return Merge(a, b);
+    }
+    public static Dictionary<TKey, TValue[]> MaybeMerge<TKey, TValue>(Dictionary<TKey, TValue[]> a, Dictionary<TKey, TValue[]> b)
+    {
+        if (a is null)
+            return b;
+        if (b is null)
+            return a;
+        foreach (var kvp in b)
+        {
+            if (!a.TryGetValue(kvp.Key, out TValue[] value))
+            {
+                value = kvp.Value;
+                a.Add(kvp.Key, value);
+                continue;
             }
+            a[kvp.Key] = MaybeMerge(value, kvp.Value);
+        }
+        return a;
+    }
+    public static void Begin(this SpriteBatch spriteBatch, SpriteBatchData spriteBatchData)
+    {
+        spriteBatch.Begin
+        (
+            spriteBatchData.SortMode, spriteBatchData.BlendState, spriteBatchData.SamplerState, spriteBatchData.DepthStencilState,
+            spriteBatchData.RasterizerState, spriteBatchData.Effect, spriteBatchData.Matrix
+        );
+    }
+    public static void End(this SpriteBatch spriteBatch, out SpriteBatchData spriteBatchData)
+    {
+        spriteBatchData = new SpriteBatchData(spriteBatch);
+        spriteBatch.End();
+    }
+    public struct SpriteBatchData
+    {
+        public SpriteSortMode SortMode;
+        public BlendState BlendState;
+        public SamplerState SamplerState;
+        public DepthStencilState DepthStencilState;
+        public RasterizerState RasterizerState;
+        public Effect Effect;
+        public Matrix Matrix;
+        public SpriteBatchData(SpriteBatch spriteBatch)
+        {
+            if (spriteBatch is null)
+                return;
+
+            SortMode = spriteBatch.sortMode;
+            BlendState = spriteBatch.blendState;
+            SamplerState = spriteBatch.samplerState;
+            DepthStencilState = spriteBatch.depthStencilState;
+            RasterizerState = spriteBatch.rasterizerState;
+            Effect = spriteBatch.customEffect;
+            Matrix = spriteBatch.transformMatrix;
         }
     }
 }
