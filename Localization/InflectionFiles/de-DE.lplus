@@ -1,0 +1,28 @@
+[Inflections]
+Word: !de, !del, !para, !con, !en
+
+# First and second column are for weak adjectives (which I think is the only thing needed? Considering the context which is item prefixes).
+# Most German adjectives are uninflectable, safe for those.
+# The rest is all for common noun endings for certain genders.
+
+MascSg: -e,  -X,   -er,      -aXen, -aXXen
+FemSg:  -e,  -X,   -erin,    X,     X
+NeutSg: -e,  -X,   X,        X,     X
+MascPl: -en, -Xen, -ers,     -äXen, -äXXen
+FemPl:  -en, -Xen, -erinnen, X,     X
+NeutPl: -en, -Xen, X,        X,     X
+
+# IMPORTANT: Above table is currently incomplete!
+
+# Help, I don't speak this language! If you do, what are some common words that
+# would fall into the above table, but actually be incorrect?
+# If you know of any that would show up in Terraria, check out the other .lplus
+# files to learn how to use <Exceptions> and also [Items]!
+# - ̈q
+
+[Prefixes]
+
+# This is a common change for all vanilla languages;
+# 'Light' the adjective was unanimously translated as either the noun, or a transliteration, in other languages.
+
+<Light:(Leicht)>

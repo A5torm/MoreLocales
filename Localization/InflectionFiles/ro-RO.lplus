@@ -1,41 +1,13 @@
 [Inflections]
-Word: !de, !para, !con
+Word: !de, !pentru, !cu, !în, !întru
 
-MascSg: -o,  -e,  -An,   X,      -ul,   -l,   -or,   X,     -az,   -er,   -asma
-FemSg:  -a,  X,   -Nna,  -ión,   -ula,  X,    -ora,  -iz,   X,     X,     X
-MascPl: -os, -es, -Nnes, X,      -ules, -les, -ores, X,     -aces, -eres, -asmas
-FemPl:  -as, X,   -Nnas, -iones, -ulas, X,    -oras, -ices, X,     X,     X
+MascSg: -u,  -uul, -os,   -osul,   -t,  -tul,  X,      X,        X,    X,    -e, -ele, -p,     -pul,    X,    -tor,   -torul,   -ci, -ciul, -l,  -lul
+FemSg:  -ă,  -a,   -oasă, -oasa,   -tă, -ta,   -ciune, -ciunea,  -ie,  -ia,   X,  X,   X,      X,       -i,   -toare, -toarea,  -ce, -cea,  -lă, -la
+MascPl: -i,  -ii,  -oși,  -oșii,   -ți, -ții,  X,      X,        X,    X,    -i, -ii,  X,      X,       X,    -tori,  -torii,   -ci, -cii,  -li, -lii
+FemPl:  -e,  -ele, -oase, -oasele, -te, -tele, -ciuni, -ciunile, -ii,  -iile, X,  X,   -puri,  -purile, -ile, -toare, -toarele, -ce, -cele, -le, -lele
 
-<Exceptions>
-MascSg: paraguas, día
-FemSg: flor, mano, llave, sangre
-
-[Items]
-
-# Compound nouns are generally masculine, i. e. 'El latespinas', 'El lanzahojas'.
-
-<ThornWhip>
-Inflection: MascSg
-
-<LeafBlower>
-Inflection: MascSg
-
-# Acronyms are impossible to regularize using this system, so they need to be done separately.
-
-<PDA>
-Gender: Masc
-
-<SDMG>
-Gender: Fem
-
-# Unadapted nicknames are a similar situation.
-
-<Uzi>
-Gender: Fem
-
-[Prefixes]
-
-# This is a common change for all vanilla languages;
-# 'Light' the adjective was unanimously translated as either the noun, or a transliteration, in other languages.
-
-<Light:(Ligero)>
+# Help, I don't speak this language! If you do, what are some common words that
+# would fall into the above table, but actually be incorrect?
+# If you know of any that would show up in Terraria, check out the other .lplus
+# files to learn how to use <Exceptions> and also [Items]!
+# - ̈q

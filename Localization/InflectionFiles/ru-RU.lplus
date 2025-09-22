@@ -1,0 +1,28 @@
+[Inflections]
+Word: !и, !к, !в, !для, !за, !на, !от
+
+#       ADJECTIVES     NOUNS
+MascSg: -ый, -ий, -ой, X,  -й, -ь, X,  X,  X,  X
+FemSg:  -ая, -ья, -ая, X,  X,  X,  -а, -я, X,  X
+NeutSg: -ое, -ье, -ое, X,  X,  X,  X,  X,  -o, -е
+MascPl: -ые, -ьи, -ые, -ы, -и, -и, X,  X,  X,  X
+FemPl:  -ые, -ьи, -ые, X,  X,  X,  -ы, -и, X,  X
+NeutPl: -ые, -ьи, -ые, X,  X,  X,  X,  X,  -a, -я
+
+# Help, I don't speak this language! If you do, what are some common words that
+# would fall into the above table, but actually be incorrect?
+# If you know of any that would show up in Terraria, check out the other .lplus
+# files to learn how to use <Exceptions> and also [Items]!
+# - ̈q
+
+[Prefixes]
+
+# This is a common change for all vanilla languages;
+# 'Light' the adjective was unanimously translated as either the noun, or a transliteration, in other languages.
+
+<Light:Лёгкий>
+
+# Other changes
+
+# Slow was translated as 'slowness' for some reason. This is shared with some other languages.
+<Slow:Медленный>

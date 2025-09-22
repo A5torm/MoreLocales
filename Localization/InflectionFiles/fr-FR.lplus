@@ -1,5 +1,5 @@
 [Inflections]
-Word: !de, !en, !à, !avec
+Word: !i, !z, !o, !dla, !za, !ze, !na, !po, !od, !że
 
 MascSg: -eau,   -el,    -al,   -eux,   -eur,   -u,   -ur,   -f,   -ef,   -er,   -at,  -it,   -et,    -é,   -n,   -ien,    -nt,   -nd,  -ment,  -oc,  -rd,  -il,  -e,   -que,   X,     X
 FemSg:  -elle,  -elle,  -ale,  -euse,  -eure,  -ue,  -ure,  -ve,  -ève,  -ère,  X,    -ite,  -ette,  -ée,  -ne,  -ienne,  -nte,  -nde,  X,      X,    X,    X,    X,   X,      -ice, -ance
@@ -18,7 +18,7 @@ FemSg: fleur, hache, pioche, main, clé, clef
 
 # Other changes
 
-# Slow was translated as 'slowness' for some reason.
+# Slow was translated as 'slowness' for some reason. This is shared with some other languages.
 <Slow:(Lent)>
 # Massive is just weird, this corrects it.
 <Massive:(Imposant)>

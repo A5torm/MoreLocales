@@ -288,6 +288,7 @@ namespace MoreLocales.Core.Inflections
                     'D' => RecognizableDiacriticType.Diaeresis,
                     'R' => RecognizableDiacriticType.Ring,
                     'K' => RecognizableDiacriticType.Caron,
+                    'Q' => RecognizableDiacriticType.Comma,
                     'L' => RecognizableDiacriticType.Cedilla,
                     'O' => RecognizableDiacriticType.Ogonek,
                     _ => throw new InvalidOperationException($"Character '{c}' was not recognized as corresponding to any diacritic type.")
@@ -317,10 +318,13 @@ namespace MoreLocales.Core.Inflections
         {
             for (int i = 0; i < Match.Length; i++)
             {
+                // get the diacritic map value
+                char d = DiacriticsMap is null ? '\u0000' : (char)DiacriticsMap[i];
+                // if matching to any character, continue.
+                if (d == '\u0002')
+                    continue;
                 // turn character to form that will actually be compared
                 char c = char.ToLowerInvariant(word[i]);
-                // also get the diacritic map value
-                char d = DiacriticsMap is null ? '\u0000' : (char)DiacriticsMap[i];
                 // most common check, direct character check
                 if (d == 0 && Match[i] == c)
                     continue;
@@ -409,7 +413,10 @@ namespace MoreLocales.Core.Inflections
                     };
                     if (indexInWord < 0 || indexInWord >= word.Length)
                         continue;
-                    TextHelper.TryAddDiacritic(word[indexInWord], diacritic, out actualReplacement[i]);
+                    if (diacritic == RecognizableDiacriticType.AnyCharacter)
+                        actualReplacement[i] = word[indexInWord];
+                    else
+                        TextHelper.TryAddDiacritic(word[indexInWord], diacritic, out actualReplacement[i]);
                 }
             }
             if (actualReplacement != null)
@@ -566,6 +573,12 @@ namespace MoreLocales.Core.Inflections
         /// </summary>
         StrictNone = 1,
         /// <summary>
+        /// During the recognition stage, this will match to any character.<br/>
+        /// During the generation stage, this will keep the original character at that position.<para/>
+        /// Written 'X' in LPlus files.
+        /// </summary>
+        AnyCharacter = 2,
+        /// <summary>
         /// Letters with the grave diacritic, e. g. Àà<para/>
         /// Written 'G' in LPlus files.
         /// </summary>
@@ -610,6 +623,10 @@ namespace MoreLocales.Core.Inflections
         /// Written 'K' in LPlus files.
         /// </summary>
         Caron = '\u030C',
+        /// <summary>
+        /// Letters with the comma diacritic, e. g. Șș<para/>
+        /// </summary>
+        Comma = '\u0326',
         /// <summary>
         /// Letters with the cedilla diacritic, e. g. Çç<para/>
         /// Written 'L' in LPlus files.
