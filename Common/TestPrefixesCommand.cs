@@ -26,7 +26,9 @@ internal sealed class TestPrefixesCommand : ModCommand, ILocalizedModType
         }
         string itemID = args[0];
         int item = 0;
-        if (int.TryParse(itemID, out int numberID))
+        if (itemID.Equals("-h", System.StringComparison.Ordinal))
+            item = caller.Player.HeldItem.type;
+        else if (int.TryParse(itemID, out int numberID))
             item = numberID;
         else if (ItemID.Search.TryGetId(itemID, out int numberID0))
             item = numberID0;
