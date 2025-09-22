@@ -279,6 +279,7 @@ namespace MoreLocales.Core.Inflections
                 result[i] = c switch
                 {
                     'N' => RecognizableDiacriticType.StrictNone,
+                    'X' => RecognizableDiacriticType.AnyCharacter,
                     'G' => RecognizableDiacriticType.Grave,
                     'A' => RecognizableDiacriticType.Acute,
                     'C' => RecognizableDiacriticType.Circumflex,
@@ -320,7 +321,7 @@ namespace MoreLocales.Core.Inflections
             {
                 // get the diacritic map value
                 char d = DiacriticsMap is null ? '\u0000' : (char)DiacriticsMap[i];
-                // if matching to any character, continue.
+                // if matching to any character, continue
                 if (d == '\u0002')
                     continue;
                 // turn character to form that will actually be compared
