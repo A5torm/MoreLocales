@@ -1,6 +1,7 @@
 ﻿using MoreLocales.Core.Inflections;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace MoreLocales.Common;
 
@@ -45,6 +46,9 @@ internal sealed class TestPrefixesCommand : ModCommand, ILocalizedModType
             if (!dummy.CanApplyPrefix(i))
                 continue;
             dummy.prefix = i;
+            LocalizedText prefix = Lang.prefix[i];
+            if (prefix is null || string.IsNullOrWhiteSpace(prefix.Value))
+                continue;
             caller.Reply(dummy.HoverName);
         }
         dummy.prefix = pre;

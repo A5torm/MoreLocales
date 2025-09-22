@@ -701,11 +701,11 @@ public static class MoreLocalesAPI
             loadedCulture = culture;
 
             // if it's somehow larger than the range of things that was available then, default back to vanilla thing
-            if (loadedCulture > (int)CultureNamePlus.Indonesian)
+            if (loadedCulture > (int)Indonesian)
                 loadedCulture = LanguageManager.Instance.ActiveCulture.LegacyId;
 
             // no reason to re-set the language if it's vanill
-            if (loadedCulture < (int)CultureNamePlus.BritishEnglish)
+            if (loadedCulture < (int)BritishEnglish)
                 return;
         }
         else
@@ -717,20 +717,20 @@ public static class MoreLocalesAPI
 
             for (int i = 1; i < extraCulturesV2.Length; i++)
             {
-                GameCulture culture = extraCulturesV2[i].Culture;
-                if (langCode == culture.Name)
+                ref MoreLocalesCulture culture = ref extraCulturesV2[i];
+                if (!culture.Vanilla && langCode == culture.Culture.Name)
                 {
-                    loadedCulture = culture.LegacyId;
+                    loadedCulture = culture.Culture.LegacyId;
                     break;
                 }
             }
-
-            if (loadedCulture == 9999)
-                loadedCulture = accessibleCulture;
         }
 
-        LanguageManager.Instance.SetLanguage(extraCulturesV2[loadedCulture].Culture);
-        Main.instance.SetTitle();
+        if (loadedCulture != 9999)
+        {
+            LanguageManager.Instance.SetLanguage(extraCulturesV2[loadedCulture].Culture);
+            Main.instance.SetTitle();
+        }
     }
     private static void SaveCustomCultureData()
     {

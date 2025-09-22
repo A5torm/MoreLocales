@@ -528,7 +528,7 @@ internal class LangMenuV2 : ARenderTargetContentByRequest, ILoadable
         int sizeX = BetterLangMenuV2.columns * (BetterLangMenuV2.buttonWidth + BetterLangMenuV2.buttonPaddingX);
         int sizeY = BetterLangMenuV2.rows * (BetterLangMenuV2.buttonHeight + BetterLangMenuV2.buttonPaddingY) + BetterLangMenuV2.buttonPaddingX;
 
-        base.PrepareARenderTarget_AndListenToEvents(ref _target, device, sizeX, sizeY, RenderTargetUsage.PlatformContents);
+        PrepareARenderTarget_AndListenToEvents(ref _target, device, sizeX, sizeY, RenderTargetUsage.PlatformContents);
 
         var oldTargets = device.GetRenderTargets();
 

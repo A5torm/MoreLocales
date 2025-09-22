@@ -720,7 +720,7 @@ public static class LangUtils
     public static LocalizationFile ToLocalizationFile(this TmodFile.FileEntry entry, List<LocalizationEntry> entries, string prefix = null)
     {
         if (prefix is null)
-            if (!LocalizationLoader.TryGetCultureAndPrefixFromPath(entry.Name, out _, out prefix))
+            if (!TryGetCultureAndPrefixFromPath(entry.Name, out _, out prefix))
                 throw new Exception($"The provided file, {entry.Name}, is not a localization file.");
         return new(entry.Name, prefix, entries);
     }
@@ -728,7 +728,7 @@ public static class LangUtils
     public static LocalizationFile ToLocalizationFile(this TmodFile.FileEntry entry, WscJsonObject jsonObjectEng, string prefix = null)
     {
         if (prefix is null)
-            if (!LocalizationLoader.TryGetCultureAndPrefixFromPath(entry.Name, out _, out prefix))
+            if (!TryGetCultureAndPrefixFromPath(entry.Name, out _, out prefix))
                 throw new Exception($"The provided file, {entry.Name}, is not a localization file.");
         return ToLocalizationFile(entry, ParseLocalizationEntries(jsonObjectEng, prefix), prefix);
     }
@@ -781,7 +781,7 @@ public static class LangUtils
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string LocalizationFileToHJSONText(LocalizationFile file, Dictionary<string, string> localizationsForCulture)
     {
-        return LocalizationLoader.LocalizationFileToHjsonText(file, localizationsForCulture);
+        return LocalizationFileToHjsonText(file, localizationsForCulture);
     }
     /// <summary>
     /// Returns a list of localization entries as a dictionary.
