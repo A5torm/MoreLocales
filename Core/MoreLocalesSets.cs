@@ -34,32 +34,6 @@ public struct RecognizableWordData(InflectionPattern pattern, InflectionAndParad
 public readonly struct InflectableWord
 {
     /// <summary>
-    /// Types of boundary symbols that could be around a word, like parentheses, curly brackets, etc.
-    /// </summary>
-    public enum BoundaryType : byte
-    {
-        /// <summary>
-        /// No boundary symbol.
-        /// </summary>
-        None,
-        /// <summary>
-        /// <c>(Word)</c>
-        /// </summary>
-        Parentheses,
-        /// <summary>
-        /// <c>{Word}</c>
-        /// </summary>
-        CurlyBrackets,
-        /// <summary>
-        /// <c>&lt;Word&gt;</c>
-        /// </summary>
-        AngleBrackets,
-        /// <summary>
-        /// <c>[Word]</c>
-        /// </summary>
-        SquareBrackets,
-    }
-    /// <summary>
     /// The base form of the word.
     /// </summary>
     public readonly string BaseForm;
@@ -95,14 +69,7 @@ public readonly struct InflectableWord
             return;
         }
 
-        Brackets = baseForm[0] switch
-        {
-            '(' => BoundaryType.Parentheses,
-            '{' => BoundaryType.CurlyBrackets,
-            '<' => BoundaryType.AngleBrackets,
-            '[' => BoundaryType.SquareBrackets,
-            _ => BoundaryType.None,
-        };
+        Brackets = TextHelper.GetBoundaryType(baseForm);
         if (Brackets != BoundaryType.None)
             baseForm = baseForm[1..^1];
 
@@ -139,23 +106,16 @@ public readonly struct InflectableWord
     /// To ensure that an inflection exists, use <see cref="EnsureExists(InflectionData)"/> first.
     /// </summary>
     /// <param name="inflection">Inflection. Leave null to retrieve base form.</param>
-    /// <param name="withBrackets">Whether or not to return this word formatted with the stored bracket type.</param>
+    /// <param name="withBoundary">Whether or not to return this word formatted with the stored <see cref="BoundaryType"/>.</param>
     /// <returns></returns>
-    public readonly string Get(InflectionData? inflection = null, bool withBrackets = true)
+    public readonly string Get(InflectionData? inflection = null, bool withBoundary = true)
     {
         string finalWord = BaseForm;
         if (inflection.HasValue && !Uninflectable && AlternateForms.TryGetValue(inflection.Value, out string inflected))
             finalWord = inflected;
-        BoundaryType b = withBrackets ? Brackets : BoundaryType.None;
-        return b switch
-        {
-            BoundaryType.None => finalWord,
-            BoundaryType.Parentheses => $"({finalWord})",
-            BoundaryType.CurlyBrackets => $"{{{finalWord}}}",
-            BoundaryType.AngleBrackets => $"<{finalWord}>",
-            BoundaryType.SquareBrackets => $"[{finalWord}]",
-            _ => finalWord,
-        };
+        if (!withBoundary)
+            return finalWord;
+        return TextHelper.FormatWithBoundary(finalWord, Brackets);
     }
 }
 /// <summary>
