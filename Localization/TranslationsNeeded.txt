@@ -1,6 +1,6 @@
 en-US, 75/652, 12%, missing 577
 de-DE, 50/652, 8%, missing 602
-fr-FR, 0/652, 0%, missing 652
+fr-FR, 39/652, 6%, missing 613
 es-ES, 55/652, 8%, missing 597
 ru-RU, 50/652, 8%, missing 602
 zh-Hans, 64/652, 10%, missing 588
