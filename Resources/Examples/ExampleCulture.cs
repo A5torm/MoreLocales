@@ -19,7 +19,7 @@ namespace MoreLocales.Resources.Examples
         // If we leave it like this, keys for this culture will be registered under 'ExampleCulture', which is the class name.
         public override string Name => base.Name;
         // ModCulture has a couple of useful Set methods for setting a range of different aspects of this culture concisely.
-        public override void SetCultureData(ref int fallbackCulture, ref bool hasSubtitle, ref bool hasDescription)
+        public override void SetCultureData(ref int fallbackCulture, ref bool hasSubtitle, ref bool hasDescription, ref string nativeName, ref LanguageNameFormat langNameFormat)
         {
             // I'm feeling British today. If the game doesn't find localized values for something, we can make it fall back to British English, for example.
             fallbackCulture = (int)CultureNamePlus.BritishEnglish;
