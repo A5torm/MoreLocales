@@ -100,19 +100,21 @@ public static class CultureHelper
     /// <param name="i"></param>
     /// <returns></returns>
     public static string GetRealName(this Item i) => i._nameOverride ?? Lang.GetItemNameValue(i.type);
-    /// <inheritdoc cref="MoreLocalesAPI.RegisterCulture(string, string, int, bool, bool, GrammarData?, Func{bool}, LanguageButtonDrawData, Mod)"/>
+    /// <inheritdoc cref="MoreLocalesAPI.RegisterCulture(string, string, int, bool, bool, string, LanguageNameFormat?, GrammarData?, Func{bool}, LanguageButtonDrawData, Mod)"/>
     public static ref MoreLocalesCulture RegisterCulture(this Mod mod,
         string internalName,
         string languageCode,
         int fallbackCulture = 1,
         bool hasSubtitle = true,
         bool hasDescription = false,
+        string nativeName = null,
+        LanguageNameFormat? langNameFormat = null,
         GrammarData? grammarData = null,
         Func<bool> available = null,
         LanguageButtonDrawData buttonDrawData = new())
     =>
         ref MoreLocalesAPI.RegisterCulture(internalName, languageCode, fallbackCulture, hasSubtitle, hasDescription,
-            grammarData, available, buttonDrawData, mod);
+            nativeName, langNameFormat, grammarData, available, buttonDrawData, mod);
 }
 /// <summary>
 /// A light text formatting structure for adjective-noun order.

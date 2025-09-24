@@ -98,6 +98,104 @@ public struct LanguageButtonDrawData(Asset<Texture2D> sheet = null, int? sheetFr
     /// </summary>
     public readonly ButtonPanelDraw HijackPanelDraw = hijackPanelDraw;
 }
+/// <summary>
+/// Flags enum telling the mod how to render language names in the language menu.
+/// </summary>
+[Flags]
+public enum LanguageNameFormatFlags : ushort
+{
+    /// <summary>
+    /// No flags. Will render as:<para/>
+    /// <b>NativeName TranslatedName</b>
+    /// </summary>
+    None = 0,
+    /// <summary>
+    /// The native name will be ordered after the translated name.
+    /// </summary>
+    NativeAfter = 1,
+    /// <summary>
+    /// The native name will have boundaries around it.
+    /// </summary>
+    BoundariesNative = 2,
+    /// <summary>
+    /// The translated name will have boundaries around it.
+    /// </summary>
+    BoundariesTranslated = 4,
+
+    // Combos
+
+    /// <inheritdoc/>
+    BoundariesNativeAfter = NativeAfter | BoundariesNative,
+    /// <inheritdoc/>
+    BoundariesTranslatedBefore = NativeAfter | BoundariesTranslated,
+    /// <inheritdoc/>
+    BoundariesBoth = BoundariesNative | BoundariesTranslated,
+    /// <inheritdoc/>
+    NativeAfterBoundariesBoth = NativeAfter | BoundariesBoth,
+
+}
+/// <summary>
+/// Simple formatter struct telling the mod how to render language names in the language menu and what boundary type to use.
+/// </summary>
+/// <param name="flags"></param>
+/// <param name="boundary"></param>
+public struct LanguageNameFormat(LanguageNameFormatFlags flags, BoundaryType boundary)
+{
+    private static readonly LanguageNameFormat _default = new(LanguageNameFormatFlags.BoundariesTranslated, BoundaryType.Parentheses);
+    /// <summary>
+    /// Language name formatter where the translated name has parentheses around it, i. e. <c>'NativeName (TranslatedName)'</c>
+    /// </summary>
+    public static LanguageNameFormat Default => _default;
+    /// <summary>
+    /// Flags telling the mod how to render language names in the language menu.
+    /// </summary>
+    public LanguageNameFormatFlags Flags = flags;
+    /// <summary>
+    /// Which type of boundary should be used for rendering boundaries according to <see cref="Flags"/>.
+    /// </summary>
+    public BoundaryType Boundary = boundary;
+    /// <summary>
+    /// Extracts the parameters related to language name formatting from this <see cref="LanguageNameFormat"/> instance.<br/>
+    /// These are used, for example, with <see cref="Format(string, string, in bool, in bool, in bool, in BoundaryType)"/>.<br/>
+    /// Alternatively, just use the instanced version, <see cref="Format(string, string)"/>.
+    /// </summary>
+    public readonly void Deconstruct(out bool nativeAfter, out bool boundariesNative, out bool boundariesTranslated, out BoundaryType boundary)
+    {
+        nativeAfter = (Flags & LanguageNameFormatFlags.NativeAfter) != 0;
+        boundariesNative = (Flags & LanguageNameFormatFlags.BoundariesNative) != 0;
+        boundariesTranslated = (Flags & LanguageNameFormatFlags.BoundariesTranslated) != 0;
+        boundary = Boundary;
+    }
+    /// <summary>
+    /// Formats the native and translated names of a language using this <see cref="LanguageNameFormat"/> instance.
+    /// </summary>
+    /// <param name="native">The native name of the language.</param>
+    /// <param name="translated">The translated name of the language.</param>
+    /// <returns>The formatted name.</returns>
+    public readonly string Format(string native, string translated)
+    {
+        Deconstruct(out bool nativeAfter, out bool boundariesNative, out bool boundariesTranslated, out BoundaryType boundary);
+        return Format(native, translated, in nativeAfter, in boundariesNative, in boundariesTranslated, in boundary);
+    }
+    /// <summary>
+    /// Formats a language name using the provided parameters, which can be desconstructed from a <see cref="LanguageNameFormat"/> instance using, for example, <see cref="Deconstruct(out bool, out bool, out bool, out BoundaryType)"/>.
+    /// </summary>
+    /// <param name="native">The native name of the language.</param>
+    /// <param name="translated">The translated name of the language.</param>
+    /// <param name="nativeAfter">Whether or not the native language should come after.</param>
+    /// <param name="boundariesNative">Whether or not to put the specified boundary around the native name.</param>
+    /// <param name="boundariesTranslated">Whether or not to put the specified boundary around the translated name.</param>
+    /// <param name="boundary">The boundary that should be applied if appropriate.</param>
+    /// <returns>The formatted name.</returns>
+    public static string Format(string native, string translated, in bool nativeAfter, in bool boundariesNative, in bool boundariesTranslated, in BoundaryType boundary)
+    {
+        if (boundariesNative)
+            native = TextHelper.FormatWithBoundary(native, boundary);
+        if (boundariesTranslated)
+            translated = TextHelper.FormatWithBoundary(translated, boundary);
+        return nativeAfter ? $"{translated} {native}" : $"{native} {translated}";
+    }
+}
 #endregion
 /// <summary>
 /// A structure used to significantly extend the functionality of <see cref="GameCulture"/>.<br/>
@@ -105,7 +203,7 @@ public struct LanguageButtonDrawData(Asset<Texture2D> sheet = null, int? sheetFr
 /// These keys are needed for correct display inside <see cref="MoreLocales"/>'s UI.
 /// </summary>
 public struct MoreLocalesCulture(GameCulture culture, string name, int fallback = 1,
-    bool subtitle = false, bool description = false, GrammarData? grammarData = null,
+    bool subtitle = false, bool description = false, string nativeName = null, LanguageNameFormat? langNameFormat = null, GrammarData? grammarData = null,
     Func<bool> available = null, LanguageButtonDrawData buttonDrawData = new(), Mod mod = null)
 {
     /// <summary>
@@ -131,6 +229,14 @@ public struct MoreLocalesCulture(GameCulture culture, string name, int fallback 
     /// If this is true for a custom culture, the mod will search for (or create) a description key using <see cref="Mod.GetLocalization(string, Func{string})"/> using the "Cultures.{Name}.Description" suffix.
     /// </summary>
     public readonly bool HasDescription = description;
+    /// <summary>
+    /// The name of this culture in its own language.
+    /// </summary>
+    public readonly string NativeName = nativeName ?? name;
+    /// <summary>
+    /// The way language names will be formatted in the language menu when this language is active.
+    /// </summary>
+    public readonly LanguageNameFormat LanguageNameFormat = langNameFormat ?? LanguageNameFormat.Default;
     /// <inheritdoc cref="Core.GrammarData"/>
     public readonly GrammarData GrammarData = grammarData ?? new();
     /// <summary>
@@ -332,36 +438,45 @@ public static class MoreLocalesAPI
         var basicRomance = new GrammarData(adjectiveOrder: AdjectiveOrder.AfterWithSpace);
 
         RegisterCulture(nameof(English),
+            nativeName: "English",
             buttonDrawData: new(sheetFrame: (int)English));
 
         RegisterCulture(nameof(German),
+            nativeName: "Deutsch",
             buttonDrawData: new(sheetFrame: (int)German));
 
         RegisterCulture(nameof(Italian),
+            nativeName: "Italiano",
             grammarData: basicRomance,
             buttonDrawData: new(sheetFrame: (int)Italian));
 
         RegisterCulture(nameof(French),
+            nativeName: "Français",
             grammarData: GrammarData.StyleOrder(PluralizationStyle.SimpleWithSingularZero, AdjectiveOrder.AfterWithSpace),
             buttonDrawData: new(sheetFrame: (int)French));
 
         RegisterCulture(nameof(Spanish),
+            nativeName: "Español",
             grammarData: basicRomance,
             buttonDrawData: new(sheetFrame: (int)Spanish));
 
         RegisterCulture(nameof(Russian),
+            nativeName: "Русский",
             grammarData: new(PluralizationStyle.RussianThreeway),
             buttonDrawData: new(sheetFrame: (int)Russian));
 
         RegisterCulture(nameof(Chinese),
+            nativeName: "中文",
             grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.Before),
             buttonDrawData: new(sheetFrame: (int)Chinese));
 
         RegisterCulture(nameof(Portuguese),
+            nativeName: "Português",
             grammarData: basicRomance,
             buttonDrawData: new(sheetFrame: (int)Portuguese));
 
         RegisterCulture(nameof(Polish),
+            nativeName: "Polski",
             grammarData: new(PluralizationStyle.PolishThreeway),
             buttonDrawData: new(sheetFrame: (int)Polish));
     }
@@ -375,93 +490,112 @@ public static class MoreLocalesAPI
 
         mod.RegisterCulture(nameof(BritishEnglish),
             "en-GB",
+            nativeName: "English",
             buttonDrawData: new(sheetFrame: (int)BritishEnglish));
 
         mod.RegisterCulture(nameof(Japanese),
             "ja-JP",
+            nativeName: "日本語",
             grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.Before),
             buttonDrawData: new(sheetFrame: (int)Japanese));
 
         mod.RegisterCulture(nameof(Korean),
             "ko-KR",
+            nativeName: "한국어",
             grammarData: new(PluralizationStyle.None),
             buttonDrawData: new(sheetFrame: (int)Korean));
 
         mod.RegisterCulture(nameof(TraditionalChinese),
             "zh-Hant",
             (int)Chinese,
+            nativeName: "中文",
             grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.Before),
             buttonDrawData: new(sheetFrame: (int)TraditionalChinese));
 
         mod.RegisterCulture(nameof(Turkish),
             "tr-TR",
+            nativeName: "Türkçe",
             grammarData: new(PluralizationStyle.Custom, CultureHelper.turkishPlural),
             buttonDrawData: new(sheetFrame: (int)Turkish));
 
         mod.RegisterCulture(nameof(Thai),
             "th-TH",
+            nativeName: "ภาษาไทย",
             grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.After),
             buttonDrawData: new(sheetFrame: (int)Thai));
 
         mod.RegisterCulture(nameof(Ukrainian),
             "uk-UA",
             (int)Russian,
+            nativeName: "Українська",
             grammarData: new(PluralizationStyle.RussianThreeway),
             buttonDrawData: new(sheetFrame: (int)Ukrainian));
 
         mod.RegisterCulture(nameof(MexicanSpanish),
             "es-MX",
             (int)Spanish,
+            nativeName: "Español",
             grammarData: basicRomance,
             buttonDrawData: new(sheetFrame: (int)MexicanSpanish));
 
         mod.RegisterCulture(nameof(Czech),
             "cs-CZ",
+            nativeName: "Čeština",
             grammarData: new(PluralizationStyle.Custom, CultureHelper.czechPlural),
             buttonDrawData: new(sheetFrame: (int)Czech));
 
         // hungarian's adjective agreement rules are a little weird, but irrelevant for the mod
         mod.RegisterCulture(nameof(Hungarian),
             "hu-HU",
+            nativeName: "Magyar",
             grammarData: new(PluralizationStyle.SimpleWithSingularZero),
             buttonDrawData: new(sheetFrame: (int)Hungarian));
 
         mod.RegisterCulture(nameof(PortugalPortuguese),
             "pt-PT",
             (int)Portuguese,
+            nativeName: "Português",
             grammarData: basicRomance,
             buttonDrawData: new(sheetFrame: (int)PortugalPortuguese));
 
         mod.RegisterCulture(nameof(Swedish),
             "sv-SE",
+            nativeName: "Svenska",
             buttonDrawData: new(sheetFrame: (int)Swedish));
 
         mod.RegisterCulture(nameof(Dutch),
             "nl-NL",
+            nativeName: "Nederlands",
             buttonDrawData: new(sheetFrame: (int)Dutch));
 
         mod.RegisterCulture(nameof(Danish),
             "da-DK",
+            nativeName: "Dansk",
             grammarData: new(PluralizationStyle.SimpleWithSingularZero),
             buttonDrawData: new(sheetFrame: (int)Danish));
 
         mod.RegisterCulture(nameof(Vietnamese),
             "vi-VN",
             hasSubtitle: false,
+            nativeName: "Tiếng Việt",
             grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.AfterWithSpace),
             buttonDrawData: new(sheetFrame: (int)Vietnamese));
 
         mod.RegisterCulture(nameof(Finnish),
             "fi-FI",
+            nativeName: "Suomi",
             buttonDrawData: new(sheetFrame: (int)Finnish));
 
         mod.RegisterCulture(nameof(Romanian),
             "ro-RO",
             grammarData: new(PluralizationStyle.Custom, CultureHelper.romanianPlural, AdjectiveOrder.AfterWithSpace),
+            nativeName: "Română",
             buttonDrawData: new(sheetFrame: (int)Romanian));
 
         mod.RegisterCulture(nameof(Indonesian),
-            "id-ID", grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.AfterWithSpace),
+            "id-ID",
+            nativeName: "Bahasa Indonesia",
+            grammarData: GrammarData.StyleOrder(PluralizationStyle.None, AdjectiveOrder.AfterWithSpace),
             buttonDrawData: new(sheetFrame: (int)Indonesian));
     }
     internal static void DoSafeLoad()
@@ -478,6 +612,10 @@ public static class MoreLocalesAPI
     /// <param name="fallbackCulture">The <see cref="GameCulture.LegacyId"/> of a fallback culture. Localizations from the fallback culture will be loaded if one for this culture isn't found.</param>
     /// <param name="hasSubtitle">Whether or not a subtitle should be searched for and shown in the language menu.</param>
     /// <param name="hasDescription">Whether or not a hover text (description) should be searched for and shown in the language menu.</param>
+    /// <param name="nativeName">The native name of this culture in that culture's language, i. e. 'English' for English, 'Español' for Spanish, etc.</param>
+    /// <param name="langNameFormat">A formatter that tells the mod how language names should be displayed in the languages menu.<br/>
+    /// Leave <see langword="null"/> to use <see cref="LanguageNameFormat.Default"/>.
+    /// </param>
     /// <param name="grammarData">Data related to handling grammar for this culture.</param>
     /// <param name="available">Whether or not this culture should be visible in the language menu. Useful if you want cultures to be 'unlockable' for whatever reason.</param>
     /// <param name="buttonDrawData">Data related to the drawing of this culture's button in the language menu.</param>
@@ -492,6 +630,8 @@ public static class MoreLocalesAPI
         int fallbackCulture = 1,
         bool hasSubtitle = true,
         bool hasDescription = false,
+        string nativeName = null,
+        LanguageNameFormat? langNameFormat = null,
         GrammarData? grammarData = null,
         Func<bool> available = null,
         LanguageButtonDrawData buttonDrawData = new(),
@@ -526,7 +666,7 @@ public static class MoreLocalesAPI
 
         Logging.tML.Info($"[MoreLocales] Culture {internalName} was registered by {(mod == MoreLocales.Instance ? "MoreLocales" : mod?.Name ?? "vanilla")}");
 
-        MoreLocalesCulture newCulture = new(childCulture, internalName, fallbackCulture, hasSubtitle, hasDescription, grammarData, available, buttonDrawData, mod);
+        MoreLocalesCulture newCulture = new(childCulture, internalName, fallbackCulture, hasSubtitle, hasDescription, nativeName, langNameFormat, grammarData, available, buttonDrawData, mod);
 
         if (extraCulturesV2.Length < _registeredCount + 1)
             Array.Resize(ref extraCulturesV2, _registeredCount + 1);
@@ -796,5 +936,8 @@ public static class MoreLocalesAPI
             _legacyCultures.Remove(i);
             _NamedCultures.Remove((CultureName)i);
         }
+
+        _legacyCultures.TrimExcess();
+        _NamedCultures.TrimExcess();
     }
 }

@@ -52,7 +52,15 @@ public abstract class ModCulture : ILoadable
     /// Whether or not this culture should show some text (a description, for example) in the language menu when hovered.<para/>
     /// Defaults to <see langword="false"/>.
     /// </param>
-    public virtual void SetCultureData(ref int fallbackCulture, ref bool hasSubtitle, ref bool hasDescription)
+    /// <param name="nativeName">
+    /// The native name of this culture in its corresponding language. i. e. 'Español' for Spanish, 'English' for English, 'Deutsch' for German, etc.<para/>
+    /// Defaults to <see cref="Name"/>.
+    /// </param>
+    /// <param name="langNameFormat">
+    /// Defines the way language names should be displayed in the language menu, including order and formatting with <see cref="BoundaryType"/>s.<para/>
+    /// Defaults to <see cref="LanguageNameFormat.Default"/>.
+    /// </param>
+    public virtual void SetCultureData(ref int fallbackCulture, ref bool hasSubtitle, ref bool hasDescription, ref string nativeName, ref LanguageNameFormat langNameFormat)
     {
 
     }
@@ -126,8 +134,10 @@ public abstract class ModCulture : ILoadable
         int fallbackCulture = 1;
         bool hasSubtitle = true;
         bool hasDescription = false;
+        string nativeName = Name;
+        LanguageNameFormat langNameFormat = LanguageNameFormat.Default;
 
-        SetCultureData(ref fallbackCulture, ref hasSubtitle, ref hasDescription);
+        SetCultureData(ref fallbackCulture, ref hasSubtitle, ref hasDescription, ref nativeName, ref langNameFormat);
 
         PluralizationStyle pluralization = PluralizationStyle.Simple;
         AdjectiveOrder orderFormatter = new();
@@ -152,7 +162,7 @@ public abstract class ModCulture : ILoadable
 
         int index = mod
             .RegisterCulture
-            (Name, LanguageCode, fallbackCulture, hasSubtitle, hasDescription, data, hasCustomAvailabilityMethod ? IsAvailable : null, drawData)
+            (Name, LanguageCode, fallbackCulture, hasSubtitle, hasDescription, nativeName, langNameFormat, data, hasCustomAvailabilityMethod ? IsAvailable : null, drawData)
             .Culture
             .LegacyId;
 

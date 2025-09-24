@@ -43,134 +43,134 @@ Cultures: {
 	}
 
 	English: {
-		Title: English (Tiếng Anh)
+		Title: Tiếng Anh
 		Subtitle: Hợp Chủng Quốc Hoa Kỳ
 	}
 
 	German: {
-		Title: Deutsch (Tiếng Đức)
+		Title: Tiếng Đức
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Italian: {
-		Title: Italiano (Tiếng Ý)
+		Title: Tiếng Ý
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	French: {
-		Title: Français (Tiếng Pháp)
+		Title: Tiếng Pháp
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Spanish: {
-		Title: Español (Tiếng Tây Ba Nha)
+		Title: Tiếng Tây Ba Nha
 		Subtitle: Tây Ba Nha
 	}
 
 	Russian: {
-		Title: Русский (Tiếng Nga)
+		Title: Tiếng Nga
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Chinese: {
-		Title: 中文 (Tiếng Trung)
+		Title: Tiếng Trung
 		Subtitle: Giản Thể
 	}
 
 	Portuguese: {
-		Title: Português (Tiếng Bồ Đào Nha)
+		Title: Tiếng Bồ Đào Nha
 		Subtitle: Brazil
 	}
 
 	Polish: {
-		Title: Polski (Tiếng Ba Lan)
+		Title: Tiếng Ba Lan
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	BritishEnglish: {
-		Title: English (Tiếng Anh)
+		Title: Tiếng Anh
 		Subtitle: Vương Quốc Anh
 	}
 
 	Japanese: {
-		Title: 日本語 (Tiếng Nhật)
+		Title: Tiếng Nhật
 		Subtitle: Phổ Thông
 	}
 
 	Korean: {
-		Title: 한국어 (Tiếng Hàn)
+		Title: Tiếng Hàn
 		Subtitle: Hàn Quốc
 	}
 
 	TraditionalChinese: {
-		Title: 中文 (Tiếng Trung)
+		Title: Tiếng Trung
 		Subtitle: Phồn Thể
 	}
 
 	Turkish: {
-		Title: Türkçe (Tiếng Thổ Nhĩ Kỳ)
+		Title: Tiếng Thổ Nhĩ Kỳ
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Thai: {
-		Title: ภาษาไทย (Tiếng Thái)
+		Title: Tiếng Thái
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Ukrainian: {
-		Title: Українська (Tiếng U-kren)
+		Title: Tiếng U-kren
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	MexicanSpanish: {
-		Title: Español (Tiếng Tây Ba Nha)
-		Subtitle: Mỹ La Tinh
+		Title: Tiếng Tây Ba Nha
+		Subtitle: Mê-hi-cô
 	}
 
 	Czech: {
-		Title: Čeština (Tiếng Séc)
+		Title: Tiếng Séc
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Hungarian: {
-		Title: Magyar (Tiếng Hungary)
+		Title: Tiếng Hungary
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	PortugalPortuguese: {
-		Title: Português (Tiếng Bồ Đào Nha)
+		Title: Tiếng Bồ Đào Nha
 		Subtitle: Bồ Đào Nha
 	}
 
 	Swedish: {
-		Title: Svenska (Tiếng Thụy Điển)
+		Title: Tiếng Thụy Điển
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Dutch: {
-		Title: Nederlands (Tiếng Hà Lan)
+		Title: Tiếng Hà Lan
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Danish: {
-		Title: Dansk (Tiếng Đan Mạch)
+		Title: Tiếng Đan Mạch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
-	Vietnamese.Title: Tiếng Việt (Tiếng Việt)
+	Vietnamese.Title: Tiếng Việt
 
 	Finnish: {
-		Title: Suomi (Tiếng Phần Lan)
+		Title: Tiếng Phần Lan
 		Subtitle: Thông Dụng
 	}
 
 	Romanian: {
-		Title: Română (Tiếng Rumani)
+		Title: Tiếng Rumani
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Indonesian: {
-		Title: Bahasa Indonesia (Tiếng Indo)
+		Title: Tiếng Indo
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 }

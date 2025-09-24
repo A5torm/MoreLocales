@@ -341,6 +341,8 @@ public static class BetterLangMenuV2
 
         // final pass: drawing the text
 
+        MoreLocalesAPI.ActiveCulture.LanguageNameFormat.Deconstruct(out bool nativeAfter, out bool boundariesNative, out bool boundariesTranslated, out BoundaryType boundary);
+
         foreach (var index in span)
         {
             ref ButtonDrawInfo info = ref _drawInfoCache[index];
@@ -382,7 +384,8 @@ public static class BetterLangMenuV2
                 ChatManager.DrawColorCodedStringWithShadow(sb, font, subtitle, drawSubPos, drawSubColor, 0f, Vector2.Zero, new Vector2(subSize));
             }
 
-            string title = info.buttonText.title.GetForCulture(ref culture, $"Cultures.{culture.Name}.Title").Value;
+            string translatedName = info.buttonText.title.GetForCulture(ref culture, $"Cultures.{culture.Name}.Title").Value;
+            string title = LanguageNameFormat.Format(culture.NativeName, translatedName, in nativeAfter, in boundariesNative, in boundariesTranslated, in boundary);
             float xSizeTitle = font.MeasureString(title).X;
 
             float xScale = 1f;

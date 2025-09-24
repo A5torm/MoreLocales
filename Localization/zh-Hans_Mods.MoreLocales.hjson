@@ -54,32 +54,32 @@ Cultures: {
 	}
 
 	English: {
-		Title: English (英语)
+		Title: 英语
 		Subtitle: 美式英语
 	}
 
 	German: {
-		Title: Deutsch (德语)
+		Title: 德语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}德语"
 	}
 
 	Italian: {
-		Title: Italiano (意大利语)
+		Title: 意大利语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}意大利语"
 	}
 
 	French: {
-		Title: Français (法语)
+		Title: 法语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}法语"
 	}
 
 	Spanish: {
-		Title: Español (西班牙语)
+		Title: 西班牙语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}西班牙语"
 	}
 
 	Russian: {
-		Title: Русский (俄语)
+		Title: 俄语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}俄语"
 	}
 
@@ -89,27 +89,27 @@ Cultures: {
 	}
 
 	Portuguese: {
-		Title: Português (葡萄牙语)
+		Title: 葡萄牙语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}葡萄牙语"
 	}
 
 	Polish: {
-		Title: Polski (波兰语)
+		Title: 波兰语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}波兰语"
 	}
 
 	BritishEnglish: {
-		Title: English (英语)
+		Title: 英语
 		Subtitle: 英式英语
 	}
 
 	Japanese: {
-		Title: 日本語 (日语)
+		Title: 日语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}日语"
 	}
 
 	Korean: {
-		Title: 한국어 (韩语)
+		Title: 韩语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}韩语"
 	}
 
@@ -119,69 +119,69 @@ Cultures: {
 	}
 
 	Turkish: {
-		Title: Türkçe (土耳其语)
+		Title: 土耳其语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}土耳其语"
 	}
 
 	Thai: {
-		Title: ภาษาไทย (泰语)
+		Title: 泰语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}泰语"
 	}
 
 	Ukrainian: {
-		Title: Українська (乌克兰语)
+		Title: 乌克兰语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}乌克兰语"
 	}
 
 	MexicanSpanish: {
-		Title: Español (西班牙语)
+		Title: 西班牙语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}语拉丁美洲语"
 	}
 
 	Czech: {
-		Title: Čeština (捷克语)
+		Title: 捷克语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}捷克语"
 	}
 
 	Hungarian: {
-		Title: Magyar (匈牙利语)
+		Title: 匈牙利语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}匈牙利语"
 	}
 
 	PortugalPortuguese: {
-		Title: Português (葡萄牙语)
+		Title: 葡萄牙语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}葡萄牙语"
 	}
 
 	Swedish: {
-		Title: Svenska (瑞典语)
+		Title: 瑞典语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}瑞典语"
 	}
 
 	Dutch: {
-		Title: Nederlands (荷兰语)
+		Title: 荷兰语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}荷兰语"
 	}
 
 	Danish: {
-		Title: Dansk (丹麦语)
+		Title: 丹麦语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}丹麦语"
 	}
 
-	Vietnamese.Title: Tiếng Việt (越南语)
+	Vietnamese.Title: 越南语
 
 	Finnish: {
-		Title: Suomi (芬兰语)
+		Title: 芬兰语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}芬兰语"
 	}
 
 	Romanian: {
-		Title: Română (罗马尼亚语)
+		Title: 罗马尼亚语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}罗马尼亚语"
 	}
 
 	Indonesian: {
-		Title: Bahasa Indonesia (印度尼西亚语)
+		Title: 印度尼西亚语
 		Subtitle: "{$Cultures.Common.StandardSubtitle}印尼语"
 	}
 }

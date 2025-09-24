@@ -47,134 +47,134 @@ Cultures: {
 	}
 
 	English: {
-		Title: English (Englisch)
+		Title: Englisch
 		Subtitle: United States
 	}
 
 	German: {
-		Title: Deutsch (Deutsch)
+		Title: Deutsch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Italian: {
-		Title: Italiano (Italienisch)
+		Title: Italienisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	French: {
-		Title: Français (Französisch)
+		Title: Französisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Spanish: {
-		Title: Español (Spanisch)
+		Title: Spanisch
 		Subtitle: Spain
 	}
 
 	Russian: {
-		Title: Русский (Russisch)
+		Title: Russisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Chinese: {
-		Title: 中文 (Chinesisch)
+		Title: Chinesisch
 		Subtitle: Simplified
 	}
 
 	Portuguese: {
-		Title: Português (Portugiesisch)
+		Title: Portugiesisch
 		Subtitle: Brazil
 	}
 
 	Polish: {
-		Title: Polski (Polnisch)
+		Title: Polnisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	BritishEnglish: {
-		Title: English (Englisch)
+		Title: Englisch
 		Subtitle: United Kingdom
 	}
 
 	Japanese: {
-		Title: 日本語 (Japanisch)
+		Title: Japanisch
 		Subtitle: Hyoujungo
 	}
 
 	Korean: {
-		Title: 한국어 (Koreanisch)
+		Title: Koreanisch
 		Subtitle: South Korea
 	}
 
 	TraditionalChinese: {
-		Title: 中文 (Chinesisch)
+		Title: Chinesisch
 		Subtitle: Traditional
 	}
 
 	Turkish: {
-		Title: Türkçe (Türkisch)
+		Title: Türkisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Thai: {
-		Title: ภาษาไทย (Thai)
+		Title: Thai
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Ukrainian: {
-		Title: Українська (Ukrainisch)
+		Title: Ukrainisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	MexicanSpanish: {
-		Title: Español (Spanisch)
+		Title: Spanisch
 		Subtitle: Standard Latin American
 	}
 
 	Czech: {
-		Title: Čeština (Tschechisch)
+		Title: Tschechisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Hungarian: {
-		Title: Magyar (Ungarisch)
+		Title: Ungarisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	PortugalPortuguese: {
-		Title: Português (Portugiesisch)
+		Title: Portugiesisch
 		Subtitle: Portugal
 	}
 
 	Swedish: {
-		Title: Svenska (Schwedisch)
+		Title: Schwedisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Dutch: {
-		Title: Nederlands (Niederländisch)
+		Title: Niederländisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Danish: {
-		Title: Dansk (Dänisch)
+		Title: Dänisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
-	Vietnamese.Title: Tiếng Việt (Vietnamesisch)
+	Vietnamese.Title: Vietnamesisch
 
 	Finnish: {
-		Title: Suomi (Finnisch)
+		Title: Finnisch
 		Subtitle: Kirjakieli
 	}
 
 	Romanian: {
-		Title: Română (Rumänisch)
+		Title: Rumänisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Indonesian: {
-		Title: Bahasa Indonesia (Indonesisch)
+		Title: Indonesisch
 		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 }

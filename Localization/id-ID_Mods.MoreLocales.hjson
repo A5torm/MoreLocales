@@ -47,129 +47,129 @@ Cultures: {
 	}
 
 	English: {
-		Title: English (Inggris)
+		Title: Inggris
 		Subtitle: Amerika Serikat
 	}
 
 	German: {
-		Title: Deutsch (German)
+		Title: German
 		Subtitle: Standar
 	}
 
 	Italian: {
-		Title: Italiano (Italia)
+		Title: Italia
 		Subtitle: Standar
 	}
 
 	French: {
-		Title: Français (Perancis)
+		Title: Perancis
 		Subtitle: Standar
 	}
 
 	Spanish: {
-		Title: Español (Spanyol)
+		Title: Spanyol
 		Subtitle: Spanyol
 	}
 
 	Russian: {
-		// Title: Русский (Russian)
+		// Title: Русский
 		Subtitle: Standar
 	}
 
 	Chinese: {
-		Title: 中文 (China)
+		Title: China
 		Subtitle: Simpel
 	}
 
 	Portuguese: {
-		Title: Português (Portugal)
+		Title: Portugal
 		// Subtitle: Brazil
 	}
 
 	Polish: {
-		Title: Polski (Polandia)
+		Title: Polandia
 		Subtitle: Standar
 	}
 
 	BritishEnglish: {
-		Title: English (Inggris)
+		Title: Inggris
 		Subtitle: Inggris
 	}
 
 	Japanese: {
-		Title: 日本語 (Jepang)
+		Title: Jepang
 		Subtitle: Standar
 	}
 
 	Korean: {
-		Title: 한국어 (Korea)
+		Title: Korea
 		Subtitle: Korea Selatan
 	}
 
 	TraditionalChinese: {
-		Title: 中文 (China)
+		Title: China
 		Subtitle: Tradisional
 	}
 
 	Turkish: {
-		Title: Türkçe (Turki)
+		Title: Turki
 		Subtitle: Standar
 	}
 
 	Thai: {
-		Title: ภาษาไทย (Thailand)
+		Title: Thailand
 		Subtitle: Standar
 	}
 
 	Ukrainian: {
-		Title: Українська (Ukraina)
+		Title: Ukraina
 		Subtitle: Standar
 	}
 
 	MexicanSpanish: {
-		Title: Español (Spanyol)
-		Subtitle: Standar Amerika Latin
+		Title: Spanyol
+		Subtitle: Meksiko
 	}
 
 	Czech: {
-		Title: Čeština (Ceko)
+		Title: Ceko
 		Subtitle: Standar
 	}
 
 	Hungarian: {
-		Title: Magyar (Hungaria)
+		Title: Hungaria
 		Subtitle: Standar
 	}
 
 	PortugalPortuguese: {
-		Title: Português (Portugal)
+		Title: Portugal
 		// Subtitle: Portugal
 	}
 
 	Swedish: {
-		Title: Svenska (Swedia)
+		Title: Swedia
 		Subtitle: Standar
 	}
 
 	Dutch: {
-		Title: Nederlands (Belanda)
+		Title: Belanda
 		Subtitle: Standar
 	}
 
 	Danish: {
-		Title: Dansk (Denmark)
+		Title: Denmark
 		Subtitle: Standar
 	}
 
 	Vietnamese.Title: Tiếng Việt (Vietnam)
 
 	Finnish: {
-		Title: Suomi (Finlandia)
+		Title: Finlandia
 		Subtitle: Literatur
 	}
 
 	Romanian: {
-		Title: Română (Romania)
+		Title: Romania
 		Subtitle: Standar
 	}
 

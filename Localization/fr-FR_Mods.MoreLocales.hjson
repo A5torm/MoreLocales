@@ -38,7 +38,7 @@ Configs: {
 
 Cultures: {
 	Common: {
-		// StandardSubtitle: Standard
+		StandardSubtitle: Standard
 		/* LocalizedFontUnavailable:
 			'''
 			This language cannot be used because it requires a font that is currently not in the mod.
@@ -47,135 +47,135 @@ Cultures: {
 	}
 
 	English: {
-		// Title: English (English)
-		// Subtitle: United States
+		Title: Anglais
+		Subtitle: États-Unis
 	}
 
 	German: {
-		// Title: Deutsch (German)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Allemand
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Italian: {
-		// Title: Italiano (Italian)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Italien
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	French: {
-		// Title: Français (French)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Français
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Spanish: {
-		// Title: Español (Spanish)
-		// Subtitle: Spain
+		Title: Espagnol
+		Subtitle: Espagne
 	}
 
 	Russian: {
-		// Title: Русский (Russian)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Russe
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Chinese: {
-		// Title: 中文 (Chinese)
-		// Subtitle: Simplified
+		Title: Chinois
+		Subtitle: Simplifié
 	}
 
 	Portuguese: {
-		// Title: Português (Portuguese)
-		// Subtitle: Brazil
+		Title: Portugais
+		Subtitle: Brésil
 	}
 
 	Polish: {
-		// Title: Polski (Polish)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Polonais
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	BritishEnglish: {
-		// Title: English (English)
-		// Subtitle: United Kingdom
+		Title: Anglais
+		Subtitle: Royaume-Uni
 	}
 
 	Japanese: {
-		// Title: 日本語 (Japanese)
-		// Subtitle: Hyoujungo
+		Title: Japonais
+		Subtitle: Hyoujungo
 	}
 
 	Korean: {
-		// Title: 한국어 (Korean)
-		// Subtitle: South Korea
+		Title: Coréen
+		Subtitle: Corée du Sud
 	}
 
 	TraditionalChinese: {
-		// Title: 中文 (Chinese)
-		// Subtitle: Traditional
+		Title: Chinois
+		Subtitle: Traditionnel
 	}
 
 	Turkish: {
-		// Title: Türkçe (Turkish)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Turc
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Thai: {
-		// Title: ภาษาไทย (Thai)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Thaï
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Ukrainian: {
-		// Title: Українська (Ukrainian)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Ukrainien
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	MexicanSpanish: {
-		// Title: Español (Spanish)
-		// Subtitle: Mexico
+		Title: Espagnol
+		Subtitle: Mexique
 	}
 
 	Czech: {
-		// Title: Čeština (Czech)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Tchèque
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Hungarian: {
-		// Title: Magyar (Hungarian)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Hongrois
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	PortugalPortuguese: {
-		// Title: Português (Portuguese)
-		// Subtitle: Portugal
+		Title: Portugais
+		Subtitle: Portugal
 	}
 
 	Swedish: {
-		// Title: Svenska (Swedish)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Suédois
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Dutch: {
-		// Title: Nederlands (Dutch)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Néerlandais
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Danish: {
-		// Title: Dansk (Danish)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Danois
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
-	// Vietnamese.Title: Tiếng Việt (Vietnamese)
+	Vietnamese.Title: Vietnamien
 
 	Finnish: {
-		// Title: Suomi (Finnish)
-		// Subtitle: Kirjakieli
+		Title: Finnois
+		Subtitle: Kirjakieli
 	}
 
 	Romanian: {
-		// Title: Română (Romanian)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Roumain
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 
 	Indonesian: {
-		// Title: Bahasa Indonesia (Indonesian)
-		// Subtitle: "{$Cultures.Common.StandardSubtitle}"
+		Title: Indonésien
+		Subtitle: "{$Cultures.Common.StandardSubtitle}"
 	}
 }
 
