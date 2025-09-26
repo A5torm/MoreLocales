@@ -213,7 +213,7 @@ internal struct InflectionsSection
         if (paradigm < 0 || paradigm >= patterns.Length)
             return null;
         InflectionPattern test = patterns[paradigm];
-        if (test.Type == InflectionPatternType.DoesntExist && !strict)
+        if (test.Type == InflectionPatternType.Nonexistent && !strict)
         {
             // if we don't find the pattern directly, we can then fall back to this process:
             // 1. try to find a pattern of the same gender, but different number
@@ -233,7 +233,7 @@ internal struct InflectionsSection
                 if (possiblePatterns is null)
                     continue;
                 found = possiblePatterns[paradigm];
-                if (found.Type == InflectionPatternType.DoesntExist)
+                if (found.Type == InflectionPatternType.Nonexistent)
                     continue;
                 return found;
             }
@@ -248,7 +248,7 @@ internal struct InflectionsSection
                 if (possiblePatterns is null)
                     continue;
                 found = possiblePatterns[paradigm];
-                if (found.Type == InflectionPatternType.DoesntExist)
+                if (found.Type == InflectionPatternType.Nonexistent)
                     continue;
                 return found;
             }
@@ -583,7 +583,7 @@ public sealed class InflectionPattern(InflectionPatternType type, string match, 
 
         if (pattern.Length == 1 && pattern[0] == 'X')
         {
-            result = new InflectionPattern(InflectionPatternType.DoesntExist, null, false);
+            result = new InflectionPattern(InflectionPatternType.Nonexistent, null, false);
             return true;
         }
 
@@ -694,7 +694,7 @@ public enum InflectionPatternType
     /// <summary>
     /// Represents a pattern which doesn't exist in the main table. Marked as X in LPlus files.
     /// </summary>
-    DoesntExist,
+    Nonexistent,
 }
 /// <summary>
 /// An enum containing all diacritics that can be specified for an <see cref="InflectionPattern"/> in an LPlus file.
@@ -763,6 +763,7 @@ public enum SpecialPatternCharacter
     Caron = '\u030C',
     /// <summary>
     /// Letters with the comma diacritic, e. g. Șș<para/>
+    /// Written 'Q' in LPlus files.
     /// </summary>
     Comma = '\u0326',
     /// <summary>

@@ -1,10 +1,10 @@
 [Inflections]
 Word: !i, !z, !o, !dla, !za, !ze, !na, !po, !od, !że
 
-MascSg: -eau,   -el,    -al,   -eux,   -eur,   -u,   -ur,   -f,   -ef,   -er,   -at,  -it,   -et,    -é,   -n,   -ien,    -nt,   -nd,  -ment,  -oc,  -rd,  -il,  -e,   -que,   X,     X
-FemSg:  -elle,  -elle,  -ale,  -euse,  -eure,  -ue,  -ure,  -ve,  -ève,  -ère,  X,    -ite,  -ette,  -ée,  -ne,  -ienne,  -nte,  -nde,  X,      X,    X,    X,    X,   X,      -ice, -ance
-MascPl: -eaux,  -els,   -aux,  -eux,   -eurs,  -us,  -urs,  -fs,  -efs,  -ers,  -ats, -its,  -ets,   -és,  -ns,  -iens,   -nts,  -nds,  -ments, -ocs, -rds, -ils, -es, -ques,  X,     X
-FemPl:  -elles, -elles, -ales, -euses, -eures, -ues, -ures, -ves, -èves, -ères, X,    -ites, -ettes, -ées, -nes, -iennes, -ntes, -ndes, X,      X,    X,    X,    X,   X,      -ices, -ances
+MascSg: -eau,   -el,    -al,   -eux,   -eur,   -u,   -ur,   -f,   -ef,   -er,   -at,  -it,   -t,    -é,   -n,   -ien,    -nt,   -nd,  -ment,  -oc,  -rd,  -il,  -e,   -que,   X,     X
+FemSg:  -elle,  -elle,  -ale,  -euse,  -eure,  -ue,  -ure,  -ve,  -ève,  -ère,  X,    -ite,  -tte,  -ée,  -ne,  -ienne,  -nte,  -nde,  X,      X,    X,    X,    X,   X,      -ice, -ance
+MascPl: -eaux,  -els,   -aux,  -eux,   -eurs,  -us,  -urs,  -fs,  -efs,  -ers,  -ats, -its,  -ts,   -és,  -ns,  -iens,   -nts,  -nds,  -ments, -ocs, -rds, -ils, -es, -ques,  X,     X
+FemPl:  -elles, -elles, -ales, -euses, -eures, -ues, -ures, -ves, -èves, -ères, X,    -ites, -ttes, -ées, -nes, -iennes, -ntes, -ndes, X,      X,    X,    X,    X,   X,      -ices, -ances
 
 <Exceptions>
 FemSg: fleur, hache, pioche, main, clé, clef

@@ -11,6 +11,9 @@ MascPl: -y, X,  X,   X,   X,  X,  X,    -e, -kie
 FemPl:  X,  -y, -ki, -ce, X,  X,  X,    -e, -kie
 NeutPl: X,  X,  X,   X,   -a, -a, -ona, -e, -kie
 
+<Exceptions>
+MascPl: buty
+
 # Help, I don't speak this language! If you do, what are some common words that
 # would fall into the above table, but actually be incorrect?
 # If you know of any that would show up in Terraria, check out the other .lplus
